@@ -82,11 +82,13 @@ export default function Navbar() {
         vertical: "top",
         horizontal: "right",
       }}
+      sx={{marginTop: 6}}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Đăng xuất</MenuItem>
     </Menu>
   );
 
@@ -212,17 +214,15 @@ export default function Navbar() {
               </Badge>
             </IconButton>
 
-            <IconButton
-              size="large"
-              edge="end"
+            <Button
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Image src={AvatarImage} alt="Name" width={30} height={30}/> 
-            </IconButton>
+              <Image src={AvatarImage} alt="Name" width={40} height={40} className="rounded"/> 
+            </Button>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -231,7 +231,6 @@ export default function Navbar() {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
             >
               <MoreIcon />
             </IconButton>

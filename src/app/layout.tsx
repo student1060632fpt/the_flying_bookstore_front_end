@@ -5,6 +5,8 @@ import Navbar from "@/components/nav/Navbar";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../utils/theme";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 const main_font = Montserrat({ subsets: ["vietnamese"] });
 const sub_font = Montserrat({ subsets: ["vietnamese"] }); // don't know when to use it
 
@@ -25,7 +27,7 @@ export default function RootLayout({
           <ThemeProvider theme={theme}>
             <div className="flex flex-col min-h-screen">
               <Navbar />
-              <main className="flex-grow bg-black text-white">{children}</main>
+              <main className="flex-grow">{children}</main>
             </div>
           </ThemeProvider>
         </AppRouterCacheProvider>

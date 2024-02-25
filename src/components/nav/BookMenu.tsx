@@ -70,7 +70,7 @@ export default function BookMenus() {
         disableElevation
         onClick={handleClick}
         endIcon={<KeyboardArrowDownIcon />}
-        sx={{paddingLeft: 3}}
+        sx={{paddingLeft: {md: 3, xs: 1.5}}}
       >
         <BsShop size={30} />
       </Button>

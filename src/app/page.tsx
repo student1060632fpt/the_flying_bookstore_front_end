@@ -1,8 +1,9 @@
+import HomeBanner from "@/components/home/HomeBanner";
 
 export default function Home() {
   return (
     <div className="">
-      what iss it?
+      {/* <HomeBanner/> */}
     </div>
   );
 }

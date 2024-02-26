@@ -5,6 +5,7 @@ import HeroSection from "./../components/home/HeroSection/HeroSection"
 import Statistic from "./../components/home/Statistic/Statistic"
 import PromoteSection from "@/components/home/PromoteSection";
 import BookCategory from "@/components/home/Category/BookCategory";
+import NewComingList from "@/components/home/NewComing/NewComingList";
 export default function Home() {
 
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Statistic />
       <PromoteSection/>
       <BookCategory/>
+      <NewComingList/>
     </div>
   );
 }

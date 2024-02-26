@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+
 import Book from "./G13ZDV5U.jpg";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";

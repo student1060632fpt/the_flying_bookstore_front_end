@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React from "react";
+
 import Slider from "react-slick";
 import PromoteBanner from "./../../assets/images/promote banner.svg"
 import BookCardCarousel from "./Statistic/BookCardCarousel";

@@ -1,4 +1,4 @@
-import React from "react";
+
 import "./Statistic.scss";
 import { SlEnergy } from "react-icons/sl";
 import { MdSecurity } from "react-icons/md";

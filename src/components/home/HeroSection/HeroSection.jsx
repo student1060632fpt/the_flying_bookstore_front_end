@@ -1,4 +1,4 @@
-import React from "react";
+
 import "./HeroSection.scss";
 import { AiOutlineBarChart } from "react-icons/ai";
 import { BiCalendar } from "react-icons/bi";

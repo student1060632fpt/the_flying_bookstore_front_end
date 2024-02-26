@@ -11,8 +11,8 @@ import Image from "next/image";
 import { Chip } from "@mui/material";
 export default function HeroSection() {
   return (
-    <section className="hero grid grid-cols-2 gap-4">
-      <div className="pl-10 max-w-2xl py-32 sm:py-48 lg:py-56">
+    <section className="hero container mx-auto grid grid-cols-2 gap-4">
+      <div className="max-w-2xl py-12 sm:py-32 lg:py-48">
         <p className="text-lg sellest text-secondary mb-6">BÁN CHẠY</p>
         <div className="text-left">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-6xl">
@@ -52,11 +52,11 @@ export default function HeroSection() {
           </div>
         </div>
       </div>
-      <div className="relative">
+      <div className="relative h-full">
         <Image
           src={TeenGirlImage}
           alt="Picture of the author"
-          className="absolute bottom-0 w-8/12"
+          className="absolute bottom-0 w-10/12"
         />
       </div>
       <div className="absolute top-0 -z-10 overflow-hidden" aria-hidden="true">

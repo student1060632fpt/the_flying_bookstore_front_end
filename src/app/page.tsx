@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import HeroSection from "./../components/home/HeroSection/HeroSection"
 import Statistic from "./../components/home/Statistic/Statistic"
 import PromoteSection from "@/components/home/PromoteSection";
-import BookCategory from "@/components/home/BookCategory";
+import BookCategory from "@/components/home/Category/BookCategory";
 export default function Home() {
 
   return (

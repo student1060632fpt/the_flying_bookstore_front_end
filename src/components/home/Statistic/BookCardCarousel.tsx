@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import Book from "./../../assets/images/book/G13ZDV5U.jpg";
+import Book from "./G13ZDV5U.jpg";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
 const BookCardCarousel = ({ imgSrc }: { imgSrc?: string }) => {

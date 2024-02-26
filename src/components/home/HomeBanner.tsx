@@ -1,34 +1,36 @@
-'use-client'
+"use-client";
 import Slider from "react-slick";
-
+import HeroSection from "./HeroSection/HeroSection";
 export default function HomeBanner() {
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
+    slidesToScroll: 1,
   };
   return (
-    <Slider {...settings}>
-      <div>
-        <h3>1</h3>
-      </div>
-      <div>
-        <h3>2</h3>
-      </div>
-      <div>
-        <h3>3</h3>
-      </div>
-      <div>
-        <h3>4</h3>
-      </div>
-      <div>
-        <h3>5</h3>
-      </div>
-      <div>
-        <h3>6</h3>
-      </div>
-    </Slider>
+    <div className="overflow-hidden">
+      <Slider {...settings}>
+        <div className="banner" id="banner1">
+          <HeroSection />
+        </div>
+        <div className="banner" id="banner2">
+          <HeroSection />
+        </div>
+        <div className="banner" id="banner3">
+          <HeroSection />
+        </div>
+        <div className="banner" id="banner4">
+          <HeroSection />
+        </div>
+        <div className="banner" id="banner5">
+          <HeroSection />
+        </div>
+        <div className="banner" id="banner6">
+          <HeroSection />
+        </div>
+      </Slider>
+    </div>
   );
 }

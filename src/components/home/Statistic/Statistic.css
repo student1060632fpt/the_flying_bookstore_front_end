@@ -1,0 +1,1 @@
+.statistic{@apply py-12}.statistic-list{@apply grid sm:grid-cols-2 md:grid-cols-4 gap-4 text-center}.statistic-item{@apply p-4}.statistic-content{@apply border-stone-200 px-4 py-6 rounded-lg}.statistic-icon{@apply text-secondary w-9 h-9 mb-3 inline-block}.statistic-number{@apply font-light text-xl text-stone-900 font-semibold}

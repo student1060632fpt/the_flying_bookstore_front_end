@@ -10,13 +10,11 @@ import ScrollButton from "@/components/scrollButton/ScrollButton";
 export default function Home() {
   return (
     <div className="">
-
       <HomeBanner />
       <Statistic />
       <PromoteSection />
       <BookCategory />
       <NewComingList />
-
     </div>
   );
 }

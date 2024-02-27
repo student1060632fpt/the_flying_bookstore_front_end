@@ -21,7 +21,8 @@ import { BorderColor } from "@mui/icons-material";
 import BookMenus from "./BookMenu";
 import { CiSearch } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
-import AvatarImage from "./../../assets/images/avatar.jpg"
+import AvatarImage from "./../../assets/images/avatar.jpg";
+import Link from "next/link";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -82,7 +83,7 @@ export default function Navbar() {
         vertical: "top",
         horizontal: "right",
       }}
-      sx={{marginTop: 6}}
+      sx={{ marginTop: 6 }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
@@ -148,40 +149,42 @@ export default function Navbar() {
     <div>
       <AppBar position="static" sx={{ bgcolor: "background.paper" }}>
         <Toolbar>
-          <Button sx={{ textTransform: "none" }}>
-            <Image
-              src={logoImage}
-              width={50}
-              height={50}
-              alt="Picture of the author"
-            />
-            <Box sx={{ display: { xs: "none", sm: "block" }, ml: 2 }}>
-              <Typography
-                variant="h6"
-                component="h1"
-                sx={{
-                  fontWeight: "bold",
-                  fontFamily: "Montserrat",
-                  lineHeight: 1.2,
-                  fontSize: 26,
-                }}
-              >
-                The Flying
-              </Typography>
-              <Typography
-                variant="body1"
-                component="div"
-                textAlign="left"
-                sx={{
-                  letterSpacing: 7,
-                  fontWeight: "light",
-                  fontFamily: "Montserrat",
-                }}
-              >
-                bookstore
-              </Typography>
-            </Box>
-          </Button>
+          <Link href="/">
+            <Button sx={{ textTransform: "none" }}>
+              <Image
+                src={logoImage}
+                width={50}
+                height={50}
+                alt="Picture of the author"
+              />
+              <Box sx={{ display: { xs: "none", sm: "block" }, ml: 2 }}>
+                <Typography
+                  variant="h6"
+                  component="h1"
+                  sx={{
+                    fontWeight: "bold",
+                    fontFamily: "Montserrat",
+                    lineHeight: 1.2,
+                    fontSize: 26,
+                  }}
+                >
+                  The Flying
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="div"
+                  textAlign="left"
+                  sx={{
+                    letterSpacing: 7,
+                    fontWeight: "light",
+                    fontFamily: "Montserrat",
+                  }}
+                >
+                  bookstore
+                </Typography>
+              </Box>
+            </Button>
+          </Link>
           <Box sx={{ flexGrow: 0.5 }} />
 
           <Box
@@ -221,7 +224,13 @@ export default function Navbar() {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Image src={AvatarImage} alt="Name" width={40} height={40} className="rounded"/> 
+              <Image
+                src={AvatarImage}
+                alt="Name"
+                width={40}
+                height={40}
+                className="rounded"
+              />
             </Button>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>

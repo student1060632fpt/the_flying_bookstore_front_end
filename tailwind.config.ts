@@ -16,6 +16,7 @@ const config: Config = {
         'green': '#13ce66',
         'primary': '#00254F',
         'secondary':'#EAA451',
+        'bookstore':'#41C0E1'
         
       },
     },

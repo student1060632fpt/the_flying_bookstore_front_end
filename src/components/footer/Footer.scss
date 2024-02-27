@@ -1,0 +1,6 @@
+.item-contact{
+  @apply  flex items-center;
+  .icon{
+    @apply text-secondary mr-2;
+  }
+}

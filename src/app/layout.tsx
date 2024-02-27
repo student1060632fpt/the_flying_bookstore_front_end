@@ -7,6 +7,7 @@ import { ThemeProvider } from "@mui/material/styles";
 import theme from "../utils/theme";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Footer from "@/components/footer/Footer";
 const main_font = Montserrat({ subsets: ["vietnamese"] });
 const sub_font = Montserrat({ subsets: ["vietnamese"] }); // don't know when to use it
 
@@ -28,6 +29,7 @@ export default function RootLayout({
             <div className="flex flex-col min-h-screen">
               <Navbar />
               <main className="flex-grow">{children}</main>
+              <Footer/>
             </div>
           </ThemeProvider>
         </AppRouterCacheProvider>

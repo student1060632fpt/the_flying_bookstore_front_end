@@ -13,8 +13,8 @@ const NewComingList = () => {
     autoplaySpeed: 5000,
   };
   return (
-    <div className="container mx-auto">
-      <h3 className="text-3xl pt-8 pb-10 font-semibold">Sách mới ra mắt</h3>
+    <div className="container mx-auto mb-20">
+      <h3 className="text-3xl pt-8 pb-10 font-semibold">Chương trình khuyến mãi</h3>
       <Slider {...settings}>
         {slides.map((slide) => (
           <NewBook key={slide} />

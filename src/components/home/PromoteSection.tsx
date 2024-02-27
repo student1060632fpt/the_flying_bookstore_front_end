@@ -20,7 +20,7 @@ const PromoteSection = () => {
     <>
       <section className="promote relative overflow-hidden">
         <h3 className="text-3xl pt-8 pb-5 font-semibold text-center">
-          Chương trình khuyến mãi
+          Sách mới ra mắt
         </h3>
         <p className="text-sn text-center mb-8">Từ 24/2 đến 14/04</p>
         <Slider {...settings}>

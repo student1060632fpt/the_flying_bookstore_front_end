@@ -1,3 +1,4 @@
+'use client';
 import Slider from "react-slick";
 import NewBook from "./NewBook";
 

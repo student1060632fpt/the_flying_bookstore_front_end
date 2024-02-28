@@ -1,6 +1,7 @@
-'use client';
+"use client";
 import Slider from "react-slick";
 import Category from "./Category";
+import Link from "next/link";
 
 const BookCategory = () => {
   const settings = {
@@ -22,7 +23,9 @@ const BookCategory = () => {
       </h3>
       <Slider {...settings}>
         {slides.map((slide) => (
-          <Category key={slide} />
+          <Link href="/search#thieunhi" key={slide}>
+            <Category  />
+          </Link>
         ))}
       </Slider>
     </div>

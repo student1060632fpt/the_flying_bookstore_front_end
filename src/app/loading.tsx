@@ -4,7 +4,7 @@ export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
     <Skeleton
-      sx={{ bgcolor: "grey.100" }}
+      sx={{ bgcolor: "grey.100", height:"50vh" }}
       variant="rectangular"
     />
   );

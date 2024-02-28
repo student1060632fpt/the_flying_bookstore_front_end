@@ -104,7 +104,7 @@ const BookInfo = () => {
             <Button variant="text" size="large">
               <FaPlus className="text-secondary" />
             </Button>
-            <input title="number" type="text" className="text-center w-10" />
+            <input title="number" defaultValue={1} type="text" className="text-center w-10" />
             <Button variant="text" size="large">
               <FaMinus className="text-secondary" />
             </Button>

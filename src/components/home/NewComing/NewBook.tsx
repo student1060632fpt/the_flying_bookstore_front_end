@@ -1,9 +1,10 @@
-import Image from "next/image"
-import Book from "./nhat-ky-am-ap-con-duong-di-dao-conduongdidao-jacket.jpg"
-import "./NewBook.scss"
+import Image from "next/image";
+import Book from "./nhat-ky-am-ap-con-duong-di-dao-conduongdidao-jacket.jpg";
+import "./NewBook.scss";
+import Link from "next/link";
 const NewBook = () => {
   return (
-    <div className="">
+    <Link href="/detail#123">
       <div className="relative w-8/12 ">
         <Image
           src={Book}
@@ -14,8 +15,8 @@ const NewBook = () => {
       </div>
       <h4 className="text-lg font-semibold pt-3">Nhật ký ấm áp</h4>
       <p className="text-gray-400 text-sm">5.000đ/ngày</p>
-    </div>
-  )
-}
+    </Link>
+  );
+};
 
-export default NewBook
+export default NewBook;

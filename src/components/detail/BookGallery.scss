@@ -1,10 +1,10 @@
-.image-book{
+.image-book {
   @apply w-8 rounded-md;
 }
-.image-cover{
+.image-cover {
   position: relative;
   height: 350px;
-  padding:10px;
+  padding: 10px;
   img {
     object-fit: cover;
     border-radius: 10px;

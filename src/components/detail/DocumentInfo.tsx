@@ -53,8 +53,8 @@ const DocumentInfo = () => {
           onChange={handleChange}
           aria-label="basic tabs example"
         >
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Chi tiết" {...a11yProps(0)} />
+          <Tab label="Đánh giá" {...a11yProps(1)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>

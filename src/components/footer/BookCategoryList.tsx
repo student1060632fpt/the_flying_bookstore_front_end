@@ -1,12 +1,16 @@
+import Link from "next/link";
+
 const CategoryList = () => {
   return (
-    <div className="flex flex-col gap-3 text-gray-500 text-sm">
-      <p>Hư cấu</p>
-      <p>Văn học hiện đại</p>
-      <p>Văn học kinh điển</p>
-      <p>Thiếu nhi</p>
-      <p>Lãng mạn</p>
-    </div>
+    <Link href="/search#abc">
+      <div className="flex flex-col gap-3 text-gray-500 text-sm">
+        <p>Hư cấu</p>
+        <p>Văn học hiện đại</p>
+        <p>Văn học kinh điển</p>
+        <p>Thiếu nhi</p>
+        <p>Lãng mạn</p>
+      </div>
+    </Link>
   );
 };
 

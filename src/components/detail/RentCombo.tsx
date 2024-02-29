@@ -5,7 +5,7 @@ import { FiCircle } from "react-icons/fi";
 import { FiCheckCircle } from "react-icons/fi";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
-
+import Link from "next/link";
 
 const RentCombo = () => {
   const [value, setvalue] = useState(0);
@@ -35,9 +35,8 @@ const RentCombo = () => {
               </div>
             </div>
             <div className="text-right">
-
-            <p className="font-bold">{item.price}đ</p>
-            <p className="text-xs text-gray-300">~1.000đ/ngày</p>
+              <p className="font-bold">{item.price}đ</p>
+              <p className="text-xs text-gray-300">~1.000đ/ngày</p>
             </div>
           </div>
         ))}
@@ -54,15 +53,17 @@ const RentCombo = () => {
         <p className="font-semibold text-lg">Tổng tiền</p>
         <p className="font-semibold text-right text-lg">100.000đ</p>
       </div>
-      <Button
-        variant="contained"
-        color="secondary"
-        size="large"
-        sx={{ width: "100%", color: "white" }}
-        startIcon={<CiShoppingCart />}
-      >
-        Đặt thuê ngay
-      </Button>
+      <Link href="/cart">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          sx={{ width: "100%", color: "white" }}
+          startIcon={<CiShoppingCart />}
+        >
+          Đặt thuê ngay
+        </Button>
+      </Link>
     </>
   );
 };

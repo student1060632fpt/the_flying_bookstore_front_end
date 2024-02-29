@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import BookInfo from "@/components/detail/BookInfo";
 import DocumentInfo from "@/components/detail/DocumentInfo";
 import RentBook from "@/components/detail/RentBook";
+import NewComingList from "@/components/home/NewComing/NewComingList";
 
 export const metadata: Metadata = {
   title: "Book detail | " + SITE_NAME,
@@ -20,6 +21,8 @@ export default function Page() {
             <RentBook/>
         </div>
       </div>
+      <NewComingList />
+
     </div>
   );
 }

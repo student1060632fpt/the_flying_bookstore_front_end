@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
+import Link from "next/link";
 
 const RentDay = () => {
   return (
@@ -16,7 +17,7 @@ const RentDay = () => {
           <DatePicker sx={{ width: "100%" }} label="Ngày trả" />
         </LocalizationProvider>
       </div>
-      
+
       <div className="flex flex-col gap-2 border-b pt-3 pb-2">
         <div className="columns-2">
           <p className="text-sm">Giá thuê</p>
@@ -43,15 +44,17 @@ const RentDay = () => {
         <p className="font-semibold text-lg">Tổng tiền</p>
         <p className="font-semibold text-right text-lg">100.000đ</p>
       </div>
-      <Button
-        variant="contained"
-        color="secondary"
-        size="large"
-        sx={{ width: "100%", color: "white" }}
-        startIcon={<CiShoppingCart />}
-      >
-        Đặt thuê ngay
-      </Button>
+      <Link href="/cart">
+        <Button
+          variant="contained"
+          color="secondary"
+          size="large"
+          sx={{ width: "100%", color: "white" }}
+          startIcon={<CiShoppingCart />}
+        >
+          Đặt thuê ngay
+        </Button>
+      </Link>
     </>
   );
 };

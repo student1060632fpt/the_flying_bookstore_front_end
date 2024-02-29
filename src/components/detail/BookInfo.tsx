@@ -10,8 +10,8 @@ import { AiFillThunderbolt } from "react-icons/ai";
 import { LuShieldCheck } from "react-icons/lu";
 import { AiOutlineThunderbolt } from "react-icons/ai";
 import { CiHashtag } from "react-icons/ci";
-import { FaMinus } from "react-icons/fa6";
-import { FaPlus } from "react-icons/fa";
+import Quality from "./Quality";
+
 
 const BookInfo = () => {
   return (
@@ -100,15 +100,7 @@ const BookInfo = () => {
         </div>
         <h1 className="text-2xl font-bold mb-3">2.000đ/ngày</h1>
         <div className="flex items-center gap-4">
-          <div className="flex w-fit border rounded-md h-10">
-            <Button variant="text" size="large">
-              <FaPlus className="text-secondary" />
-            </Button>
-            <input title="number" defaultValue={1} type="text" className="text-center w-10" />
-            <Button variant="text" size="large">
-              <FaMinus className="text-secondary" />
-            </Button>
-          </div>
+          <Quality/>
           <p>Hiện còn 3 cuốn</p>
         </div>
       </div>

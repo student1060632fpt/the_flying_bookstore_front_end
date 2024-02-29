@@ -12,7 +12,7 @@ const RentBook = () => {
   return (
     <div className="">
       <h3 className="text-xl font-bold text-primary mb-4">Đặt thuê</h3>
-      <Accordion sx={{ backgroundColor: "white", borderRadius: 2 }}>
+      <Accordion sx={{ backgroundColor: "white", borderRadius: 2 }} defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel2-content"
@@ -27,7 +27,7 @@ const RentBook = () => {
           <RentDay/>
         </AccordionDetails>
       </Accordion>
-      <Accordion defaultExpanded  sx={{ backgroundColor: "white", borderRadius: 2 }}>
+      {/* <Accordion defaultExpanded  sx={{ backgroundColor: "white", borderRadius: 2 }}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel3-content"
@@ -41,7 +41,7 @@ const RentBook = () => {
         <AccordionDetails>
           <RentCombo/>
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
       <Owner/>
     </div>
   );

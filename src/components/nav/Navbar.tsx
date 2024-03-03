@@ -206,11 +206,13 @@ export default function Navbar() {
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" aria-label="show 4 new mails">
-              <Badge badgeContent={5} color="error">
-                <CiShoppingCart color={theme.palette.primary.main} />
-              </Badge>
-            </IconButton>
+            <Link href="/cart">
+              <IconButton size="large" aria-label="show 4 new mails">
+                <Badge badgeContent={5} color="error">
+                  <CiShoppingCart color={theme.palette.primary.main} />
+                </Badge>
+              </IconButton>
+            </Link>
             <IconButton size="large" aria-label="show 17 new notifications">
               <Badge badgeContent={17} color="error">
                 <CiBellOn color={theme.palette.primary.main} />

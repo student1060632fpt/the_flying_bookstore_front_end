@@ -1,11 +1,10 @@
-import { Skeleton } from "@mui/material";
+import { CircularProgress, Skeleton } from "@mui/material";
 
 export default function Loading() {
   // You can add any UI inside Loading, including a Skeleton.
   return (
-    <Skeleton
-      sx={{ bgcolor: "grey.100", height:"50vh" }}
-      variant="rectangular"
-    />
+    <div className="w-full h-60 flex items-center justify-center">
+      <CircularProgress />
+    </div>
   );
 }

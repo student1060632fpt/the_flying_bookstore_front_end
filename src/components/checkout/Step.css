@@ -1,0 +1,1 @@
+.step .card{@apply py-5}.step .card h3{@apply font-semibold text-primary text-2xl mb-3}.step .card .row-2{@apply grid grid-cols-2 gap-4 my-8}

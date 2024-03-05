@@ -62,6 +62,7 @@ const InfoRent = () => {
       <div className="row-2">
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
+            label="Ngày sinh"
             sx={{ width: 260 }}
             slotProps={{
               field: { clearable: true, onClear: () => setCleared(true) },
@@ -69,7 +70,7 @@ const InfoRent = () => {
           />
         </LocalizationProvider>
         <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Age</InputLabel>
+          <InputLabel id="demo-simple-select-label">Thành phố</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"

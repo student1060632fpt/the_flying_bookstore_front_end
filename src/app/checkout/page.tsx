@@ -1,6 +1,5 @@
 "use client";
 import Step1 from "@/components/checkout/Step1";
-import { SITE_NAME } from "@/utils/env";
 import {
   Box,
   Button,
@@ -10,17 +9,14 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import type { Metadata } from "next";
 import React, { useState } from "react";
 
 const steps = [
-  "Select campaign settings",
-  "Create an ad group",
-  "Create an ad",
+  "Điền thông tin",
+  "Tạo đơn hàng",
+  "Lấy hàng",
 ];
-export const metadata: Metadata = {
-  title: "Checkout | " + SITE_NAME,
-};
+
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
 
@@ -111,7 +107,6 @@ const Checkout = () => {
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps: { completed?: boolean } = {};
-           
             return (
               <Step key={label} {...stepProps}>
                 <StepLabel >{label}</StepLabel>

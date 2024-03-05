@@ -1,1 +1,1 @@
-.step .card{@apply py-5}.step .card h3{@apply font-semibold text-primary text-2xl mb-3}.step .card .row-2{@apply grid grid-cols-2 gap-4 my-8}
+.step .card{@apply py-5 mx-5}.step .card h3{@apply font-semibold text-primary text-2xl mb-3}.step .card .row-2{@apply grid grid-cols-2 gap-4 my-8}.pay{@apply grid grid-cols-3 gap-5}.pay .pay-card{cursor:pointer;@apply border text-primary rounded-lg p-4 text-center}.pay .pay-card .icon{width:45px;height:45px;@apply mx-auto mb-2}.pay .pay-card p{@apply text-sm}.pay .pay-card.choose{background-color:#fff0df;@apply border-primary}

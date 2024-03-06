@@ -6,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { BsShop } from "react-icons/bs";
 import Link from "next/link";
+import { CiBoxList } from "react-icons/ci";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -73,7 +74,7 @@ export default function BookMenus() {
         endIcon={<KeyboardArrowDownIcon />}
         sx={{ paddingLeft: { md: 3, xs: 1.5 } }}
       >
-        <BsShop size={30} />
+        <CiBoxList size={30} />
       </Button>
       <StyledMenu
         id="book-menu"

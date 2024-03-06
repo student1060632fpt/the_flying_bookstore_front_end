@@ -33,6 +33,7 @@ const Pay = () => {
           <p className="">Thanh toán Momo</p>
         </div>
       </div>
+      <p className="mt-5">Bạn sẽ đưa tiền mặt 100.000đ khi gặp người cho thuê sách</p>
     </div>
   );
 };

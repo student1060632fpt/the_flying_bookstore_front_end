@@ -29,8 +29,7 @@ const InfoRent = () => {
     return () => {};
   }, [cleared]);
   return (
-    <div className="card ">
-      <h3 className="">Thông tin đặt thuê</h3>
+    <>
       <div className="row-2">
         <TextField
           size="medium"
@@ -63,7 +62,6 @@ const InfoRent = () => {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Ngày sinh"
-            sx={{ width: 260 }}
             slotProps={{
               field: { clearable: true, onClear: () => setCleared(true) },
             }}
@@ -92,7 +90,7 @@ const InfoRent = () => {
           variant="standard"
         />
       </div>
-    </div>
+    </>
   );
 };
 

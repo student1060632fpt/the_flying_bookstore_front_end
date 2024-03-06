@@ -16,7 +16,7 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Image from "next/image";
 import logoImage from "./../../assets/images/logo.jpg";
-import { Avatar, Button, useTheme } from "@mui/material";
+import { Avatar, Button, Divider, useTheme } from "@mui/material";
 import { BorderColor } from "@mui/icons-material";
 import BookMenus from "./BookMenu";
 import { CiSearch } from "react-icons/ci";
@@ -35,6 +35,8 @@ const SearchIconWrapper = styled("div")(({ theme }) => ({
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  borderLeft: "var(--Grid-borderWidth) solid",
+  borderColor: "divider",
   width: "100%",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 1),
@@ -48,7 +50,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-
+  const [isAuth, setIsAuth] = React.useState(true);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
@@ -67,6 +69,10 @@ export default function Navbar() {
 
   const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+  const logout = () => {
+    handleMenuClose();
+    setIsAuth(false);
   };
 
   const menuId = "primary-search-account-menu";
@@ -87,9 +93,9 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Đăng xuất</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Thông tin của tôi</MenuItem>
+      <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
+      <MenuItem onClick={logout}>Đăng xuất</MenuItem>
     </Menu>
   );
 
@@ -196,6 +202,7 @@ export default function Navbar() {
             }}
           >
             <BookMenus />
+            <Divider orientation="vertical" variant="middle" flexItem />
             <StyledInputBase
               placeholder="Tìm sách…"
               inputProps={{ "aria-label": "search" }}
@@ -205,36 +212,52 @@ export default function Navbar() {
             </SearchIconWrapper>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Link href="/cart">
-              <IconButton size="large" aria-label="show 4 new mails">
-                <Badge badgeContent={5} color="error">
-                  <CiShoppingCart color={theme.palette.primary.main} />
+          {!isAuth ? (
+            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+              <Link href="/login">
+                <Button variant="outlined" size="medium">
+                  Đăng nhập
+                </Button>
+              </Link>
+              <Link href="/signin">
+                <Button variant="contained" size="medium">
+                  Đăng ký
+                </Button>
+              </Link>
+            </Box>
+          ) : (
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Link href="/cart">
+                <IconButton size="large" aria-label="show 4 new mails">
+                  <Badge badgeContent={5} color="error">
+                    <CiShoppingCart color={theme.palette.primary.main} />
+                  </Badge>
+                </IconButton>
+              </Link>
+              <IconButton size="large" aria-label="show 17 new notifications">
+                <Badge badgeContent={17} color="error">
+                  <CiBellOn color={theme.palette.primary.main} />
                 </Badge>
               </IconButton>
-            </Link>
-            <IconButton size="large" aria-label="show 17 new notifications">
-              <Badge badgeContent={17} color="error">
-                <CiBellOn color={theme.palette.primary.main} />
-              </Badge>
-            </IconButton>
 
-            <Button
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <Image
-                src={AvatarImage}
-                alt="Name"
-                width={40}
-                height={40}
-                className="rounded"
-              />
-            </Button>
-          </Box>
+              <Button
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <Image
+                  src={AvatarImage}
+                  alt="Name"
+                  width={40}
+                  height={40}
+                  className="rounded"
+                />
+              </Button>
+            </Box>
+          )}
+
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

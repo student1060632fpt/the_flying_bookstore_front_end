@@ -7,8 +7,10 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import InputBase from "@mui/material/InputBase";
+import { CiBag1 } from "react-icons/ci";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
+import { IoBagOutline } from "react-icons/io5";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { CiShoppingCart } from "react-icons/ci";
@@ -54,6 +56,16 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
+  const [menuOrderOpen, setMenuOrderOpen] = React.useState<null | HTMLElement>(
+    null
+  );
+  const openMenu = Boolean(menuOrderOpen);
+  const handleClickOpenMenuOrder = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    setMenuOrderOpen(event.currentTarget);
+  };
+  const handleCloseMenuOrder = () => setMenuOrderOpen(null);
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -150,6 +162,18 @@ export default function Navbar() {
       </MenuItem>
     </Menu>
   );
+  const renderOrderMenu = (
+    <Menu
+      id="order-menu"
+      anchorEl={menuOrderOpen}
+      open={openMenu}
+      onClose={handleCloseMenuOrder}
+      MenuListProps={{ "aria-labelledby": "order-button" }}
+    >
+      <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của tôi</MenuItem>
+      <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của khách</MenuItem>
+    </Menu>
+  );
 
   return (
     <div>
@@ -228,6 +252,20 @@ export default function Navbar() {
           ) : (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Link href="/cart">
+                <IconButton
+                  size="large"
+                  aria-label="show 4 new mails"
+                  aria-controls={openMenu ? "order-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openMenu ? "true" : undefined}
+                  onClick={handleClickOpenMenuOrder}
+                >
+                  <Badge badgeContent={5} color="error">
+                    <CiBag1 color={theme.palette.primary.main} />
+                  </Badge>
+                </IconButton>
+              </Link>
+              <Link href="/cart">
                 <IconButton size="large" aria-label="show 4 new mails">
                   <Badge badgeContent={5} color="error">
                     <CiShoppingCart color={theme.palette.primary.main} />
@@ -273,6 +311,7 @@ export default function Navbar() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      {renderOrderMenu}
     </div>
   );
 }

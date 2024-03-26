@@ -12,8 +12,17 @@ import {
   TextField,
 } from "@mui/material";
 import React, { MouseEvent, useState } from "react";
+import FormHelperText from "@mui/material/FormHelperText";
 
-const FormSignin = () => {
+const FormSignin = ({
+
+  register,
+  errors,
+}: {
+  errors: any;
+  register: any;
+
+}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showRepeatPassword, setShowRepeatPassword] = useState(false);
 
@@ -25,14 +34,27 @@ const FormSignin = () => {
   return (
     <>
       <TextField
+        {...register("username", { require: "Username là trường bắt buộc" })}
+        error={errors.username}
         id="standard-basic"
-        label="Email"
+        label="Username"
         variant="standard"
         sx={{ width: "100%" }}
+        helperText={errors.username && errors.username.message}
+        required
+        margin="dense"
       />
-      <FormControl variant="standard" sx={{ width: "100%" }}>
+      <FormControl
+        variant="standard"
+        sx={{ width: "100%" }}
+        required
+        margin="normal"
+      >
         <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>
         <Input
+          {...register("password", { require: "Mật khẩu là trường bắt buộc" })}
+          required
+          error={errors.password}
           id="standard-adornment-password"
           type={showPassword ? "text" : "password"}
           endAdornment={
@@ -47,17 +69,31 @@ const FormSignin = () => {
             </InputAdornment>
           }
         />
+        {errors.password && (
+          <FormHelperText>{errors.password.message}</FormHelperText>
+        )}
+        <FormHelperText></FormHelperText>
       </FormControl>
-      <FormControl variant="standard" sx={{ width: "100%" }}>
-        <InputLabel htmlFor="standard-adornment-password">Nhập lại mật khẩu</InputLabel>
+      <FormControl
+        variant="standard"
+        sx={{ width: "100%" }}
+        required
+        margin="normal"
+      >
+        <InputLabel htmlFor="standard-adornment-password">
+          Nhập lại mật khẩu
+        </InputLabel>
         <Input
+          {...register("repeatPassword", {
+            require: "Yêu cầu điền trường này",
+          })}
           id="standard-adornment-password"
           type={showRepeatPassword ? "text" : "password"}
           endAdornment={
             <InputAdornment position="end">
               <IconButton
                 aria-label="toggle password visibility"
-                onClick={() => setShowRepeatPassword(state => !state)}
+                onClick={() => setShowRepeatPassword((state) => !state)}
                 onMouseDown={handleMouseDownPassword}
               >
                 {showRepeatPassword ? <VisibilityOff /> : <Visibility />}

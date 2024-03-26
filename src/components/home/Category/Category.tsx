@@ -3,7 +3,7 @@ import Image from "next/image";
 import Book from "./hoangtube.jpg";
 import "./Category.scss"
 
-const Category = () => {
+const Category = ({name}: {name:string}) => {
   return (
     <div className=" text-center">
       <div className="mx-auto w-8/12">

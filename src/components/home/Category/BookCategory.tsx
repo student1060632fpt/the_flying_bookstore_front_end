@@ -2,6 +2,7 @@
 import Slider from "react-slick";
 import Category from "./Category";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const BookCategory = () => {
   const settings = {
@@ -14,7 +15,33 @@ const BookCategory = () => {
     centerMode: true,
     centerPadding: "60px",
   };
+  const [listCategory, setListCategory] = useState<any>();
   const slides = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const getCategory = async () => {
+    try {
+      const response = await fetch("localhost:8082/api/genre/all", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        redirect: "follow",
+      });
+
+      if (response.ok) {
+        // Registration successful, handle the response accordingly
+        console.log(response);
+
+        setListCategory(response);
+      } else {
+        throw new Error("Registration failed");
+      }
+    } catch (error) {
+      // Handle any network or server errors
+    }
+  };
+  useEffect(() => {
+    getCategory();
+  }, []);
 
   return (
     <div className="container mx-auto mt-10 mb-24">
@@ -24,7 +51,7 @@ const BookCategory = () => {
       <Slider {...settings}>
         {slides.map((slide) => (
           <Link href="/search#thieunhi" key={slide}>
-            <Category  />
+            <Category name={"Thiếu nhi"} />
           </Link>
         ))}
       </Slider>

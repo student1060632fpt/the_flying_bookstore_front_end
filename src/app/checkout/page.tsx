@@ -16,7 +16,7 @@ import React, { useState } from "react";
 const steps = ["Điền thông tin", "Xuất đơn hàng", "Lấy hàng"];
 
 const Checkout = () => {
-  const [activeStep, setActiveStep] = useState(1);
+  const [activeStep, setActiveStep] = useState(0);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);

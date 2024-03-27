@@ -17,6 +17,7 @@
     "@mui/material": "^5.15.7",
     "@mui/material-nextjs": "^5.15.7",
     "@mui/styled-engine-sc": "^6.0.0-alpha.14",
+    "@mui/x-data-grid": "^7.0.0",
     "@mui/x-date-pickers": "^6.19.5",
     "dayjs": "^1.11.10",
     "next": "^14.1.0",

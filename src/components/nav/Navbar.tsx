@@ -170,7 +170,9 @@ export default function Navbar() {
       onClose={handleCloseMenuOrder}
       MenuListProps={{ "aria-labelledby": "order-button" }}
     >
-      <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của tôi</MenuItem>
+      <Link href={"/order"}>
+        <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của tôi</MenuItem>
+      </Link>
       <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của khách</MenuItem>
     </Menu>
   );
@@ -251,7 +253,7 @@ export default function Navbar() {
             </Box>
           ) : (
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <Link href="/cart">
+              <Link href="/order">
                 <IconButton
                   size="large"
                   aria-label="show 4 new mails"

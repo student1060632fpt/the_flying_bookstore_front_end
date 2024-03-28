@@ -9,6 +9,7 @@ import {
   GridColDef,
   GridToolbar,
 } from "@mui/x-data-grid";
+import Link from "next/link";
 import React, { useState } from "react";
 import { CiEdit, CiTrash } from "react-icons/ci";
 
@@ -170,7 +171,9 @@ const ManagerPost = () => {
         <Typography variant="h4" gutterBottom>
           Quản lý bài viết
         </Typography>
+        <Link href="/manager-post/add-post">
         <Button variant="contained">Thêm bài đăng</Button>
+        </Link>
       </Stack>
       <Box sx={{ width: "100%", height: rows[0]!! ? "auto" : "500px" }}>
         <DataGrid

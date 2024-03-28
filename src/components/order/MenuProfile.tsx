@@ -13,8 +13,8 @@ import Link from "next/link";
 
 const MenuProfile = () => {
   return (
-    <MenuList>
-      <MenuItem>
+    <MenuList >
+      <MenuItem  sx={{py: 1.5, px: 2}} >
         <ListItemIcon>
           <div className="relative w-14 h-14">
             <Image
@@ -28,33 +28,33 @@ const MenuProfile = () => {
         <ListItemText sx={{ ml: 2 }}>Chào Hòa</ListItemText>
       </MenuItem>
       <Divider />
-      <MenuItem>
-        <ListItemIcon>
-          <CiUser />
+      <MenuItem sx={{py: 1.5, px: 2}}>
+        <ListItemIcon >
+          <CiUser size={22} />
         </ListItemIcon>
         <Link href="/profile">
           <ListItemText>Cài đặt tài khoản</ListItemText>
         </Link>
       </MenuItem>
-      <MenuItem>
+      <MenuItem  sx={{py: 1.5, px: 2}}>
         <ListItemIcon>
-          <CiBag1 />
+          <CiBag1 size={22} />
         </ListItemIcon>
         <Link href="/my-order">
           <ListItemText>Quản lý đơn hàng của tôi</ListItemText>
         </Link>
       </MenuItem>
-      <MenuItem>
+      <MenuItem sx={{py: 1.5, px: 2}}>
         <ListItemIcon>
-          <PiBriefcaseLight />
+          <PiBriefcaseLight size={22} />
         </ListItemIcon>
         <Link href="/customer-order">
           <ListItemText>Quản lý đơn hàng của khách</ListItemText>
         </Link>
       </MenuItem>
-      <MenuItem>
+      <MenuItem sx={{py: 1.5, px: 2}}>
         <ListItemIcon>
-          <CiViewList />
+          <CiViewList size={22} />
         </ListItemIcon>
         <Link href="/manager-post">
           <ListItemText>Quản lý bài đăng</ListItemText>

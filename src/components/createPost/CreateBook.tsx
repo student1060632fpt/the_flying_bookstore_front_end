@@ -1,14 +1,13 @@
 import { top100Films } from "@/app/(manager)/manager-post/add-post/top100film";
 import {
-  Accordion,
   AccordionDetails,
-  AccordionSummary,
   Autocomplete,
   Grid,
   TextField,
 } from "@mui/material";
-import { FieldErrors, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Accordion, AccordionSummary } from "./AccordionCustom";
 export type TFieldValue = {
   title: string;
   author: string;
@@ -19,6 +18,7 @@ export type TFieldValue = {
   datePublish: string;
   language: string;
 };
+
 const CreateBook = () => {
   const {
     register,

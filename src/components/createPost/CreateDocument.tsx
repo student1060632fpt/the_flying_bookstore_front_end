@@ -1,8 +1,6 @@
 "use client";
 import {
-  Accordion,
   AccordionDetails,
-  AccordionSummary,
   Autocomplete,
   Button,
   FormControl,
@@ -24,6 +22,7 @@ import Image from "next/image";
 import NoImage from "./../../assets/images/noimg.png";
 import { useStaticPicker } from "@mui/x-date-pickers/internals";
 import axios, { AxiosProgressEvent } from "axios";
+import { Accordion, AccordionSummary } from "./AccordionCustom";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",

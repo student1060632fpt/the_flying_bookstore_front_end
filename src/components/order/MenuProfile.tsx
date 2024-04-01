@@ -7,7 +7,7 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import AvaImg from "./../../assets/images/avatar.jpg";
-import { CiUser, CiBag1, CiViewList } from "react-icons/ci";
+import { CiUser, CiBag1, CiViewList,CiCirclePlus } from "react-icons/ci";
 import { PiBriefcaseLight } from "react-icons/pi";
 import Link from "next/link";
 
@@ -58,6 +58,14 @@ const MenuProfile = () => {
         </ListItemIcon>
         <Link href="/manager-post">
           <ListItemText>Quản lý bài đăng</ListItemText>
+        </Link>
+      </MenuItem>
+      <MenuItem sx={{py: 1.5, px: 2}}>
+        <ListItemIcon>
+          <CiCirclePlus size={22} />
+        </ListItemIcon>
+        <Link href="/manager-post/add-post">
+          <ListItemText>Thêm bài đăng</ListItemText>
         </Link>
       </MenuItem>
     </MenuList>

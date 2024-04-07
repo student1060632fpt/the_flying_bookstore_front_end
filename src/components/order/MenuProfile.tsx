@@ -20,6 +20,7 @@ const MenuProfile = () => {
             <Image
               src={AvaImg}
               alt="ava"
+              sizes="14"
               fill
               className="object-cover rounded-full"
             />

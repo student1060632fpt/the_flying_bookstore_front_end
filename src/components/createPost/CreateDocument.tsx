@@ -146,6 +146,7 @@ const CreateDocument = () => {
                 <Image
                   src={imgUrl || NoImage}
                   alt="img"
+                  sizes="52"
                   fill
                   className="object-contain"
                 />

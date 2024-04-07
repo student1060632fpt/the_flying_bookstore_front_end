@@ -1,0 +1,1 @@
+.auth{@apply grid grid-cols-2 container mx-auto my-10}.auth__left{@apply flex flex-col justify-center;align-items:center}.auth__left h2{@apply w-1/2 mx-auto text-2xl font-semibold text-primary}.auth__form{@apply mx-auto w-1/2 my-5 grid gap-3}.auth__right{@apply relative w-full h-full}.auth__right .img{@apply object-cover rounded-lg}

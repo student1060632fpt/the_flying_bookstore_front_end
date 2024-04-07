@@ -25,6 +25,7 @@ import { CiSearch } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
 import AvatarImage from "./../../assets/images/avatar.jpg";
 import Link from "next/link";
+import { SignOutButton, SignedOut, UserButton } from "@clerk/nextjs";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -107,7 +108,9 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleMenuClose}>Thông tin của tôi</MenuItem>
       <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
-      <MenuItem onClick={logout}>Đăng xuất</MenuItem>
+      <MenuItem onClick={logout}>
+        <SignOutButton>Đăng xuất</SignOutButton>
+      </MenuItem>
     </Menu>
   );
 
@@ -245,14 +248,18 @@ export default function Navbar() {
                   Đăng nhập
                 </Button>
               </Link>
-              <Link href="/signin">
+              <Link href="/sign-up">
                 <Button variant="contained" size="medium">
                   Đăng ký
                 </Button>
               </Link>
             </Box>
           ) : (
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Box
+              sx={{ display: { xs: "none", md: "flex" } }}
+              justifyContent={"center"}
+              alignSelf={"center"}
+            >
               <Link href="/my-order">
                 <IconButton
                   size="large"
@@ -279,22 +286,13 @@ export default function Navbar() {
                   <CiBellOn color={theme.palette.primary.main} />
                 </Badge>
               </IconButton>
-
-              <Button
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <Image
-                  src={AvatarImage}
-                  alt="Name"
-                  width={40}
-                  height={40}
-                  className="rounded"
+              <IconButton size="large">
+                <UserButton
+                  signInUrl="/login"
+                  afterSignOutUrl="/"
+                  afterMultiSessionSingleSignOutUrl="/"
                 />
-              </Button>
+              </IconButton>
             </Box>
           )}
 

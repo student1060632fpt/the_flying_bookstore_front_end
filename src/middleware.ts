@@ -5,8 +5,6 @@ export default authMiddleware({
   publicRoutes: ["/", "/favicon.ico","/cart","/detail","/search"],
   ignoredRoutes: ["/favicon.ico", "/((?!api|trpc))(_next.*|.+.[w]+$)", "/","/cart","/detail","/search"],
   afterAuth(auth, req, evt) {
-    console.log({auth,req});
-    
     // Handle users who aren't authenticated
     if (!auth.userId && !auth.isPublicRoute) {
       return redirectToSignIn({ returnBackUrl: req.url });

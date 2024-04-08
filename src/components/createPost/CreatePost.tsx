@@ -10,10 +10,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { top100Films } from "@/app/(manager)/manager-post/add-post/top100film";
 import { Accordion, AccordionSummary } from "./AccordionCustom";
-type Inputs = {
+export type TFieldPostValue = {
   description: string;
   timeMax: number;
-  quantity: number;
+  quantity?: number;
   address: string;
   deposit: number;
   price: number;
@@ -24,8 +24,8 @@ const CreatePost = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  } = useForm<TFieldPostValue>();
+  const onSubmit: SubmitHandler<TFieldPostValue> = (data) => console.log(data);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Accordion defaultExpanded>

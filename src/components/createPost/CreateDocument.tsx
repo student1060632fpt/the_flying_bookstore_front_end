@@ -36,7 +36,7 @@ const VisuallyHiddenInput = styled("input")({
   width: 1,
 });
 
-export type TFieldValue = {
+export type TFieldDocumentValue = {
   damagePercent: number;
   linkImage: string;
 };
@@ -46,9 +46,9 @@ const CreateDocument = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<TFieldValue>();
+  } = useForm<TFieldDocumentValue>();
   const [uploadProgress, setUploadProgress] = useState(0);
-  const onSubmit: SubmitHandler<TFieldValue> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<TFieldDocumentValue> = (data) => console.log(data);
   const [imgUrl, setImgUrl] = useState<string>();
   const handleFileUpload = (event: any) => {
     console.log(event.target.files[0], "bebe");

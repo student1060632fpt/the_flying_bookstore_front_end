@@ -10,8 +10,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Footer from "@/components/footer/Footer";
 import ScrollButton from "@/components/scrollButton/ScrollButton";
 import { SITE_NAME } from "@/utils/env";
-import { ClerkProvider } from "@clerk/nextjs";
-import { viVN } from "@clerk/localizations";
 const main_font = Montserrat({ subsets: ["vietnamese"] });
 const sub_font = Montserrat({ subsets: ["vietnamese"] }); // don't know when to use it
 
@@ -35,13 +33,11 @@ export default function RootLayout({
       <body className={main_font.className}>
         <AppRouterCacheProvider options={{ key: "css" }}>
           <ThemeProvider theme={theme}>
-            <ClerkProvider localization={viVN}  >
-              <div className="flex flex-col min-h-screen">
-                <Navbar />
-                <main className="flex-grow">{children}</main>
-                <Footer />
-              </div>
-            </ClerkProvider>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-grow">{children}</main>
+              <Footer />
+            </div>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

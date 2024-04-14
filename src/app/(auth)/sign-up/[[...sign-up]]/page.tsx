@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Background from "./../../../assets/images/bg-signin.jpg";
 import "./../../login/Login.scss";
-import { SignIn, SignUp } from "@clerk/nextjs";
+
 
 const Page = () => {
 
@@ -9,7 +9,6 @@ const Page = () => {
     <div className="auth">
       <div className="auth__left ">
         <div className="auth__form ">
-          <SignUp afterSignUpUrl={"/"}/>
         </div>
       </div>
       <div className="auth__right">

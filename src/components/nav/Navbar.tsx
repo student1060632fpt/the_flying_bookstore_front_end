@@ -25,7 +25,6 @@ import { CiSearch } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
 import AvatarImage from "./../../assets/images/avatar.jpg";
 import Link from "next/link";
-import { SignOutButton, SignedOut, UserButton } from "@clerk/nextjs";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -109,7 +108,6 @@ export default function Navbar() {
       <MenuItem onClick={handleMenuClose}>Thông tin của tôi</MenuItem>
       <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
       <MenuItem onClick={logout}>
-        <SignOutButton>Đăng xuất</SignOutButton>
       </MenuItem>
     </Menu>
   );
@@ -287,11 +285,7 @@ export default function Navbar() {
                 </Badge>
               </IconButton>
               <IconButton size="large">
-                <UserButton
-                  signInUrl="/login"
-                  afterSignOutUrl="/"
-                  afterMultiSessionSingleSignOutUrl="/"
-                />
+                
               </IconButton>
             </Box>
           )}

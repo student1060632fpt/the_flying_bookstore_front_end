@@ -3,7 +3,6 @@ import Background from "./../../../../assets/images/background.jpg";
 import FormLogin from "@/components/auth/FormLogin";
 import "./../Login.scss";
 
-import { SignIn, SignUp } from "@clerk/nextjs";
 export type FormLogin = {
   loginName: string;
   password: string;
@@ -15,7 +14,7 @@ const Login = () => {
     <div className="auth">
       <div className="auth__left ">
         <div className="auth__form ">
-          <SignIn afterSignInUrl={"/"}/>
+          
         </div>
       </div>
       <div className="auth__right">

@@ -13,7 +13,7 @@ const Category = ({name}: {name:string}) => {
           className="card-image"
         />
       </div>
-      <h4 className="text-lg font-semibold py-3">Thiếu nhi</h4>
+      <h4 className="text-lg font-semibold py-3">{name}</h4>
     </div>
   );
 };

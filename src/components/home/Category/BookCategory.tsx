@@ -3,6 +3,11 @@ import Slider from "react-slick";
 import Category from "./Category";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+type ICategory = {
+  id: number;
+  name: string;
+  nameVn: string;
+};
 
 const BookCategory = () => {
   const settings = {
@@ -15,23 +20,24 @@ const BookCategory = () => {
     centerMode: true,
     centerPadding: "60px",
   };
-  const [listCategory, setListCategory] = useState<any>();
+  const [listCategory, setListCategory] = useState<Array<ICategory>>();
   const slides = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const getCategory = async () => {
     try {
-      const response = await fetch("localhost:8082/api/genre/all", {
-        method: "POST",
+      const response = await fetch("http://localhost:8082/api/genre", {
+        method: "GET",
         headers: {
           "Content-Type": "application/json",
         },
         redirect: "follow",
       });
 
-      if (response.ok) {
+      if (response?.ok) {
         // Registration successful, handle the response accordingly
-        console.log(response);
+        const responseData = await response.json();
+        console.log({ responseData });
 
-        setListCategory(response);
+        setListCategory(responseData);
       } else {
         throw new Error("Registration failed");
       }
@@ -48,13 +54,15 @@ const BookCategory = () => {
       <h3 className="text-3xl pt-8 pb-10 font-semibold text-center">
         Danh mục sản phẩm
       </h3>
-      <Slider {...settings}>
-        {slides.map((slide) => (
-          <Link href="/search#thieunhi" key={slide}>
-            <Category name={"Thiếu nhi"} />
-          </Link>
-        ))}
-      </Slider>
+      {listCategory && (
+        <Slider {...settings}>
+          {listCategory.map((category, index) => (
+            <Link href={`/search#${category.name}`} key={index}>
+              <Category name={category.nameVn} />
+            </Link>
+          ))}
+        </Slider>
+      )}
     </div>
   );
 };

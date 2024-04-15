@@ -7,6 +7,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { BsShop } from "react-icons/bs";
 import Link from "next/link";
 import { CiBoxList } from "react-icons/ci";
+import { useGenreStore } from "@/hooks/genre";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -53,6 +54,7 @@ const StyledMenu = styled((props: MenuProps) => (
 
 export default function BookMenus() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const listCategory = useGenreStore((state) => state.listGenre);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -60,7 +62,32 @@ export default function BookMenus() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const renderMenu = () => {
+    if (!listCategory) return <></>;
+    return (
+      <StyledMenu
+        id="book-menu"
+        MenuListProps={{
+          "aria-labelledby": "book-button",
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+      >
+        {listCategory.map((category) => (
+          <Link
+            key={category.id}
+            href={`/search/${category.name}`}
+            scroll={false}
+          >
+            <MenuItem onClick={handleClose} disableRipple>
+              {category.nameVn}
+            </MenuItem>
+          </Link>
+        ))}
+      </StyledMenu>
+    );
+  };
   return (
     <>
       <Button
@@ -76,41 +103,7 @@ export default function BookMenus() {
       >
         <CiBoxList size={30} />
       </Button>
-      <StyledMenu
-        id="book-menu"
-        MenuListProps={{
-          "aria-labelledby": "book-button",
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-      >
-        <Link href="/search#vanhoc"  scroll={false}>
-          <MenuItem onClick={handleClose} disableRipple>
-            Văn học
-          </MenuItem>
-        </Link>
-        <Link href="/search#kinhte">
-          <MenuItem onClick={handleClose} disableRipple>
-            Kinh tế
-          </MenuItem>
-        </Link>
-        <Link href="/search#kynangsong">
-          <MenuItem onClick={handleClose} disableRipple>
-            Tâm lý - Kỹ năng sống
-          </MenuItem>
-        </Link>
-        <Link href="/search#giaokhoa">
-          <MenuItem onClick={handleClose} disableRipple>
-            Giáo khoa - Tham khảo
-          </MenuItem>
-        </Link>
-        <Link href="/search#tieusu">
-          <MenuItem onClick={handleClose} disableRipple>
-            Tiểu sử - Hồi kí
-          </MenuItem>
-        </Link>
-      </StyledMenu>
+      {renderMenu()}
     </>
   );
 }

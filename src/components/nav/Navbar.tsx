@@ -1,31 +1,25 @@
 "use client";
 import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import InputBase from "@mui/material/InputBase";
 import { CiBag1 } from "react-icons/ci";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
-import { IoBagOutline } from "react-icons/io5";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import { CiShoppingCart } from "react-icons/ci";
-import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Image from "next/image";
 import logoImage from "./../../assets/images/logo.jpg";
-import { Avatar, Button, Divider, useTheme } from "@mui/material";
-import { BorderColor } from "@mui/icons-material";
+import { Button, Divider, useTheme } from "@mui/material";
 import BookMenus from "./BookMenu";
 import { CiBellOn } from "react-icons/ci";
 import AvatarImage from "@/assets/images/no avatar.jpeg";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
-
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -198,19 +192,7 @@ export default function Navbar() {
           </Link>
           <Box sx={{ flexGrow: 0.5 }} />
 
-          <Box
-            sx={{
-              display: "flex",
-              flexGrow: 1,
-              borderRadius: 1,
-              backgroundColor: "#F8F8F8",
-            }}
-          >
-            <BookMenus />
-            <Divider orientation="vertical" variant="middle" flexItem />
-            <SearchBar/>
-            
-          </Box>
+          <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           {!isAuth ? (
             <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>

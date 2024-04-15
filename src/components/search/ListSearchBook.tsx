@@ -15,7 +15,7 @@ const ListSearchBook = ({
         ))}
       </div>
       <div className="flex justify-end mt-10">
-        <Pagination count={10} />
+        <Pagination count={bookData?.totalPages} />
       </div>
     </>
   );

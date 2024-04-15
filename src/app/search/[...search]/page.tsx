@@ -19,8 +19,8 @@ export default function Page({
 }) {
   const [listBook, setListBook] = useState<PageResponse<IListing>>()
   const genreParam = params?.search[0] == "category" ? params?.search[1] : "";
+  const title = params?.search[0] == "book-name" ? params?.search[1] : "";
   async function makeRequest() {
-    const title = "";
     const paramsAxios = {
       genre:genreParam,
       title,
@@ -28,8 +28,8 @@ export default function Page({
     try {
       const response: AxiosResponse<PageResponse<IListing>> = await axios.request({ ...config, params: paramsAxios });
       if (response?.data) {
-        console.log(response?.data?.content);
         setListBook(response?.data)
+        
       }
     } catch (error) {
       console.log(error);

@@ -32,20 +32,8 @@ const HeaderListBook = ({
     <div>
       <h2 className="text-4xl font-semibold text-primary">Sách</h2>
       <div className="border rounded-lg my-5 px-3 py-1 bg-white flex justify-between items-center">
-        <p className="font-semibold">Hiển thị 37 cuốn sách hiện có</p>
-        <Button
-          id="basic-filter"
-          aria-controls={open ? "basic-filter-menu" : undefined}
-          aria-haspopup="true"
-          aria-expanded={open ? "true" : undefined}
-          onClick={handleClick}
-          startIcon={<FilterListIcon />}
-          sx={{
-            textTransform: "none",
-          }}
-        >
-          {filterOption[selectedIndex]}
-        </Button>
+        <p className="font-semibold my-2">Hiển thị {bookData?.totalElements} cuốn sách hiện có</p>
+        
       </div>
       <Menu
         id="basic-filter-menu"

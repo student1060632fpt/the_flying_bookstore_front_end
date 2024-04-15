@@ -1,9 +1,9 @@
-import { Book } from "@/components/createPost/ModalSearchBook";
+import { IBook } from "@/components/createPost/ModalSearchBook";
 import { create } from "zustand";
 
 interface IChoosenBook {
-  bookChoosen: Book | null;
-  updateBook: (arg: Book | null) => void;
+  bookChoosen: IBook | null;
+  updateBook: (arg: IBook | null) => void;
 }
 
 export const useStoreBook = create<IChoosenBook>((set) => ({

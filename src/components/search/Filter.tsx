@@ -7,15 +7,31 @@ import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Checkbox from "@mui/material/Checkbox";
 import { Button, FormControlLabel, FormGroup, Slider } from "@mui/material";
+import { useGenreStore } from "@/hooks/genre";
 const label = { inputProps: { "aria-label": "Checkbox demo" } };
 function valuetext(value: number) {
   return `${value} đ`;
 }
-const FilterComponent = () => {
+const FilterComponent = ({genreParam}:{genreParam:string}) => {
   const [value, setValue] = useState<number[]>([20, 37]);
+  const listCategory = useGenreStore((state) => state.listGenre);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setValue(newValue as number[]);
+  };
+  const renderListCategory = () => {
+    if (!listCategory) return <></>;
+    return (
+      <FormGroup>
+        {listCategory.map((category) => (
+          <FormControlLabel
+            key={category.id}
+            control={<Checkbox checked={genreParam == category.name}/>}
+            label={category.nameVn}
+          />
+        ))}
+      </FormGroup>
+    );
   };
   return (
     <>
@@ -32,26 +48,7 @@ const FilterComponent = () => {
           >
             <h3 className="text-lg font-semibold">Danh mục</h3>
           </AccordionSummary>
-          <AccordionDetails>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Văn học"
-              />
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Lịch sử"
-              />
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Kinh tế"
-              />
-              <FormControlLabel
-                control={<Checkbox defaultChecked />}
-                label="Thiếu nhi"
-              />
-            </FormGroup>
-          </AccordionDetails>
+          <AccordionDetails>{renderListCategory()}</AccordionDetails>
         </Accordion>
         <Accordion
           defaultExpanded

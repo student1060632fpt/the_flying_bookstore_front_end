@@ -4,8 +4,14 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
+import { PageResponse } from "@/types/page";
+import { IListing } from "../home/PromoteSection";
 const filterOption = ["Mới nhất", "Bán chạy", "Giá tăng dần", "Giá giảm dần"];
-const HeaderListBook = () => {
+const HeaderListBook = ({
+  bookData,
+}: {
+  bookData: PageResponse<IListing> | undefined;
+}) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);

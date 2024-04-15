@@ -21,32 +21,11 @@ import logoImage from "./../../assets/images/logo.jpg";
 import { Avatar, Button, Divider, useTheme } from "@mui/material";
 import { BorderColor } from "@mui/icons-material";
 import BookMenus from "./BookMenu";
-import { CiSearch } from "react-icons/ci";
 import { CiBellOn } from "react-icons/ci";
-import AvatarImage from "./../../assets/images/avatar.jpg";
+import AvatarImage from "@/assets/images/no avatar.jpeg";
 import Link from "next/link";
+import SearchBar from "./SearchBar";
 
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(1, 2),
-  height: "100%",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  color: theme.palette.primary.main,
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  borderLeft: "var(--Grid-borderWidth) solid",
-  borderColor: "divider",
-  width: "100%",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 1),
-    transition: theme.transitions.create("width"),
-    color: theme.palette.primary.main,
-    width: "100%",
-  },
-}));
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -229,13 +208,8 @@ export default function Navbar() {
           >
             <BookMenus />
             <Divider orientation="vertical" variant="middle" flexItem />
-            <StyledInputBase
-              placeholder="Tìm sách…"
-              inputProps={{ "aria-label": "search" }}
-            />
-            <SearchIconWrapper>
-              <CiSearch size={25} />
-            </SearchIconWrapper>
+            <SearchBar/>
+            
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           {!isAuth ? (

@@ -31,7 +31,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8",
     "swr": "^2.2.5",
-    "zustand": "^4.5.2"
+    "zustand": "https://pkg.csb.dev/pmndrs/zustand/commit/992cedd4/zustand"
   },
   "devDependencies": {
     "@types/node": "^20",

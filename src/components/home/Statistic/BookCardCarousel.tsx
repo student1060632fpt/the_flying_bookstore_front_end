@@ -5,11 +5,11 @@ import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
 import { IListing } from "../PromoteSection";
+import { formatCurrency } from "@/utils/helps";
 
 const BookCardCarousel = ({ book }: { book: IListing }) => {
-  
   return (
-    <Link href="/detail#abc">
+    <Link href={`/detail/${book?.id}`}>
       <div className="text-center mb-5">
         <Image
           src={book?.copy?.imageLink || BookImg}
@@ -19,7 +19,7 @@ const BookCardCarousel = ({ book }: { book: IListing }) => {
           height={230}
         />
         <h4 className="text-xl font-semibold py-3">{book?.book?.title || "Không có tiêu đề"}</h4>
-        <p className="pb-3 text-sm text-secondary">{book?.leaseRate||"Không hợp lệ "}đ/ngày</p>
+        <p className="pb-3 text-sm text-secondary">{`${formatCurrency(book?.leaseRate)}/ngày`||"Không hợp lệ "}</p>
         <Button
           variant="contained"
           color="secondary"

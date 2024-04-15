@@ -9,4 +9,15 @@ const chunkArray = (array: Array<any>, chunkSize: number) => {
   }
   return chunks;
 };
-export { chunkArray };
+
+const formatCurrency = (amount:number)=> {
+  // Chuyển số tiền thành chuỗi và thêm dấu chấm phẩy giữa các hàng nghìn
+  const formattedAmount = amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  
+  // Thêm ký tự đơn vị tiền tệ (VND)
+  return formattedAmount + "đ";
+}
+
+
+
+export { chunkArray,formatCurrency };

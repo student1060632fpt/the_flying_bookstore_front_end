@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import Book from "./hoangtube.jpg";
+import Book from "@/assets/images/book loading.gif";
 import "./Category.scss"
 
 const Category = ({name}: {name:string}) => {

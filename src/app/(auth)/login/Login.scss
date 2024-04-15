@@ -1,7 +1,7 @@
 .auth {
   @apply grid grid-cols-2 container mx-auto my-10;
   &__left {
-    @apply flex flex-col justify-center;
+    @apply flex flex-col justify-center  py-52;
     align-items: center;
     h2 {
       @apply w-1/2 mx-auto text-2xl font-semibold text-primary;

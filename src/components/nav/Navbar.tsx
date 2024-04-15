@@ -107,8 +107,7 @@ export default function Navbar() {
     >
       <MenuItem onClick={handleMenuClose}>Thông tin của tôi</MenuItem>
       <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
-      <MenuItem onClick={logout}>
-      </MenuItem>
+      <MenuItem onClick={logout}>Đăng xuất</MenuItem>
     </Menu>
   );
 
@@ -253,11 +252,7 @@ export default function Navbar() {
               </Link>
             </Box>
           ) : (
-            <Box
-              sx={{ display: { xs: "none", md: "flex" } }}
-              justifyContent={"center"}
-              alignSelf={"center"}
-            >
+            <Box sx={{ display: { xs: "none", md: "flex" } }}>
               <Link href="/my-order">
                 <IconButton
                   size="large"
@@ -284,9 +279,22 @@ export default function Navbar() {
                   <CiBellOn color={theme.palette.primary.main} />
                 </Badge>
               </IconButton>
-              <IconButton size="large">
-                
-              </IconButton>
+
+              <Button
+                aria-label="account of current user"
+                aria-controls={menuId}
+                aria-haspopup="true"
+                onClick={handleProfileMenuOpen}
+                color="inherit"
+              >
+                <Image
+                  src={AvatarImage}
+                  alt="Name"
+                  width={40}
+                  height={40}
+                  className="rounded"
+                />
+              </Button>
             </Box>
           )}
 

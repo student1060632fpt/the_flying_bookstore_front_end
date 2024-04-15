@@ -1,20 +1,25 @@
 import Image from "next/image";
 
-import Book from "./G13ZDV5U.jpg";
+import BookImg from "@/assets/images/book-cover_null.png";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
-const BookCardCarousel = ({ imgSrc }: { imgSrc?: string }) => {
+import { IListing } from "../PromoteSection";
+
+const BookCardCarousel = ({ book }: { book: IListing }) => {
+  
   return (
     <Link href="/detail#abc">
       <div className="text-center mb-5">
         <Image
-          src={imgSrc || Book}
+          src={book?.copy?.imageLink || BookImg}
           alt="Picture of the author"
-          className="mx-auto bottom-0 w-8/12"
+          className="mx-auto bottom-0"
+          width={128}
+          height={230}
         />
-        <h4 className="text-xl font-semibold py-3">Tục ngữ phong dao</h4>
-        <p className="pb-3 text-sm text-secondary">3.000đ/ngày</p>
+        <h4 className="text-xl font-semibold py-3">{book?.book?.title || "Không có tiêu đề"}</h4>
+        <p className="pb-3 text-sm text-secondary">{book?.leaseRate||"Không hợp lệ "}đ/ngày</p>
         <Button
           variant="contained"
           color="secondary"

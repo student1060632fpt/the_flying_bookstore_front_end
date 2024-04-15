@@ -8,7 +8,7 @@ const Footer = () => {
   return (
     <>
       <Mail />
-      <BookCategoryList />
+      {/* <BookCategoryList /> */}
       <Info />
       <ScrollButton /> 
 

@@ -35,7 +35,6 @@ const BookCategory = () => {
       if (response?.ok) {
         // Registration successful, handle the response accordingly
         const responseData = await response.json();
-        console.log({ responseData });
 
         setListCategory(responseData);
       } else {

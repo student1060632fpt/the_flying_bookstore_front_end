@@ -34,7 +34,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-export type Book = {
+export type IBook = {
   id: number;
   isbn: string;
   title: string;
@@ -53,11 +53,11 @@ export default function ModalSearchBook({
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
 }) {
-  const [value, setValue] = useState<Book | null | undefined>();
+  const [value, setValue] = useState<IBook | null | undefined>();
   const [isNew, setIsNew] = useState(false);
-  const [listBook, setListBook] = useState<Array<Book>>([]);
-  const getBookTitle = (book: Book) => book.title;
-  const getBookKey = (book: Book) => book.id;
+  const [listBook, setListBook] = useState<Array<IBook>>([]);
+  const getBookTitle = (book: IBook) => book.title;
+  const getBookKey = (book: IBook) => book.id;
   const { updateBook, bookChoosen } = useStoreBook();
   useEffect(() => {
     if (bookChoosen) {
@@ -84,7 +84,7 @@ export default function ModalSearchBook({
 
   const onChangeAutoComplete = (
     event: React.ChangeEvent<{}>,
-    newValue: Book | null
+    newValue: IBook | null
   ) => {
     updateBook(newValue);
     setValue(newValue);

@@ -12,7 +12,7 @@ export default function Home() {
       <Statistic />
       <PromoteSection />
       <BookCategory />
-      <NewComingList />
+      {/* <NewComingList /> */}
     </div>
   );
 }

@@ -11,6 +11,13 @@ module.exports = {
         hostname: '**.ibb.co',
         port: '',
       },
+      
+      {
+        protocol: 'http',
+        hostname: 'books.google.com',
+        port: '',
+      },
+      
     ],
   },
 }

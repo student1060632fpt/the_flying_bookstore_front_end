@@ -29,7 +29,6 @@ export default function Page({
       const response: AxiosResponse<PageResponse<IListing>> = await axios.request({ ...config, params: paramsAxios });
       if (response?.data) {
         setListBook(response?.data)
-        
       }
     } catch (error) {
       console.log(error);

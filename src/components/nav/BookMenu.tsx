@@ -77,7 +77,7 @@ export default function BookMenus() {
         {listCategory.map((category) => (
           <Link
             key={category.id}
-            href={`/search/${category.name}`}
+            href={`/search/category/${category.name}`}
             scroll={false}
           >
             <MenuItem onClick={handleClose} disableRipple>

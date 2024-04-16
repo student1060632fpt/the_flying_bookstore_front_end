@@ -1,4 +1,4 @@
-import { ICategory } from "@/components/home/Category/BookCategory";
+import { ICategory } from "@/types/category";
 import { StateCreator, create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 

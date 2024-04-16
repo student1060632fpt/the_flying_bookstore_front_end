@@ -5,28 +5,20 @@ import { PageResponse } from "@/types/page";
 import { IListing } from "@/types/book";
 import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useStoreSearch } from "@/hooks/search";
 const ListSearchBook = ({
-  bookData,genreParam,titleParam,pageSizeParam
+  bookData
 }: {
   bookData: PageResponse<IListing> | undefined;
-  genreParam: string;
-  titleParam:string;
-  pageSizeParam:string
 }) => {
+  const {categoryParam: genreParam,updatePageNumber, titleParam,pageNumber: pageSizeParam} = useStoreSearch()
   const router = useRouter()
   const handleChangePage = (
     event: ChangeEvent<unknown> | null,
     newPage: number
   ) => {
-    console.log({newPage});
-    let linkTo = `/search/page-number/${newPage}`
-    if(genreParam){
-
-      linkTo = `/search/category/${genreParam}/page-number/${newPage}`
-    } else if(titleParam){
-      linkTo = `/search/book-name/${titleParam}/page-number/${newPage}`
-    }
-    router.push(linkTo)
+    updatePageNumber(newPage);
+    router.push("/search")
   };
   return (
     <>
@@ -39,7 +31,7 @@ const ListSearchBook = ({
         <Pagination
           count={bookData?.totalPages}
           onChange={handleChangePage}
-          page={parseInt(pageSizeParam)}
+          page={pageSizeParam}
         />
       </div>
     </>

@@ -7,16 +7,14 @@ import { useState } from "react";
 import { PageResponse } from "@/types/page";
 import { useGenreStore } from "@/hooks/genre";
 import { IListing } from "@/types/book";
+import { useStoreSearch } from "@/hooks/search";
 const filterOption = ["Mới nhất", "Bán chạy", "Giá tăng dần", "Giá giảm dần"];
 const HeaderListBook = ({
   bookData,
-  genreParam,
-  titleParam
 }: {
   bookData: PageResponse<IListing> | undefined;
-  genreParam: string;
-  titleParam:string;
 }) => {
+  const {categoryParam: genreParam,titleParam} = useStoreSearch();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const listCategory = useGenreStore(state=>state.listGenre)
@@ -34,12 +32,11 @@ const HeaderListBook = ({
   };
   const renterTitle = ()=>{
     if(!genreParam && !titleParam){
-      return <h2 className="text-4xl font-semibold text-primary">Tất cả loại sách</h2>
+      return <h2 className="text-4xl font-semibold text-primary">Tất cả sách</h2>
     } else if(genreParam && listCategory){
-      const genre = listCategory?.find(item => item.name == genreParam);
-      return <h2 className="text-4xl font-semibold text-primary">Sách theo thể loại {genre?.nameVn}</h2>
+      return <h2 className="text-4xl font-semibold text-primary">Sách theo thể loại {genreParam?.nameVn}</h2>
     } else if (titleParam){
-      return <h2 className="text-4xl font-semibold text-primary">Sách có tiêu đề bao gồm {titleParam}</h2>
+      return <h2 className="text-4xl font-semibold text-primary">Sách có tiêu đề bao gồm: {titleParam}</h2>
     }
   }
   return (

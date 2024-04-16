@@ -8,6 +8,9 @@ import { BsShop } from "react-icons/bs";
 import Link from "next/link";
 import { CiBoxList } from "react-icons/ci";
 import { useGenreStore } from "@/hooks/genre";
+import { useRouter } from "next/navigation";
+import { useStoreSearch } from "@/hooks/search";
+import { ICategory } from "@/types/category";
 
 const StyledMenu = styled((props: MenuProps) => (
   <Menu
@@ -59,6 +62,12 @@ export default function BookMenus() {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  const { updateCategoryParam } = useStoreSearch();
+  const router = useRouter();
+  const onNavigate = (category: ICategory) => {
+    updateCategoryParam(category);
+    router.push("/search");
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -75,15 +84,13 @@ export default function BookMenus() {
         onClose={handleClose}
       >
         {listCategory.map((category) => (
-          <Link
+          <MenuItem
             key={category.id}
-            href={`/search/category/${category.name}`}
-            scroll={false}
+            onClick={() => onNavigate(category)}
+            disableRipple
           >
-            <MenuItem onClick={handleClose} disableRipple>
-              {category.nameVn}
-            </MenuItem>
-          </Link>
+            {category.nameVn}
+          </MenuItem>
         ))}
       </StyledMenu>
     );

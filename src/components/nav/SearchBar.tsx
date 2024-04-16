@@ -3,6 +3,8 @@ import { CiSearch } from "react-icons/ci";
 import BookMenus from "./BookMenu";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useStoreSearch } from "@/hooks/search";
+import { useEffect } from "react";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(1, 2),
@@ -31,14 +33,20 @@ interface IFromValue {
   search: string;
 }
 const SearchBar = () => {
-  const { register, handleSubmit } = useForm<IFromValue>();
+  const { register, handleSubmit, reset } = useForm<IFromValue>();
   const router = useRouter();
+  const { updateTitleParam, titleParam } = useStoreSearch();
   const onSubmit = (data: IFromValue) => {
     // Xử lý dữ liệu khi form được submit
-    if (data.search != "") {
-      router.push(`/search/book-name/${data.search}`);
-    }
+    updateTitleParam(data.search);
+    router.push(`/search`);
   };
+  useEffect(() => {
+    if (titleParam == null) {
+      reset();
+    }
+  }, [titleParam]);
+
   return (
     <>
       <form

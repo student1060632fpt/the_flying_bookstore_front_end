@@ -2,9 +2,9 @@ import Image from "next/image";
 import BookImage from "@/assets/images/book loading.gif";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
-import { IListing } from "../home/PromoteSection";
 import styles from "./SearchedBook.module.css"; // Import external CSS file
 import { formatCurrency } from "@/utils/helps";
+import { IListing } from "@/types/book";
 const SearchedBook = ({ book }: { book: IListing }) => {
   return (
     <Link href={`/detail/${book.id}`}>

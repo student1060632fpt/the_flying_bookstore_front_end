@@ -2,11 +2,19 @@ import Image from "next/image";
 
 import Book from "@/assets/images/book loading.gif";
 import "./Category.scss"
-import { ICategory } from "./BookCategory";
+import { ICategory } from "@/types/category";
+import { useRouter } from "next/navigation";
+import { useStoreSearch } from "@/hooks/search";
 
 const Category = ({category}: {category:ICategory}) => {
+  const { updateCategoryParam } = useStoreSearch();
+  const router = useRouter();
+  const onNavigate = () => {
+    updateCategoryParam(category);
+    router.push("/search");
+  };
   return (
-    <div className=" text-center">
+    <div className=" text-center cursor-pointer" onClick={onNavigate}>
       <div className="mx-auto w-8/12">
         <Image
           src={Book}

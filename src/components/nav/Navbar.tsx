@@ -20,6 +20,7 @@ import { CiBellOn } from "react-icons/ci";
 import AvatarImage from "@/assets/images/no avatar.jpeg";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
+import { useStoreCart } from "@/hooks/cart";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -29,6 +30,7 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
+  const cart = useStoreCart(state=>state.cart)
   const [menuOrderOpen, setMenuOrderOpen] = React.useState<null | HTMLElement>(
     null
   );
@@ -225,7 +227,7 @@ export default function Navbar() {
               </Link>
               <Link href="/cart">
                 <IconButton size="large" aria-label="show 4 new mails">
-                  <Badge badgeContent={5} color="error">
+                  <Badge badgeContent={cart? 1:0} color="error">
                     <CiShoppingCart color={theme.palette.primary.main} />
                   </Badge>
                 </IconButton>

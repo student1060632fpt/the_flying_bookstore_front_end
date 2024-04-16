@@ -12,38 +12,53 @@ import { AiOutlineThunderbolt } from "react-icons/ai";
 import { CiHashtag } from "react-icons/ci";
 import Quality from "./Quality";
 import { IListing } from "@/types/book";
-import { arrayToString, countAvarageReview, formatCurrency } from "@/utils/helps";
+import {
+  arrayToString,
+  countAvarageReview,
+  formatCurrency,
+} from "@/utils/helps";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { useGenreStore } from "@/hooks/genre";
- 
+import { ICategory } from "@/types/category";
+import { useRouter } from "next/navigation";
+import { useStoreSearch } from "@/hooks/search";
 
 const BookInfo = ({ book }: { book: IListing | undefined }) => {
   const listCategory = useGenreStore((state) => state.listGenre);
+  const { updateCategoryParam } = useStoreSearch();
+  const router = useRouter();
   const getVietnameseNames = () => {
     if (!listCategory) return [];
     // Tạo một mảng để lưu tên tiếng Việt của các phần tử cần tìm
-    const vietnameseNames: Array<string> = [];
+    const vietnameseNames: Array<ICategory> = [];
 
     // Duyệt qua mảng data
-    book?.book?.genre.forEach((item, index) => {
+    book?.book?.genre.forEach((item) => {
       // Kiểm tra nếu tên của phần tử có trong mảng itemNames
       const isFind = listCategory.find((category) => category.name == item);
-      if(isFind?.nameVn) vietnameseNames.push(isFind?.nameVn);
+      if (isFind) vietnameseNames.push(isFind);
     });
 
     // Trả về mảng chứa tên tiếng Việt của các phần tử tương ứng
     return vietnameseNames;
   };
+  const onNavigate = (category: ICategory) => {
+    updateCategoryParam(category);
+    router.push("/search");
+  };
   const renderCategory = () => {
     const listVietnameseCategory = getVietnameseNames();
-    return listVietnameseCategory.slice(0,3).map((item, index) => {
+    return listVietnameseCategory.slice(0, 3).map((item, index) => {
       return (
-        <Link href={`/search/category/${item}`} key={index}>
-          <Button variant="outlined" startIcon={<CiHashtag />}>
-            {item}
-          </Button>
-        </Link>
+        <Button
+          variant="outlined"
+          onClick={() => onNavigate(item)}
+          startIcon={<CiHashtag />}
+          key={index}
+        >
+          {item.nameVn}
+        </Button>
       );
     });
   };
@@ -69,7 +84,9 @@ const BookInfo = ({ book }: { book: IListing | undefined }) => {
                 <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
               }
             />
-            <p className="font-semibold ml-2">{countAvarageReview(book?.review)}</p>
+            <p className="font-semibold ml-2">
+              {countAvarageReview(book?.review)}
+            </p>
           </div>
           <div className="flex">
             <div className="flex items-center">

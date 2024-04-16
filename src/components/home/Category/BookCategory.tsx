@@ -4,14 +4,6 @@ import Category from "./Category";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useGenreStore } from "@/hooks/genre";
-export interface ICategory {
-  id: number;
-  name: string;
-  nameVn: string;
-  createdDate: string;
-  updatedDate: string | null;
-  deletedDate: string | null;
-}
 
 const settings = {
   dots: true,
@@ -24,20 +16,18 @@ const settings = {
   centerPadding: "60px",
 };
 const BookCategory = () => {
-  const {listGenre: listCategory} = useGenreStore();
-  
+  const { listGenre: listCategory } = useGenreStore();
+
   const renderCategory = useCallback(
     () => {
-      if(!listCategory) return (<p className="text-center"> </p>)
+      if (!listCategory) return <p className="text-center"> </p>;
       return (
         <Slider {...settings}>
           {listCategory.map((category, index) => (
-            <Link href={`/search/category/${category.name}`} key={index}>
-              <Category category={category} />
-            </Link>
+            <Category category={category} key={index} />
           ))}
         </Slider>
-      )
+      );
     },
     [listCategory] // Include 'settings' in the dependency array
   );

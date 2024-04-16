@@ -7,7 +7,7 @@ import styles from "./SearchedBook.module.css"; // Import external CSS file
 import { formatCurrency } from "@/utils/helps";
 const SearchedBook = ({ book }: { book: IListing }) => {
   return (
-    <Link href="/detail#isbn">
+    <Link href={`/detail/${book.id}`}>
       <div className="rounded-xl ease-in-out duration-300 hover:shadow-lg hover:shadow-indigo-500/40 py-5 px-3 ">
         <Image
           src={book?.copy?.imageLink || BookImage}

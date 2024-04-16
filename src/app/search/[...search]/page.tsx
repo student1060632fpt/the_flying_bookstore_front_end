@@ -1,8 +1,8 @@
 "use client";
-import { IListing } from "@/components/home/PromoteSection";
 import FilterComponent from "@/components/search/Filter";
 import HeaderListBook from "@/components/search/HeaderListBook";
 import ListSearchBook from "@/components/search/ListSearchBook";
+import { IListing } from "@/types/book";
 import { PageResponse } from "@/types/page";
 import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
@@ -19,11 +19,11 @@ export default function Page({
 }) {
   const [listBook, setListBook] = useState<PageResponse<IListing>>()
   const genreParam = params?.search[0] == "category" ? params?.search[1] : "";
-  const title = params?.search[0] == "book-name" ? params?.search[1] : "";
+  const titleParam = params?.search[0] == "book-name" ? params?.search[1] : "";
   async function makeRequest() {
     const paramsAxios = {
       genre:genreParam,
-      title,
+      title: titleParam,
     };
     try {
       const response: AxiosResponse<PageResponse<IListing>> = await axios.request({ ...config, params: paramsAxios });
@@ -45,7 +45,7 @@ export default function Page({
         <FilterComponent genreParam={genreParam}/>
       </div>
       <div className="flex-1">
-        <HeaderListBook bookData={listBook}/>
+        <HeaderListBook bookData={listBook}  genreParam={genreParam} titleParam={titleParam}/>
         <ListSearchBook bookData={listBook}/>
       </div>
     </div>

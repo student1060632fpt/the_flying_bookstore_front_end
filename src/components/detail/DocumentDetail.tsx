@@ -1,18 +1,20 @@
 import React from "react";
+import { IPropsBook } from "./DocumentInfo";
+import dayjs from "dayjs";
+import { formatCurrency } from "@/utils/helps";
 
-const DocumentDetail = () => {
+const DocumentDetail = ({book}:IPropsBook) => {
   const listInfo = {
-    "Ngày xuất bản": "01/05/2022",
-    "Kích thước": "14.5x20.5cm",
-    ISBN: "121341381648 (ISBN13: 121341381648)",
-    "Số trang": "408 trang",
+    "Ngày xuất bản": dayjs(book?.book?.publishedDate).format("DD/MM/YYYY"),
+    "Kích thước": book?.book.size,
+    ISBN: book?.book?.isbn,
+    "Số trang": book?.book?.pageCount,
   };
   const listDocInfo = {
-    "Tiền cọc": "78.000đ",
-    "Phần trăm hư hại": "10%",
-    "Mô tả về sách thuê": "Sách mới mua tháng 6/2023, tình trạng tốt",
-    "Địa chỉ cho thuê": "123 Nguyễn Trọng Tuyển, phường 12, quận Bình Thạnh",
-    "Phí phạt trả trễ": "3.000đ/ngày"
+    "Tiền cọc": formatCurrency(book?.depositFee),
+    "Phần trăm hư hại": book?.copy?.damagePercent,
+    "Địa chỉ cho thuê": book?.address,
+    "Phí phạt trả trễ": formatCurrency(book?.depositFee)+"/ngày"
   }
   return (
     <div className="flex flex-col">

@@ -20,6 +20,7 @@ import {
   TextField,
 } from "@mui/material";
 import { useStoreBook } from "@/hooks/choosenBook";
+import { IBook } from "@/types/book";
 let config = {
   method: "get",
   maxBodyLength: Infinity,
@@ -34,18 +35,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-export type IBook = {
-  id: number;
-  isbn: string;
-  title: string;
-  authors: string[];
-  languageCode: string;
-  genre: string[];
-  publisher: string;
-  publishedDate: string;
-  pageCount: number;
-  size: string;
-};
+
 export default function ModalSearchBook({
   open,
   setOpen,

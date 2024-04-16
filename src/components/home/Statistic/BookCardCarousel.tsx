@@ -4,8 +4,8 @@ import BookImg from "@/assets/images/book-cover_null.png";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
-import { IListing } from "../PromoteSection";
 import { formatCurrency } from "@/utils/helps";
+import { IListing } from "@/types/book";
 
 const BookCardCarousel = ({ book }: { book: IListing }) => {
   return (

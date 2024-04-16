@@ -6,6 +6,7 @@ import Box from "@mui/material/Box";
 import { useState } from "react";
 import DocumentDetail from "./DocumentDetail";
 import RateBook from "./RateBook";
+import { IListing } from "@/types/book";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -38,10 +39,13 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-const DocumentInfo = () => {
-  const [value, setValue] = useState(1);
+export interface IPropsBook {
+  book: IListing | undefined
+}
+const DocumentInfo = ({book}:IPropsBook) => {
+  const [value, setValue] = useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -58,7 +62,7 @@ const DocumentInfo = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={value} index={0}>
-        <DocumentDetail/>
+        <DocumentDetail book={book}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
         <RateBook/>

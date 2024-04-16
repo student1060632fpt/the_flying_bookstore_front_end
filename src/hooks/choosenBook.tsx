@@ -1,4 +1,4 @@
-import { IBook } from "@/components/createPost/ModalSearchBook";
+import { IBook } from "@/types/book";
 import { create } from "zustand";
 
 interface IChoosenBook {

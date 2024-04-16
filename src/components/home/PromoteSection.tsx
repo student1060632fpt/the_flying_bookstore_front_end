@@ -26,8 +26,6 @@ const PromoteSection = () => {
   const listContent = useListNewBookStore((state) => state.listNewBook);
   const renderBooks = useCallback(() => {
     const listBook = listContent?.content
-    console.log({ listBook });
-
     if (!listBook) {
       return <p className="text-center">Hiện tại không có sách mới</p>;
     } else if (listBook.length != 0) {

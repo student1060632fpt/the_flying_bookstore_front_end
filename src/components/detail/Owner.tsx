@@ -2,8 +2,9 @@ import Image from "next/image";
 import Avatar from "./../../assets/images/avatar.jpg";
 import { Rating } from "@mui/material";
 import { FaStar } from "react-icons/fa";
+import { IPropsBook } from "./DocumentInfo";
 
-const Owner = () => {
+const Owner = ({book}:IPropsBook) => {
   return (
     <div className="border py-4 px-6">
       <h3 className="text-primary font-semibold text-xl">Chủ sách</h3>
@@ -28,12 +29,12 @@ const Owner = () => {
       </div>
       <div className="mt-3 flex justify-between">
         <p className="text-primary">Số sách hiện có</p>
-        <p className="font-semibold">10</p>
+        <p className="font-semibold">{book?.bookOwned}</p>
       </div>
       
       <div className="mt-3 flex justify-between">
-        <p className="text-primary">Số lần đã cho thuê</p>
-        <p className="font-semibold">10</p>
+        <p className="text-primary">Số sách đang cho thuê</p>
+        <p className="font-semibold">{book?.bookLeasing}</p>
       </div>
       
     </div>

@@ -11,7 +11,7 @@ const chunkArray = (array: Array<any>, chunkSize: number) => {
 };
 
 const formatCurrency = (amount: number|undefined) => {
-  if(!amount) return "";
+  if(!amount) return 0;
   // Chuyển số tiền thành chuỗi và thêm dấu chấm phẩy giữa các hàng nghìn
   const formattedAmount = amount
     .toString()

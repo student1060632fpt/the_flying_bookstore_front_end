@@ -21,8 +21,6 @@ const bookSlice: StateCreator<IListBookStore, [["zustand/persist", unknown]]> = 
       });
 
       if (response?.data) {
-        console.log("response.data",response.data);
-        
         set({ listNewBook: response?.data});
       } else {
         throw new Error("Get Book failed");

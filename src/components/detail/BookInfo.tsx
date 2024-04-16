@@ -100,7 +100,7 @@ const BookInfo = ({ book }: { book: IListing | undefined }) => {
         </div>
         <div className="text-md border-l-2 pl-8 my-5">{book?.description}</div>
         <h1 className="text-2xl font-bold mb-3">
-          {formatCurrency(book?.leaseRate)}/ngày
+          Giá thuê: {formatCurrency(book?.leaseRate)}/ngày
         </h1>
         <div className="flex items-center gap-4">
           {book?.quantity == 0 ? "Tạm thời hết sách" : <p>Hiện còn {book?.quantity} cuốn</p>}

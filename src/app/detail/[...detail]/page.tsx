@@ -37,7 +37,7 @@ const [listing, setListing] = useState<IListing>()
           <DocumentInfo book={listing}/>
         </div>
         <div className="flex-1">
-          <RentBook />
+          <RentBook book={listing}/>
         </div>
       </div>
       <PromoteSection/>

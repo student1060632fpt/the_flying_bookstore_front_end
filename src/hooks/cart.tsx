@@ -1,15 +1,24 @@
-import {create} from "zustand";
+import { ICart } from "@/types/cart";
+import { StateCreator, create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
-interface IUseStoreCart{
-  bear: number;
-  increasePopulation: () => void;
-  removeAllBears: () => void;
-  updateBears: (arg: number) => void;
+interface IUseStoreCart {
+  cart: ICart | null;
+  addCart: (newCart: ICart) => void;
+  removeCart: () => void;
 }
-
-export const useStoreCart = create<IUseStoreCart>(set => ({
-  bear: 0,
-  increasePopulation: () => set((state) => ({bear: state.bear +1})),
-  removeAllBears: () => set({bear: 0}),
-  updateBears: (newBears) => set({bear: newBears})
-})) 
+const cartSlice: StateCreator<IUseStoreCart, [["zustand/persist", unknown]]> = (
+  set
+) => ({
+  cart: null,
+  addCart: (newCart) => {
+    set(() => ({ cart: newCart }));
+  },
+  removeCart: () => set({ cart: null }),
+});
+export const useStoreCart = create<IUseStoreCart>()(
+  persist(cartSlice, {
+    name: "cart-storage", // name of the item in the storage (must be unique)
+    storage: createJSONStorage(() => sessionStorage),
+  })
+);

@@ -7,41 +7,39 @@ import { CiTrash } from "react-icons/ci";
 import { useState } from "react";
 import { FiCircle } from "react-icons/fi";
 import { FiCheckCircle } from "react-icons/fi";
+import { useStoreCart } from "@/hooks/cart";
+import { formatCurrency } from "@/utils/helps";
 
 const CartItem = () => {
+  const { cart, removeCart } = useStoreCart();
+
   const [choose, setChoose] = useState<boolean>(false);
   return (
-    <div className="p-5 gap-5 rounded-lg border flex hover:shadow-lg hover:shadow-indigo-500/50 ease-in-out duration-200 rounded-lg">
-      <div className="flex  items-center">
-        <IconButton aria-label="delete" size="large" onClick={() => setChoose(state=>!state)}>
-          {!!choose? <FiCheckCircle className="text-2xl text-primary" />: <FiCircle className="text-2xl text-primary" />}
-        </IconButton>
-      </div>
-      <div className="relative w-32 h-48">
+    <div className="p-5 gap-5 rounded-lg border flex flex-grow hover:shadow-lg hover:shadow-indigo-500/50 ease-in-out duration-200 rounded-lg">
+      <div className="basis-2/12 relative w-32 h-48">
         <Image fill src={Book} alt="d" className="object-cover rounded-lg" />
       </div>
-      <div className=" flex flex-col justify-center">
+      <div className="basis-4/12 flex flex-col justify-center">
         <h4 className="text-primary font-semibold text-lg">
-          Một thoáng ta rực rỡ ở nhân gian
+          {cart?.book.book.title}
         </h4>
-        <p className="text-sm text-gray-500 ">Ocean Vương</p>
+        <p className="text-sm text-gray-500 ">{cart?.book.book.authors}</p>
       </div>
-      <div className=" flex flex-col justify-center">
-        <p className="mb-2">Số lượng</p>
-        <Quality />
+      <div className="basis-2/12 flex flex-col justify-center">
+        <p className="mb-2">Số lượng: 1</p>
       </div>
-      <div className="flex-1  flex flex-col justify-center">
+      <div className="basis-3/12 flex-1  flex flex-col justify-center">
         <div className="flex justify-between">
           <p>Giá thuê:</p>
-          <p>20.000đ</p>
+          <p>{formatCurrency(cart?.totalRent)}</p>
         </div>
-        <div className="flex justify-between text-gray-400 text-sm">
+        <div className=" basis-1/5 flex justify-between text-gray-400 text-sm">
           <p>Cọc:</p>
-          <p>20.000đ</p>
+          <p>{formatCurrency(cart?.book.depositFee)}</p>
         </div>
       </div>
-      <div className="flex  items-center">
-        <IconButton aria-label="delete" size="large">
+      <div className="basis-1/12 flex  items-center">
+        <IconButton onClick={removeCart} aria-label="delete" size="large">
           <CiTrash />
         </IconButton>
       </div>

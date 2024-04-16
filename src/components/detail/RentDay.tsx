@@ -12,19 +12,21 @@ import { formatCurrency } from "@/utils/helps";
 import { Controller, useForm } from "react-hook-form";
 import dayjs, { Dayjs } from "dayjs";
 import { viVN } from "@mui/x-date-pickers/locales";
+import { ICart, IFormValueDayRent } from "@/types/cart";
+import { useStoreCart } from "@/hooks/cart";
+import { useRouter } from "next/navigation";
 
-type IFormValue = {
-  dateStart: Dayjs | null;
-  dateEnd: Dayjs | null;
-};
+
 const tomorrow = dayjs().add(1, "day");
 const RentDay = ({ book }: IPropsBook) => {
-  const { handleSubmit, control, watch } = useForm<IFormValue>({
+  const { handleSubmit, control, watch } = useForm<IFormValueDayRent>({
     defaultValues: {
-      dateStart: null,
+      dateStart: dayjs(),
       dateEnd: null,
     },
   });
+  const router = useRouter()
+  const addToCart = useStoreCart(state=>state.addCart)
   const renderDurationRent = () => {
     const dateStart = watch("dateStart");
     const dateEnd = watch("dateEnd");
@@ -42,9 +44,18 @@ const RentDay = ({ book }: IPropsBook) => {
     if(!book?.depositFee || totalRent == 0) return 0;
     return book?.depositFee + totalRent;
   }
-  const onSubmit = (data: IFormValue) => {
-    console.log({ data })
+  const onSubmit = (data: IFormValueDayRent) => {
+    if(!book) return;
+    const submitCart: ICart = {
+      dayRent:data,
+      book,
+      total: renderCountTotal(),
+      totalRent: renderTotalRent(),
+      duration: renderDurationRent()
+    }
     
+    addToCart(submitCart);
+    router.push("/cart")
   };
   return (
     <>

@@ -14,6 +14,7 @@ export type IListing = {
   review?:Array<IReview>;
   bookOwned?:number;
   bookLeasing?: number;
+  user:User
 };
 
 interface ICopy {
@@ -53,3 +54,15 @@ export interface IReview {
   updatedDate: string | null;
   deletedDate: string | null;
 }
+type User = {
+  id: number;
+  username: string;
+  email: string;
+  phoneNumber: string;
+  firstName: string;
+  lastName: string;
+  birthDate: string; // hoặc có thể sử dụng kiểu Date nếu muốn
+  avatarUrl: string | null;
+  address: string;
+  password: string | null;
+};

@@ -1,3 +1,5 @@
+import { IReview } from "@/types/book";
+
 const chunkArray = (array: Array<any>, chunkSize: number) => {
   const chunks = [];
   if (chunkSize >= array.length) {
@@ -27,4 +29,12 @@ const arrayToString = (arr: Array<string> | undefined) => {
   );
 };
 
-export { chunkArray, formatCurrency, arrayToString };
+const countAvarageReview = (arrayReview: Array<IReview> | undefined)=>{
+  if(!arrayReview) return 0;
+  const totalScore = arrayReview.reduce((accumulator, review) => accumulator + review.score, 0);
+  const avarage = totalScore / arrayReview.length;
+  const roundedAverageScore = Math.round(avarage * 2) / 2;
+  return roundedAverageScore
+}
+
+export { chunkArray, formatCurrency, arrayToString,countAvarageReview};

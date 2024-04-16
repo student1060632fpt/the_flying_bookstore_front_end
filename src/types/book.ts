@@ -11,7 +11,7 @@ export type IListing = {
   description: string;
   copy: ICopy;
   book: IBook;
-  review?:Array<number>;
+  review?:Array<IReview>;
   bookOwned?:number;
   bookLeasing?: number;
 };
@@ -40,3 +40,16 @@ export type IBook = {
   pageCount: number;
   size: string;
 };
+
+export interface IReview {
+  id: number;
+  score: number;
+  description: string;
+  imageLink: string | null;
+  leaseOrderId: number;
+  userId: number;
+  listingId: number;
+  createdDate: string;
+  updatedDate: string | null;
+  deletedDate: string | null;
+}

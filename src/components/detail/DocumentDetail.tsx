@@ -14,7 +14,7 @@ const DocumentDetail = ({book}:IPropsBook) => {
     "Tiền cọc": formatCurrency(book?.depositFee),
     "Phần trăm hư hại": book?.copy?.damagePercent,
     "Địa chỉ cho thuê": book?.address,
-    "Phí phạt trả trễ": formatCurrency(book?.depositFee)+"/ngày"
+    "Phí phạt trả trễ": formatCurrency(book?.penaltyRate)+"/ngày"
   }
   return (
     <div className="flex flex-col">

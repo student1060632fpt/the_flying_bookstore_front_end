@@ -5,8 +5,8 @@ import MenuItem from "@mui/material/MenuItem";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import { useState } from "react";
 import { PageResponse } from "@/types/page";
-import { IListing } from "../home/PromoteSection";
 import { useGenreStore } from "@/hooks/genre";
+import { IListing } from "@/types/book";
 const filterOption = ["Mới nhất", "Bán chạy", "Giá tăng dần", "Giá giảm dần"];
 const HeaderListBook = ({
   bookData,
@@ -21,9 +21,7 @@ const HeaderListBook = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const listCategory = useGenreStore(state=>state.listGenre)
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+
   const handleClose = () => {
     setAnchorEl(null);
   };

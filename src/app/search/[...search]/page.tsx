@@ -20,11 +20,15 @@ export default function Page({
   const [listBook, setListBook] = useState<PageResponse<IListing>>()
   const genreParam = params?.search[0] == "category" ? params?.search[1] : "";
   const titleParam = params?.search[0] == "book-name" ? params?.search[1] : "";
+  const pageSizeParam = params?.search[0] == "page-number"  ? params?.search[1] : params?.search[2] =="page-number"? params?.search[3] : "";
   async function makeRequest() {
     const paramsAxios = {
-      genre:genreParam,
+      genre: genreParam,
       title: titleParam,
+      page: pageSizeParam,
     };
+    console.log({paramsAxios});
+    
     try {
       const response: AxiosResponse<PageResponse<IListing>> = await axios.request({ ...config, params: paramsAxios });
       if (response?.data) {
@@ -46,7 +50,7 @@ export default function Page({
       </div>
       <div className="flex-1">
         <HeaderListBook bookData={listBook}  genreParam={genreParam} titleParam={titleParam}/>
-        <ListSearchBook bookData={listBook}/>
+        <ListSearchBook bookData={listBook} genreParam={genreParam} titleParam={titleParam} pageSizeParam={pageSizeParam}/>
       </div>
     </div>
   );

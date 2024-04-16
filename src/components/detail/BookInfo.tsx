@@ -12,11 +12,42 @@ import { AiOutlineThunderbolt } from "react-icons/ai";
 import { CiHashtag } from "react-icons/ci";
 import Quality from "./Quality";
 import { IListing } from "@/types/book";
-import { arrayToString, formatCurrency } from "@/utils/helps";
+import { arrayToString, countAvarageReview, formatCurrency } from "@/utils/helps";
 import Link from "next/link";
 import dayjs from "dayjs";
+import { useGenreStore } from "@/hooks/genre";
+ 
 
 const BookInfo = ({ book }: { book: IListing | undefined }) => {
+  const listCategory = useGenreStore((state) => state.listGenre);
+  const getVietnameseNames = () => {
+    if (!listCategory) return [];
+    // Tạo một mảng để lưu tên tiếng Việt của các phần tử cần tìm
+    const vietnameseNames: Array<string> = [];
+
+    // Duyệt qua mảng data
+    book?.book?.genre.forEach((item, index) => {
+      // Kiểm tra nếu tên của phần tử có trong mảng itemNames
+      const isFind = listCategory.find((category) => category.name == item);
+      if(isFind?.nameVn) vietnameseNames.push(isFind?.nameVn);
+    });
+
+    // Trả về mảng chứa tên tiếng Việt của các phần tử tương ứng
+    return vietnameseNames;
+  };
+  const renderCategory = () => {
+    const listVietnameseCategory = getVietnameseNames();
+    return listVietnameseCategory.slice(0,3).map((item, index) => {
+      return (
+        <Link href={`/search/category/${item}`} key={index}>
+          <Button variant="outlined" startIcon={<CiHashtag />}>
+            {item}
+          </Button>
+        </Link>
+      );
+    });
+  };
+
   return (
     <div className="flex gap-10 flex-row">
       <div className="xs:basic-0 md:basis-1/4  lg:basis-1/6 ">
@@ -31,13 +62,14 @@ const BookInfo = ({ book }: { book: IListing | undefined }) => {
             <Rating
               name="half-rating-read"
               defaultValue={0}
+              value={countAvarageReview(book?.review)}
               precision={0.5}
               readOnly
               emptyIcon={
                 <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
               }
             />
-            <p className="font-semibold ml-2">{`Chưa có đánh giá nào`}</p>
+            <p className="font-semibold ml-2">{countAvarageReview(book?.review)}</p>
           </div>
           <div className="flex">
             <div className="flex items-center">
@@ -78,15 +110,7 @@ const BookInfo = ({ book }: { book: IListing | undefined }) => {
             </div>
           </div>
           <div className="flex items-center gap-5">
-            {book?.book?.genre.slice(0, 3).map((item, index) => {
-              return (
-                <Link href={`/search/category/${item}`} key={index}>
-                  <Button variant="outlined" startIcon={<CiHashtag />}>
-                    {item}
-                  </Button>
-                </Link>
-              );
-            })}
+            {renderCategory()}
 
             <Button
               variant="outlined"
@@ -103,7 +127,11 @@ const BookInfo = ({ book }: { book: IListing | undefined }) => {
           Giá thuê: {formatCurrency(book?.leaseRate)}/ngày
         </h1>
         <div className="flex items-center gap-4">
-          {book?.quantity == 0 ? "Tạm thời hết sách" : <p>Hiện còn {book?.quantity} cuốn</p>}
+          {book?.quantity == 0 ? (
+            "Tạm thời hết sách"
+          ) : (
+            <p>Hiện còn {book?.quantity} cuốn</p>
+          )}
         </div>
       </div>
     </div>

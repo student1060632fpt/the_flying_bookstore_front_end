@@ -43,7 +43,7 @@ export interface IPropsBook {
   book: IListing | undefined
 }
 const DocumentInfo = ({book}:IPropsBook) => {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(1);
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -65,7 +65,7 @@ const DocumentInfo = ({book}:IPropsBook) => {
         <DocumentDetail book={book}/>
       </CustomTabPanel>
       <CustomTabPanel value={value} index={1}>
-        <RateBook/>
+        <RateBook book={book}/>
       </CustomTabPanel>
     </Box>
   );

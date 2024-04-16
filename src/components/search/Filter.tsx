@@ -28,9 +28,10 @@ const FilterComponent = () => {
   const onChooseCategory = (val: any) => {
     if (!listCategory || !val) return;
     if (!val?.target) return;
-    const category: ICategory = listCategory.find(
+    const category: ICategory | undefined = listCategory.find(
       (item) => item.id == val?.target?.value
     );
+    if(!category) return;
     updateCategoryParam(category);
     router.push(`/search`);
   };
@@ -44,8 +45,9 @@ const FilterComponent = () => {
     return (
       <FormGroup onChange={onChooseCategory}>
         <RadioGroup
+          key={genreParam?.id}
           aria-labelledby="demo-radio-buttons-group-label"
-          defaultValue={genreParam?.id}
+          value={genreParam?.id}
           name="radio-genre-group"
         >
           {listCategory.map((category) => (

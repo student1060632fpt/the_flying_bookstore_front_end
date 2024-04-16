@@ -21,19 +21,20 @@ import AvatarImage from "@/assets/images/no avatar.jpeg";
 import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { useStoreCart } from "@/hooks/cart";
+import { useAuthStore } from "@/hooks/user";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
-  const [isAuth, setIsAuth] = React.useState(true);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
-  const cart = useStoreCart(state=>state.cart)
+  const cart = useStoreCart((state) => state.cart);
   const [menuOrderOpen, setMenuOrderOpen] = React.useState<null | HTMLElement>(
     null
   );
+  const { isLogin, removeToken } = useAuthStore();
   const openMenu = Boolean(menuOrderOpen);
   const handleClickOpenMenuOrder = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -58,8 +59,8 @@ export default function Navbar() {
     setMobileMoreAnchorEl(event.currentTarget);
   };
   const logout = () => {
+    removeToken();
     handleMenuClose();
-    setIsAuth(false);
   };
 
   const menuId = "primary-search-account-menu";
@@ -80,7 +81,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Thông tin của tôi</MenuItem>
+      {/* <MenuItem onClick={handleMenuClose}>Thông tin của tôi</MenuItem> */}
       <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
       <MenuItem onClick={logout}>Đăng xuất</MenuItem>
     </Menu>
@@ -152,6 +153,71 @@ export default function Navbar() {
     </Menu>
   );
 
+  const renderIsAuth = React.useCallback(() => {
+    if (!isLogin) {
+      return (
+        <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+          <Link href="/login">
+            <Button variant="outlined" size="medium">
+              Đăng nhập
+            </Button>
+          </Link>
+          <Link href="/sign-up">
+            <Button variant="contained" size="medium">
+              Đăng ký
+            </Button>
+          </Link>
+        </Box>
+      );
+    }
+
+    return (
+      <Box sx={{ display: { xs: "none", md: "flex" } }}>
+        <Link href="/my-order">
+          <IconButton
+            size="large"
+            aria-label="show 4 new mails"
+            aria-controls={openMenu ? "order-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={openMenu ? "true" : undefined}
+            onClick={handleClickOpenMenuOrder}
+          >
+            <Badge badgeContent={5} color="error">
+              <CiBag1 color={theme.palette.primary.main} />
+            </Badge>
+          </IconButton>
+        </Link>
+        <Link href="/cart">
+          <IconButton size="large" aria-label="show 4 new mails">
+            <Badge badgeContent={cart ? 1 : 0} color="error">
+              <CiShoppingCart color={theme.palette.primary.main} />
+            </Badge>
+          </IconButton>
+        </Link>
+        <IconButton size="large" aria-label="show 17 new notifications">
+          <Badge badgeContent={17} color="error">
+            <CiBellOn color={theme.palette.primary.main} />
+          </Badge>
+        </IconButton>
+
+        <Button
+          aria-label="account of current user"
+          aria-controls={menuId}
+          aria-haspopup="true"
+          onClick={handleProfileMenuOpen}
+          color="inherit"
+        >
+          <Image
+            src={AvatarImage}
+            alt="Name"
+            width={40}
+            height={40}
+            className="rounded"
+          />
+        </Button>
+      </Box>
+    );
+  }, [isLogin,cart]);
   return (
     <div>
       <AppBar position="static" sx={{ bgcolor: "background.paper" }}>
@@ -192,70 +258,10 @@ export default function Navbar() {
               </Box>
             </Button>
           </Link>
-          <Box sx={{ flexGrow: 0.5 }} />
-
+           <Box sx={{ flexGrow: 0.5 }} />
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
-          {!isAuth ? (
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
-              <Link href="/login">
-                <Button variant="outlined" size="medium">
-                  Đăng nhập
-                </Button>
-              </Link>
-              <Link href="/sign-up">
-                <Button variant="contained" size="medium">
-                  Đăng ký
-                </Button>
-              </Link>
-            </Box>
-          ) : (
-            <Box sx={{ display: { xs: "none", md: "flex" } }}>
-              <Link href="/my-order">
-                <IconButton
-                  size="large"
-                  aria-label="show 4 new mails"
-                  aria-controls={openMenu ? "order-menu" : undefined}
-                  aria-haspopup="true"
-                  aria-expanded={openMenu ? "true" : undefined}
-                  onClick={handleClickOpenMenuOrder}
-                >
-                  <Badge badgeContent={5} color="error">
-                    <CiBag1 color={theme.palette.primary.main} />
-                  </Badge>
-                </IconButton>
-              </Link>
-              <Link href="/cart">
-                <IconButton size="large" aria-label="show 4 new mails">
-                  <Badge badgeContent={cart? 1:0} color="error">
-                    <CiShoppingCart color={theme.palette.primary.main} />
-                  </Badge>
-                </IconButton>
-              </Link>
-              <IconButton size="large" aria-label="show 17 new notifications">
-                <Badge badgeContent={17} color="error">
-                  <CiBellOn color={theme.palette.primary.main} />
-                </Badge>
-              </IconButton>
-
-              <Button
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <Image
-                  src={AvatarImage}
-                  alt="Name"
-                  width={40}
-                  height={40}
-                  className="rounded"
-                />
-              </Button>
-            </Box>
-          )}
-
+          {renderIsAuth()}
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"

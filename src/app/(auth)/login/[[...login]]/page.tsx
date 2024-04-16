@@ -1,41 +1,76 @@
 "use client";
 import Image from "next/image";
 import Background from "@/assets/images/background.jpg";
-import { Button } from "@mui/material";
+import { Alert, Button, Slide, SlideProps, Snackbar } from "@mui/material";
 import Link from "next/link";
 import FormLogin from "@/components/auth/FormLogin";
 import "./../Login.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-
+import axios, { AxiosError } from "axios";
+import { useStoreSearch } from "@/hooks/search";
+import { useAuthStore } from "@/hooks/user";
+function SlideTransition(props: SlideProps) {
+  return <Slide {...props} direction="up" />;
+}
+type IAlert = {
+  severity: any;
+  open: boolean;
+  message: string;
+};
 const Login = () => {
   const [formData, setFormData] = useState({
     loginName: "",
     password: "",
   });
+  const [alert, setAlert] = useState<IAlert>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+  const { message, open, severity } = alert;
   const router = useRouter();
+  const {setToken} = useAuthStore()
   const handleFormSubmit = async () => {
     try {
-      const response = await fetch("http://localhost:8082/api/user/login", {
+      const response = await axios.request({
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
-        redirect: "follow",
-        mode: "cors",
+        data: formData,
+        url: "http://localhost:8082/api/user/login",
       });
 
-      if (response.ok) {
+      if (response.data) {
         // Registration successful, handle the response accordingly
+        console.log("response.data", response.data);
+        setAlert((state) => ({
+          ...state,
+          message: "Đăng ký thành công",
+          open: true,
+          severity: "success",
+        }));
+        setToken(response.data.token)
         router.push("/");
       } else {
         throw new Error("Registration failed");
       }
     } catch (error) {
-      // Handle any network or server errors
+      // Handle any network or server errors{}
+      const errorTitle = error?.response?.data?.title;
+      if (errorTitle) {
+        console.log({ errorTitle });
+        setAlert((state) => ({
+          ...state,
+          message: errorTitle,
+          severity: "error",
+          open: true,
+        }));
+      }
     }
   };
+  const handleClose = () => setAlert((state) => ({ ...state, open: false }));
 
   return (
     <div className="auth">
@@ -64,6 +99,24 @@ const Login = () => {
       <div className="auth__right">
         <Image src={Background} alt="background" fill className="img" />
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={7000}
+        key={"vertical + horizontal"}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

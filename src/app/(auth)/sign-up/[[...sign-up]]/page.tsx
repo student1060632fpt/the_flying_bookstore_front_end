@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Background from "@/assets/images/bg-signin.jpg";
-import { Button } from "@mui/material";
+import { Alert, Button, Slide, SlideProps, Snackbar } from "@mui/material";
 import Link from "next/link";
 import FormLogin from "@/components/auth/FormLogin";
 import "./../../login/Login.scss";
@@ -9,7 +9,15 @@ import FormSignin from "@/components/auth/FormSignin";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-
+import { useAuthStore } from "@/hooks/user";
+function SlideTransition(props: SlideProps) {
+  return <Slide {...props} direction="up" />;
+}
+type IAlert = {
+  severity: any;
+  open: boolean;
+  message: string;
+};
 const SignIn = () => {
   const {
     register,
@@ -17,7 +25,13 @@ const SignIn = () => {
     handleSubmit,
   } = useForm();
   const router = useRouter();
-
+  const [alert, setAlert] = useState<IAlert>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
+  const { message, open, severity } = alert;
+  const {setToken} = useAuthStore()
   const onSubmit = async (data: any) => {
     try {
       const response = await fetch("http://localhost:8082/api/user/register", {
@@ -39,6 +53,9 @@ const SignIn = () => {
       });
 
       if (response.ok) {
+        setAlert((state) => ({ ...state,message: "Đăng ký thành công", open: true,severity:"success" }));
+        console.log({data: response?.data});
+        
         // Registration successful, handle the response accordingly
         router.push("/login");
       } else {
@@ -46,8 +63,14 @@ const SignIn = () => {
       }
     } catch (error) {
       // Handle any network or server errors
+      const errorTitle = error?.response?.data?.title;
+      if (errorTitle) {
+        console.log({ errorTitle });
+        setAlert((state) => ({ ...state,message: errorTitle, open: true,severity:"error" }));
+      }
     }
   };
+  const handleClose = () => setAlert((state) => ({ ...state, open: false }));
 
   return (
     <div className="auth">
@@ -80,6 +103,23 @@ const SignIn = () => {
       <div className="auth__right">
         <Image src={Background} alt="background" fill className="img" />
       </div>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+        open={open}
+        onClose={handleClose}
+        autoHideDuration={7000}
+        key={"vertical + horizontal"}
+        TransitionComponent={SlideTransition}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };

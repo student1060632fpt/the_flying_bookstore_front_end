@@ -30,11 +30,7 @@ const Pay = () => {
     vnp_OrderType: "other",
     vnp_ReturnUrl: `http://localhost:3000/checkout`,
   });
-  const handleSubmit = () => {
-    console.log({ urlString });
 
-    // redirect(urlString)
-  };
   const renderPayType = () => {
     switch (payType) {
       case 0:
@@ -54,7 +50,7 @@ const Pay = () => {
           <>
             <p className="my-5">Trạng thái: chưa thanh toán</p>
             <Link href={urlString}>
-              <Button variant="outlined" onClick={handleSubmit}>
+              <Button variant="outlined">
                 Chuyển đến trang thanh toán của Napas
               </Button>
             </Link>

@@ -20,7 +20,7 @@ const OrderFooter = (
           <IconButton aria-label="delete">
             <CiCircleInfo />
           </IconButton>
-          <Typography>
+          <Typography component={'span'}>
             Vui lòng chỉ nhấn “đã nhận được hàng” khi đơn hàng đã được giao đến
             bạn và bạn đã nhận được hàng{" "}
           </Typography>

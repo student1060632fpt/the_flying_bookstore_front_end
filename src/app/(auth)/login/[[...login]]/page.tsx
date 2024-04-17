@@ -18,6 +18,7 @@ type IAlert = {
   open: boolean;
   message: string;
 };
+
 const Login = () => {
   const [formData, setFormData] = useState({
     loginName: "",
@@ -30,7 +31,30 @@ const Login = () => {
   });
   const { message, open, severity } = alert;
   const router = useRouter();
-  const {setToken} = useAuthStore()
+  const { setToken } = useAuthStore();
+  const getProfile = async (token:string) => {
+    try {
+      const response = await axios.request({
+        url: "http://localhost:8082/api/user/myInfo",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data) {
+        console.log("b2: response?.data",response?.data)
+        setToken(token,response?.data);
+        setAlert((state) => ({
+          ...state,
+          message: "Đăng nhập thành công",
+          open: true,
+          severity: "success",
+        }));
+        router.push("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const handleFormSubmit = async () => {
     try {
       const response = await axios.request({
@@ -44,15 +68,8 @@ const Login = () => {
 
       if (response.data) {
         // Registration successful, handle the response accordingly
-        console.log("response.data", response.data);
-        setAlert((state) => ({
-          ...state,
-          message: "Đăng ký thành công",
-          open: true,
-          severity: "success",
-        }));
-        setToken(response.data.token)
-        router.push("/");
+        console.log("b1: response.data", response.data);
+        await getProfile(response.data.token)
       } else {
         throw new Error("Registration failed");
       }
@@ -60,7 +77,6 @@ const Login = () => {
       // Handle any network or server errors{}
       const errorTitle = error?.response?.data?.title;
       if (errorTitle) {
-        console.log({ errorTitle });
         setAlert((state) => ({
           ...state,
           message: errorTitle,
@@ -110,7 +126,6 @@ const Login = () => {
         <Alert
           onClose={handleClose}
           severity={severity}
-
           variant="filled"
           sx={{ width: "100%" }}
         >

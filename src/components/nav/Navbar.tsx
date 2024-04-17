@@ -14,7 +14,7 @@ import { CiShoppingCart } from "react-icons/ci";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Image from "next/image";
 import logoImage from "./../../assets/images/logo.jpg";
-import { Button, Divider, useTheme } from "@mui/material";
+import { Alert, Button, Divider, Snackbar, useTheme } from "@mui/material";
 import BookMenus from "./BookMenu";
 import { CiBellOn } from "react-icons/ci";
 import AvatarImage from "@/assets/images/no avatar.jpeg";
@@ -22,6 +22,8 @@ import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { useStoreCart } from "@/hooks/cart";
 import { useAuthStore } from "@/hooks/user";
+import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
+import AlertSignOut from "./AlertSignOut";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -31,10 +33,15 @@ export default function Navbar() {
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
   const cart = useStoreCart((state) => state.cart);
+  const [alert, setAlert] = React.useState<IAlert>({
+    open: false,
+    message: "",
+    severity: "success",
+  });
   const [menuOrderOpen, setMenuOrderOpen] = React.useState<null | HTMLElement>(
     null
   );
-  const { isLogin, removeToken } = useAuthStore();
+  const { isLogin, profile, removeToken } = useAuthStore();
   const openMenu = Boolean(menuOrderOpen);
   const handleClickOpenMenuOrder = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -60,6 +67,11 @@ export default function Navbar() {
   };
   const logout = () => {
     removeToken();
+    setAlert({
+      message: "Đăng xuất thành công",
+      severity: "success",
+      open: true,
+    });
     handleMenuClose();
   };
 
@@ -81,7 +93,7 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      {/* <MenuItem onClick={handleMenuClose}>Thông tin của tôi</MenuItem> */}
+      <MenuItem onClick={handleMenuClose}>Chào {profile?.username}</MenuItem>
       <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
       <MenuItem onClick={logout}>Đăng xuất</MenuItem>
     </Menu>
@@ -208,7 +220,7 @@ export default function Navbar() {
           color="inherit"
         >
           <Image
-            src={AvatarImage}
+            src={profile?.avatarUrl ? profile?.avatarUrl : AvatarImage}
             alt="Name"
             width={40}
             height={40}
@@ -217,7 +229,7 @@ export default function Navbar() {
         </Button>
       </Box>
     );
-  }, [isLogin,cart]);
+  }, [isLogin, cart]);
   return (
     <div>
       <AppBar position="static" sx={{ bgcolor: "background.paper" }}>
@@ -258,7 +270,7 @@ export default function Navbar() {
               </Box>
             </Button>
           </Link>
-           <Box sx={{ flexGrow: 0.5 }} />
+          <Box sx={{ flexGrow: 0.5 }} />
           <SearchBar />
           <Box sx={{ flexGrow: 1 }} />
           {renderIsAuth()}
@@ -278,6 +290,7 @@ export default function Navbar() {
       {renderMobileMenu}
       {renderMenu}
       {renderOrderMenu}
+      <AlertSignOut alert={alert} setAlert={setAlert} />
     </div>
   );
 }

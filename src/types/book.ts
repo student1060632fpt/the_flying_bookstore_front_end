@@ -1,3 +1,4 @@
+import { IUser } from "./user";
 
 export type IListing = {
   id: number;
@@ -11,10 +12,10 @@ export type IListing = {
   description: string;
   copy: ICopy;
   book: IBook;
-  review?:Array<IReview>;
-  bookOwned?:number;
+  review?: Array<IReview>;
+  bookOwned?: number;
   bookLeasing?: number;
-  user:User
+  user: IUser;
 };
 
 interface ICopy {
@@ -54,15 +55,3 @@ export interface IReview {
   updatedDate: string | null;
   deletedDate: string | null;
 }
-type User = {
-  id: number;
-  username: string;
-  email: string;
-  phoneNumber: string;
-  firstName: string;
-  lastName: string;
-  birthDate: string; // hoặc có thể sử dụng kiểu Date nếu muốn
-  avatarUrl: string | null;
-  address: string;
-  password: string | null;
-};

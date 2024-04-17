@@ -18,6 +18,12 @@ module.exports = {
         port: '',
       },
       
+      {
+        protocol: 'https',
+        hostname: 'loremflickr.com',
+        port: '',
+      },
+      
     ],
   },
 }

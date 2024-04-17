@@ -5,7 +5,7 @@ import { useStoreCart } from "@/hooks/cart";
 import { Button } from "@mui/material";
 import Link from "next/link";
 import Image from "next/image";
-import EmptyImg from "@/assets/images/empty cart.jpeg";
+import EmptyImg from "@/assets/images/empty_cart_animation_loop.gif";
 
 const Cart = () => {
   const cart = useStoreCart((state) => state.cart);

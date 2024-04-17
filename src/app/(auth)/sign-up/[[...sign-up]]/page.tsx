@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Background from "@/assets/images/bg-signin.jpg";
+import Background from "@/assets/images/bg-signin_animation.gif";
 import { Alert, Button, Slide, SlideProps, Snackbar } from "@mui/material";
 import Link from "next/link";
 import FormLogin from "@/components/auth/FormLogin";
@@ -13,7 +13,7 @@ import { useAuthStore } from "@/hooks/user";
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
 }
-type IAlert = {
+export type IAlert = {
   severity: any;
   open: boolean;
   message: string;
@@ -31,7 +31,6 @@ const SignIn = () => {
     severity: "success",
   });
   const { message, open, severity } = alert;
-  const {setToken} = useAuthStore()
   const onSubmit = async (data: any) => {
     try {
       const response = await fetch("http://localhost:8082/api/user/register", {
@@ -54,8 +53,6 @@ const SignIn = () => {
 
       if (response.ok) {
         setAlert((state) => ({ ...state,message: "Đăng ký thành công", open: true,severity:"success" }));
-        console.log({data: response?.data});
-        
         // Registration successful, handle the response accordingly
         router.push("/login");
       } else {

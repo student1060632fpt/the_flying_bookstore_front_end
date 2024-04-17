@@ -2,6 +2,7 @@
 import Step1 from "@/components/checkout/Step1";
 import Step2 from "@/components/checkout/Step2";
 import Step3 from "@/components/checkout/Step3";
+import { useAuthStore } from "@/hooks/user";
 import {
   Box,
   Button,
@@ -11,13 +12,17 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 
 const steps = ["Điền thông tin", "Xuất đơn hàng", "Lấy hàng"];
 
 const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const { isLogin } = useAuthStore();
+  const router = useRouter();
 
+  
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
@@ -43,34 +48,13 @@ const Checkout = () => {
     );
   };
 
-  const step2 = () => {
-    return (
-      <React.Fragment>
-        <Typography sx={{ mt: 2, mb: 1 }}>Step 2 ❤</Typography>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-          <Button
-            color="inherit"
-            disabled={activeStep === 0}
-            onClick={handleBack}
-            sx={{ mr: 1 }}
-          >
-            Quay lại
-          </Button>
-          <Box sx={{ flex: "1 1 auto" }} />
 
-          <Button onClick={handleNext}>
-            {activeStep === steps.length - 1 ? "Hoàn thành" : "Next"}
-          </Button>
-        </Box>
-      </React.Fragment>
-    );
-  };
   const chooseStep = () => {
     switch (activeStep) {
       case 0:
         return <Step1 handleNext={handleNext} />;
       case 1:
-        return <Step2 handleNext={handleNext}/> ;
+        return <Step2 handleNext={handleNext} />;
       case 2:
         return <Step3 />;
       default:
@@ -79,21 +63,19 @@ const Checkout = () => {
   };
 
   return (
-
-        <>
-          <Stepper activeStep={activeStep}>
-            {steps.map((label, index) => {
-              const stepProps: { completed?: boolean } = {};
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-          {activeStep === steps.length ? stepFinish() : chooseStep()}
-        </>
-    
+    <>
+      <Stepper activeStep={activeStep}>
+        {steps.map((label, index) => {
+          const stepProps: { completed?: boolean } = {};
+          return (
+            <Step key={label} {...stepProps}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          );
+        })}
+      </Stepper>
+      {activeStep === steps.length ? stepFinish() : chooseStep()}
+    </>
   );
 };
 

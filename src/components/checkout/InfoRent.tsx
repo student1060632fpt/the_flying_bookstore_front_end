@@ -11,10 +11,13 @@ import "./Step.scss";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Controller, useFormContext } from "react-hook-form";
+import { IFormCheckout } from "@/types/form";
+import { FormInputText } from "./FormInputText";
+
 const InfoRent = () => {
   const [cleared, setCleared] = useState<boolean>(false);
   const [age, setAge] = useState("");
-
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
@@ -31,31 +34,19 @@ const InfoRent = () => {
   return (
     <>
       <div className="row-2">
-        <TextField
-          size="medium"
-          id="standard-basic"
-          label="Họ và tên lót"
-          variant="standard"
+        <FormInputText
+          name={"lastName"}
+          label={"Họ và tên lót"}
         />
-        <TextField
-          size="medium"
-          id="standard-basic"
-          label="Tên"
-          variant="standard"
+        <FormInputText
+          name={"firstName"}
+          label={"Tên"}
         />
       </div>
-      <div className="row-2">
-        <TextField
-          size="medium"
-          id="standard-basic"
-          label="Email"
-          variant="standard"
-        />
-        <TextField
-          size="medium"
-          id="standard-basic"
-          label="Số điện thoại"
-          variant="standard"
+      <div className="grid grid-cols-1">
+      <FormInputText
+          name={"email"}
+          label={"Email"}
         />
       </div>
       <div className="row-2">
@@ -67,20 +58,12 @@ const InfoRent = () => {
             }}
           />
         </LocalizationProvider>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Thành phố</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={age}
-            label="Thành phố"
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Hồ Chí Minh</MenuItem>
-            <MenuItem value={20}>Hà Nội</MenuItem>
-            <MenuItem value={30}>Đà Nẵng</MenuItem>
-          </Select>
-        </FormControl>
+        <TextField
+          size="medium"
+          id="standard-basic"
+          label="Số điện thoại"
+          variant="standard"
+        />
       </div>
       <div className="grid grid-cols-1">
         <TextField

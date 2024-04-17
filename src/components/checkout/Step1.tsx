@@ -22,6 +22,8 @@ const schema = yup.object({
 }).required();
 
 const Step1 = ({ handleNext }: { handleNext: () => void }) => {
+  import dayjs from "dayjs";
+
   const { profile } = useAuthStore();
   const methods = useForm<IFormCheckout>({
     defaultValues: {
@@ -30,7 +32,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
       email: profile?.email || "",
       phoneNumber: profile?.phoneNumber || "",
       address: profile?.phoneNumber || "",
-      birthDate: profile?.birthDate ? dayjs(profile.birthDate) : dayjs(),
+      birthDate: profile?.birthDate ? dayjs(profile.birthDate).toDate() : new Date(),
     },
     resolver: yupResolver(schema)
   });

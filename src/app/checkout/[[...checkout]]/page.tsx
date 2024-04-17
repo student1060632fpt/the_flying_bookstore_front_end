@@ -12,42 +12,43 @@ import {
   Stepper,
   Typography,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const steps = ["Điền thông tin", "Xuất đơn hàng", "Lấy hàng"];
 
-const Checkout = () => {
+const Checkout = ({ query }: { query: any }) => {
   const [activeStep, setActiveStep] = useState(0);
   const { isLogin } = useAuthStore();
   const router = useRouter();
+  const searchParams:any = useSearchParams();
 
-  
+  console.log({ searchParams }, "tui đang viết ở page nè");
+  const getStatusOrder = () => {
+    if(searchParams?.vnp_ResponseCode != "00") return;
+    const data = {
+      vnp_Amount: searchParams?.vnp_Amount || "",
+      vnp_BankCode: searchParams?.vnp_BankCode || "",
+      vnp_BankTranNo: searchParams?.vnp_BankTranNo || "",
+      vnp_CardType: searchParams?.vnp_CardType || "",
+      vnp_OrderInfo: searchParams?.vnp_OrderInfo || "",
+      vnp_PayDate: searchParams?.vnp_PayDate || "",
+      vnp_ResponseCode: searchParams?.vnp_ResponseCode || "",
+      vnp_TmnCode: searchParams?.vnp_TmnCode || "",
+      vnp_TransactionNo: searchParams?.vnp_TransactionNo || "",
+      vnp_TransactionStatus: searchParams?.vnp_TransactionStatus || "",
+      vnp_TxnRef: searchParams?.vnp_TxnRef || "",
+      vnp_SecureHash: searchParams?.vnp_SecureHash || "",
+    };
+    
+  };
+  useEffect(() => {
+    getStatusOrder();
+  }, []);
+
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-  const stepFinish = () => {
-    return (
-      <React.Fragment>
-        <Typography sx={{ mt: 2, mb: 1 }}>
-          All steps completed - you&apos;re finished
-        </Typography>
-        <Box sx={{ display: "flex", flexDirection: "row", pt: 2 }}>
-          <Box sx={{ flex: "1 1 auto" }} />
-          <Button onClick={handleReset}>Reset</Button>
-        </Box>
-      </React.Fragment>
-    );
-  };
-
 
   const chooseStep = () => {
     switch (activeStep) {
@@ -74,7 +75,7 @@ const Checkout = () => {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? stepFinish() : chooseStep()}
+      {chooseStep()}
     </>
   );
 };

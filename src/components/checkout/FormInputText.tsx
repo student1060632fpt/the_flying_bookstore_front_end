@@ -17,6 +17,7 @@ export const FormInputText = ({
     <Controller
       name={name}
       control={control}
+      rules={{ required: required ? "Trường này cần phải điển" : false }}
       render={({ field, fieldState: { error } }) => (
         <>
           <TextField
@@ -29,7 +30,6 @@ export const FormInputText = ({
             variant="standard"
             {...field}
           />
-          {!!error && <FormHelperText>{error?.message}</FormHelperText>}
         </>
       )}
     />

@@ -8,35 +8,22 @@ import Link from "next/link";
 import { FormProvider, useForm } from "react-hook-form";
 import { useAuthStore } from "@/hooks/user";
 import { IFormCheckout } from "@/types/form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
 import dayjs from "dayjs";
 
-const schema = yup.object({
-  lastName: yup.string().required(),
-  firstName: yup.string().required(),
-  address: yup.string().required(),
-  email: yup.string().email().required(),
-  birthDate: yup.date().required(),
-  phoneNumber:yup.string().required()
-}).required();
-
 const Step1 = ({ handleNext }: { handleNext: () => void }) => {
-  import dayjs from "dayjs";
-
   const { profile } = useAuthStore();
-  const methods = useForm<IFormCheckout>({
-    defaultValues: {
-      lastName: profile?.lastName || "",
-      firstName: profile?.firstName || "",
-      email: profile?.email || "",
-      phoneNumber: profile?.phoneNumber || "",
-      address: profile?.phoneNumber || "",
-      birthDate: profile?.birthDate ? dayjs(profile.birthDate).toDate() : new Date(),
-    },
-    resolver: yupResolver(schema)
-  });
-  const onSubmit = (data: IFormCheckout) => console.log(data);
+  const defaultValues: IFormCheckout = {
+    lastName: profile?.lastName || "",
+    firstName: profile?.firstName || "",
+    email: profile?.email || "",
+    phoneNumber: profile?.phoneNumber || "",
+    address: profile?.address || "",
+    birthDate: profile?.birthDate ? dayjs(profile.birthDate) : dayjs(),
+  };
+  const methods = useForm<IFormCheckout>({});
+  const onSubmit = (data: IFormCheckout) => {
+    console.log({ data });
+  };
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -63,7 +50,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
           </Link>
           <Box sx={{ flex: "1 1 auto" }} />
 
-          <Button size="large" type="submit" variant="contained" onClick={handleNext}>
+          <Button size="large" type="submit" variant="contained">
             Tạo đơn hàng
           </Button>
         </Box>

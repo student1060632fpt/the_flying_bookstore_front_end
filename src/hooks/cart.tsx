@@ -19,6 +19,6 @@ const cartSlice: StateCreator<IUseStoreCart, [["zustand/persist", unknown]]> = (
 export const useStoreCart = create<IUseStoreCart>()(
   persist(cartSlice, {
     name: "cart-storage", // name of the item in the storage (must be unique)
-    storage: createJSONStorage(() => sessionStorage),
+    storage: createJSONStorage(() => localStorage),
   })
 );

@@ -12,7 +12,6 @@
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
-    "@hookform/resolvers": "^3.3.4",
     "@mui/icons-material": "^5.15.7",
     "@mui/joy": "^5.0.0-beta.29",
     "@mui/material": "^5.15.7",
@@ -21,6 +20,7 @@
     "@mui/x-data-grid": "^7.0.0",
     "@mui/x-date-pickers": "^6.19.5",
     "axios": "^1.6.8",
+    "config": "^3.3.11",
     "dayjs": "^1.11.10",
     "next": "^14.1.0",
     "react": "^18.2.0",
@@ -32,7 +32,7 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8",
     "swr": "^2.2.5",
-    "yup": "^1.4.0",
+    "vnpay": "^1.1.0",
     "zustand": "https://pkg.csb.dev/pmndrs/zustand/commit/992cedd4/zustand"
   },
   "devDependencies": {

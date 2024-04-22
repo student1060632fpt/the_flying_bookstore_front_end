@@ -20,6 +20,7 @@ const Category = ({category}: {category:ICategory}) => {
           src={Book}
           alt="Picture of the author"
           className="card-image"
+          unoptimized
         />
       </div>
       <h4 className="text-lg font-semibold py-3">{category.nameVn}</h4>

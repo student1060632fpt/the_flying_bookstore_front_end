@@ -9,9 +9,23 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useAuthStore } from "@/hooks/user";
 import { IFormCheckout } from "@/types/form";
 import dayjs from "dayjs";
+import { VNPay } from "vnpay";
+import { useStoreCart } from "@/hooks/cart";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+const vnpay = new VNPay({
+  tmnCode: "8P19JVPK",
+  secureSecret: "KDWIRZHZVFCMABESTHVTOQONWXASFYXI",
+  vnpayHost: "https://sandbox.vnpayment.vn",
+});
 
 const Step1 = ({ handleNext }: { handleNext: () => void }) => {
   const { profile } = useAuthStore();
+  const { cart } = useStoreCart();
+  const router = useRouter();
+  const [payType, setPayType] = useState<number>(2);
+
   const defaultValues: IFormCheckout = {
     lastName: profile?.lastName || "",
     firstName: profile?.firstName || "",
@@ -20,10 +34,22 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
     address: profile?.address || "",
     birthDate: profile?.birthDate ? dayjs(profile.birthDate) : dayjs(),
   };
-  const methods = useForm<IFormCheckout>({});
+  const methods = useForm<IFormCheckout>({defaultValues});
+  const urlString = vnpay.buildPaymentUrl({
+    vnp_Amount: cart?.total || 0,
+    vnp_IpAddr: "1.1.1.1",
+    vnp_TxnRef: dayjs().valueOf().toPrecision(),
+    vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.total}`,
+    vnp_OrderType: "other",
+    vnp_ReturnUrl: `http://localhost:3000/checkout`,
+  });
   const onSubmit = (data: IFormCheckout) => {
     console.log({ data });
-  };
+    if(payType == 2){
+      router.push(urlString);
+    }
+  }; 
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -39,7 +65,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
             <h3 className="">Thông tin thanh toán</h3>
             <CartTotal />
             <h3 className="mt-10">Thanh toán</h3>
-            <Pay />
+            <Pay payType={payType} setPayType={setPayType}/>
           </div>
         </div>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mb: 5 }}>

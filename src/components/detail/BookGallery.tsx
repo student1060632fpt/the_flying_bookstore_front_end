@@ -7,7 +7,7 @@ const BookGallery = ({bookImg}:{bookImg:string|undefined}) => {
   return (
     <div>
       <div className="image-cover">
-        <Image src={bookImg||NoImg} alt="book" fill />
+        <Image src={bookImg||NoImg} alt="book" fill unoptimized />
       </div>
       
     </div>

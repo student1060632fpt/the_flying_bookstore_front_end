@@ -16,7 +16,7 @@ const Cart = () => {
       </h2>
       {!cart ? (
         <div className="mx-auto text-center flex flex-col mt-5 items-center">
-          <Image src={EmptyImg} alt="empty cart" width={600}/>
+          <Image src={EmptyImg} alt="empty cart" width={600} unoptimized/>
           <p className="my-5 text-lg text-gray-700">
             Giỏ hàng của bạn đang trống
           </p>

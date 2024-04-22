@@ -4,7 +4,7 @@ import { PiHandshakeLight } from "react-icons/pi";
 import "./Step.scss";
 import MomoLogo from "./../../assets/images/MoMo_Logo.png";
 import Image from "next/image";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { VNPay } from "vnpay";
 import { Button } from "@mui/material";
 import { useStoreCart } from "@/hooks/cart";
@@ -13,26 +13,18 @@ import { useAuthStore } from "@/hooks/user";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { formatCurrency } from "@/utils/helps";
-import QRcode from "@/assets/images/qr_checkout.png"
+import QRcode from "@/assets/images/qr_checkout.png";
+import { useFormContext } from "react-hook-form";
+import { useRouter } from "next/navigation";
 
-const vnpay = new VNPay({
-  tmnCode: "8P19JVPK",
-  secureSecret: "KDWIRZHZVFCMABESTHVTOQONWXASFYXI",
-  vnpayHost: "https://sandbox.vnpayment.vn",
-});
-
-const Pay = () => {
-  const [payType, setPayType] = useState(0);
+const Pay = ({
+  payType,
+  setPayType,
+}: {
+  payType: number;
+  setPayType: Dispatch<SetStateAction<number>>;
+}) => {
   const { cart } = useStoreCart();
-  const { profile } = useAuthStore();
-  const urlString = vnpay.buildPaymentUrl({
-    vnp_Amount: cart?.total || 0,
-    vnp_IpAddr: "1.1.1.1",
-    vnp_TxnRef: dayjs().valueOf().toPrecision(),
-    vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.total}`,
-    vnp_OrderType: "other",
-    vnp_ReturnUrl: `http://localhost:3000/checkout`,
-  });
 
   const renderPayType = () => {
     switch (payType) {
@@ -40,26 +32,20 @@ const Pay = () => {
         return (
           <>
             <p className="my-5">
-              Đầu tiên bạn sẽ đưa tiền cọc{" "}
-              {formatCurrency(cart?.book.depositFee)} cho công ty Flying
+              Bạn sẽ đưa {formatCurrency(cart?.total)} cho công ty Flying
               Bookstore tại địa chỉ 171/11 Trương Phước Phan, quận Bình Tân,
               tp.HCM
-            </p>
-
-            <p className="">
-              Bạn sẽ đưa tiền thuê sách {formatCurrency(cart?.totalRent)} khi
-              gặp {cart?.book?.user?.firstName}
             </p>
           </>
         );
       case 1:
         return (
           <>
-          h3.text-
-            <h4 className="text-md mt-5">
+            <h4 className="text-xl my-5 font-semibold">Bước 1: Thanh toán</h4>
+            <h4 className="text-md">
               Cách 1: Bạn có thể quét mã qr ở dưới đây:
             </h4>
-            <Image src={QRcode} alt="qr" className="w-1/2"/>
+            <Image src={QRcode} alt="qr" className="w-1/2" />
             <h4 className="text-md mt-5">
               Cách 2: Bạn chuyển khoản theo thông tin sau:
             </h4>
@@ -73,17 +59,17 @@ const Pay = () => {
               <br />
               Tỉnh/TP: TP.Hồ Chí Minh
             </p>
+            <h4 className="text-xl my-5 font-semibold">
+              Bước 2: Chờ quản trị xác nhận
+            </h4>
           </>
         );
       case 2:
         return (
           <>
-            <p className="my-5">Trạng thái: chưa thanh toán</p>
-            <Link href={urlString}>
-              <Button variant="outlined">
-                Chuyển đến trang thanh toán của Napas
-              </Button>
-            </Link>
+            <p className="my-5">
+              Nhấn nút Tạo đơn hàng để đến trang thanh toán VNPay
+            </p>
           </>
         );
       default:

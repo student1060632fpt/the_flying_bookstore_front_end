@@ -1,6 +1,7 @@
 "use client";
 import {
   FormControl,
+  FormHelperText,
   InputLabel,
   MenuItem,
   Select,
@@ -8,7 +9,12 @@ import {
   TextField,
 } from "@mui/material";
 import "./Step.scss";
-import { DatePicker, DateValidationError, LocalizationProvider, viVN } from "@mui/x-date-pickers";
+import {
+  DatePicker,
+  DateValidationError,
+  LocalizationProvider,
+  viVN,
+} from "@mui/x-date-pickers";
 import { useEffect, useMemo, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Controller, useFormContext } from "react-hook-form";
@@ -18,18 +24,7 @@ import { FormInputText } from "./FormInputText";
 const InfoRent = () => {
   const [cleared, setCleared] = useState<boolean>(false);
   const { control } = useFormContext();
-  const [error, setError] = useState<DateValidationError | null>(null);
 
-  const errorMessage = useMemo(() => {
-    switch (error) {
-      case 'invalidDate': {
-        return 'Ngày không hợp lệ';
-      }
-      default: {
-        return '';
-      }
-    }
-  }, [error]);
   useEffect(() => {
     if (cleared) {
       const timeout = setTimeout(() => {
@@ -49,7 +44,7 @@ const InfoRent = () => {
       <div className="grid grid-cols-1">
         <FormInputText name={"email"} label={"Email"} required />
       </div>
-      <div className="row-2">
+      <div className="grid grid-cols-1 mt-5">
         <LocalizationProvider
           dateAdapter={AdapterDayjs}
           localeText={
@@ -59,31 +54,48 @@ const InfoRent = () => {
           <Controller
             control={control}
             name="birthDate"
-            rules={{ required: "Chọn ngày sinh" }}
-            render={({ field, }) => {
+            rules={{
+              required: {
+                value: true,
+                message: "Chọn ngày sinh",
+              },
+            }}
+            render={({
+              field: { onChange, value, ref },
+              formState: { errors },
+            }) => {
+              console.log({errors});
+              
               return (
-                <DatePicker
-                  sx={{ width: "100%", mb: 2 }}
-                  label="Ngày sinh"
-                  inputRef={field.ref}
-                  format="DD/MM/YYYY"
-                  disableFuture
-                  onError={(newError) => setError(newError)}
-                  slotProps={{
-                    textField: {
-                      helperText: errorMessage,
-                    },
-                    field: { clearable: true, onClear: () => setCleared(true) },
-                  }}
-                  {...field}
-                />
+                <>
+                  <DatePicker
+                    sx={{ width: "100%",borderColor:"red" }}
+                    label="Ngày sinh"
+                    inputRef={ref}
+                    format="DD/MM/YYYY"
+                    disableFuture
+                    
+                    slotProps={{
+                      field: {
+                        clearable: true,
+                        onClear: () => setCleared(true),
+                      },
+                    }}
+                    onChange={onChange}
+                    onAccept={onChange}
+                    value={value}
+                  />
+                  <FormHelperText required={errors?.birthDate?.type == "required"} style={{color: "#d32f2f"}}>{errors?.birthDate?.message}</FormHelperText>
+                </>
               );
             }}
           />
         </LocalizationProvider>
-        <FormInputText name={"phoneNumber"} label={"Số điện thoại"} required />
       </div>
       <div className="grid grid-cols-1">
+        <FormInputText name={"phoneNumber"} label={"Số điện thoại"} required />
+      </div>
+      <div className="grid grid-cols-1 mt-5">
         <FormInputText name={"address"} label={"Địa chỉ"} required />
       </div>
     </>

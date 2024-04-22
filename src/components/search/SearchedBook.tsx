@@ -15,6 +15,7 @@ const SearchedBook = ({ book }: { book: IListing }) => {
           className={`border rounded-xl mx-auto `} // Use external CSS class
           width={128}
           height={230}
+          unoptimized
         />
         <h3 className="font-semibold text-lg text-primary my-2 truncate">
           {book?.book?.title}

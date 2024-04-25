@@ -34,7 +34,7 @@ const countAvarageReview = (arrayReview: Array<IReview> | undefined)=>{
   const totalScore = arrayReview.reduce((accumulator, review) => accumulator + review.score, 0);
   const avarage = totalScore / arrayReview.length;
   const roundedAverageScore = Math.round(avarage * 2) / 2;
-  return roundedAverageScore
+  return roundedAverageScore | 0;
 }
 
 export { chunkArray, formatCurrency, arrayToString,countAvarageReview};

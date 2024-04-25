@@ -28,10 +28,12 @@ const RentDay = ({ book }: IPropsBook) => {
   const router = useRouter()
   const addToCart = useStoreCart(state=>state.addCart)
   const renderDurationRent = () => {
+    const firstDayEnd = watch("dateEnd")
+    if(!firstDayEnd) return 0
     const dateStart = watch("dateStart");
-    const dateEnd = watch("dateEnd");
+    const dateEnd = dayjs(firstDayEnd).add(1,"day");
     if (!dateStart || !dateEnd) return 0;
-    const duration = dateEnd.diff(dateStart, "day");
+    const duration = dateEnd.diff(dateStart, "day")
     return duration;
   };
   const renderTotalRent = () => {

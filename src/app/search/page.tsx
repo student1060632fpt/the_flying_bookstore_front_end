@@ -19,7 +19,7 @@ export default function Page() {
   async function makeRequest() {
     const paramsAxios = {
       size: 20,
-      page: pageNumber,
+      page: pageNumber-1,
       title: titleParam,
       genre: categoryParam?.nameVn,
     };

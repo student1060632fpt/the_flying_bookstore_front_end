@@ -2,7 +2,7 @@
 import { PiCreditCardLight } from "react-icons/pi";
 import { PiHandshakeLight } from "react-icons/pi";
 import "./Step.scss";
-import MomoLogo from "./../../assets/images/MoMo_Logo.png";
+import MomoLogo from "./../../assets/images/vnpay.png";
 import Image from "next/image";
 import { Dispatch, SetStateAction, useState } from "react";
 import { VNPay } from "vnpay";
@@ -98,8 +98,8 @@ const Pay = ({
           className={`pay-card ${payType == 2 && "choose"}`}
           onClick={() => setPayType(2)}
         >
-          <Image src={MomoLogo} alt="momo" className="icon" />
-          <p className="">Thanh toán Momo</p>
+          <Image src={MomoLogo} alt="momo" className="mx-auto mb-2" width={65} />
+          <p className="">Thanh toán VNPay</p>
         </div>
       </div>
       {renderPayType()}

@@ -2,7 +2,6 @@
 'use client';
 import { createTheme } from '@mui/material/styles';
 import { Open_Sans } from 'next/font/google';
-
 const mainFont = Open_Sans({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin','vietnamese'],

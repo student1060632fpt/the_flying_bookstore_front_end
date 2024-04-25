@@ -14,10 +14,10 @@ const HeaderListBook = ({
 }: {
   bookData: PageResponse<IListing> | undefined;
 }) => {
-  const {categoryParam: genreParam,titleParam} = useStoreSearch();
+  const { categoryParam: genreParam, titleParam } = useStoreSearch();
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const listCategory = useGenreStore(state=>state.listGenre)
+  const listCategory = useGenreStore((state) => state.listGenre);
   const open = Boolean(anchorEl);
 
   const handleClose = () => {
@@ -30,15 +30,31 @@ const HeaderListBook = ({
     setSelectedIndex(index);
     setAnchorEl(null);
   };
-  const renterTitle = ()=>{
-    if(!genreParam && !titleParam){
-      return <h2 className="text-4xl font-semibold text-primary">Tất cả sách</h2>
-    } else if(genreParam && listCategory){
-      return <h2 className="text-4xl font-semibold text-primary">Sách theo thể loại {genreParam?.nameVn}</h2>
-    } else if (titleParam){
-      return <h2 className="text-4xl font-semibold text-primary">Sách có tiêu đề bao gồm: {titleParam}</h2>
+  const renterTitle = () => {
+    let returnTitle = `Tất cả sách`;
+    let returnCategory = "";
+    if (!genreParam && !titleParam) {
+      return <h2 className="text-4xl font-semibold text-primary">{returnTitle}</h2>
+    } else {
+      if (genreParam && listCategory) {
+        returnTitle = `Sách theo thể loại ${genreParam?.nameVn}`;
+      }
+      if (titleParam) {
+        returnCategory = `Sách có tiêu đề bao gồm: ${titleParam}`;
+      }
     }
-  }
+
+    return (
+      <>
+        <h2 className="text-4xl font-semibold text-primary">{returnTitle}</h2>
+        {returnCategory ?? (
+          <h2 className="text-4xl font-semibold text-primary">
+            {returnCategory}
+          </h2>
+        )}
+      </>
+    );
+  };
   return (
     <div>
       {renterTitle()}

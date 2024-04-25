@@ -43,7 +43,7 @@ export interface IPropsBook {
   book: IListing | undefined
 }
 const DocumentInfo = ({book}:IPropsBook) => {
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(0);
 
   const handleChange = (_: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);

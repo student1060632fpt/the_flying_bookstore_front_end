@@ -17,7 +17,7 @@ const CartItem = () => {
   return (
     <div className="p-5 gap-5 rounded-lg border flex flex-grow hover:shadow-lg hover:shadow-indigo-500/50 ease-in-out duration-200 rounded-lg">
       <div className="basis-2/12 relative w-32 h-48">
-        <Image fill src={Book} alt="d" className="object-cover rounded-lg" />
+        <Image fill src={cart?.book.copy.imageLink||Book} alt="d" className="object-cover rounded-lg" />
       </div>
       <div className="basis-4/12 flex flex-col justify-center">
         <h4 className="text-primary font-semibold text-lg">

@@ -2,6 +2,7 @@
 import Step1 from "@/components/checkout/Step1";
 import Step2 from "@/components/checkout/Step2";
 import Step3 from "@/components/checkout/Step3";
+import { useStoreCart } from "@/hooks/cart";
 import { useAuthStore } from "@/hooks/user";
 import { IParamsVNpay } from "@/types/checkout";
 import {
@@ -48,14 +49,14 @@ const Checkout = () => {
   const [activeStep, setActiveStep] = useState(0);
   const { isLogin } = useAuthStore();
   const { href: currentUrl } = useUrl() ?? {};
-
+  const { removeCart } = useStoreCart();
   const getStatusOrder = () => {
     console.log({ currentUrl });
     if (!currentUrl) return;
     const params = parseUrlParams(currentUrl);
     if (params.vnp_TransactionStatus == "00") {
       // gọi api tạo đơn hàng ở đây
-      setActiveStep(1);  
+      handleNext()
     }
   };
   useEffect(() => {
@@ -64,6 +65,8 @@ const Checkout = () => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    removeCart();
+
   };
 
   const chooseStep = () => {

@@ -13,6 +13,9 @@ import { VNPay } from "vnpay";
 import { useStoreCart } from "@/hooks/cart";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import axios from "axios";
+import AlertSignOut from "../nav/AlertSignOut";
+import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
 
 const vnpay = new VNPay({
   tmnCode: "8P19JVPK",
@@ -21,7 +24,12 @@ const vnpay = new VNPay({
 });
 
 const Step1 = ({ handleNext }: { handleNext: () => void }) => {
-  const { profile } = useAuthStore();
+  const { profile, token } = useAuthStore();
+  const [alert, setAlert] = useState<IAlert>({
+    open: false,
+    message: "Tạo đơn hàng thành công",
+    severity: "success",
+  });
   const { cart } = useStoreCart();
   const router = useRouter();
   const [payType, setPayType] = useState<number>(2);
@@ -34,7 +42,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
     address: profile?.address || "",
     birthDate: profile?.birthDate ? dayjs(profile.birthDate) : dayjs(),
   };
-  const methods = useForm<IFormCheckout>({defaultValues});
+  const methods = useForm<IFormCheckout>({ defaultValues });
   const urlString = vnpay.buildPaymentUrl({
     vnp_Amount: cart?.total || 0,
     vnp_IpAddr: "1.1.1.1",
@@ -43,12 +51,58 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
     vnp_OrderType: "other",
     vnp_ReturnUrl: `http://localhost:3000/checkout`,
   });
-  const onSubmit = (data: IFormCheckout) => {
-    console.log({ data });
-    if(payType == 2){
-      router.push(urlString);
+
+  const convertPaymentType = () => {
+    switch (payType) {
+      case 0:
+        return "COD";
+      case 1:
+        return "BANK_TRANSFER";
+      case 2:
+        return "VNPAY";
+      default:
+        break;
     }
-  }; 
+  };
+  const onSubmit = async (data: IFormCheckout) => {
+    const convertValue = {
+      status: "ORDERED_PAYMENT_PENDING",
+      listingId: cart?.book?.id,
+      lesseeId: profile?.id,
+      lesseeAddress: data.address,
+      fromDate: dayjs(cart?.dayRent.dateStart).format("YYYY-MM-DD"),
+      toDate: dayjs(cart?.dayRent.dateEnd).format("YYYY-MM-DD"),
+      paymentMethod: convertPaymentType(),
+    };
+    console.log({ data, convertValue });
+    try {
+      const response = await axios.request({
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "http://localhost:8082/api/leaseOrder",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        data: JSON.stringify(convertValue),
+      });
+      if (response?.data) {
+        setAlert((state) => ({ ...state, open: true }));
+        if (payType == 2) {
+          router.push(urlString);
+        } else {
+          handleNext()
+        }
+      }
+    } catch (error) {
+      console.log(error);
+      setAlert({
+        message:"Lỗi",
+        open:true,
+        severity: "error"
+      })
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -65,7 +119,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
             <h3 className="">Thông tin thanh toán</h3>
             <CartTotal />
             <h3 className="mt-10">Thanh toán</h3>
-            <Pay payType={payType} setPayType={setPayType}/>
+            <Pay payType={payType} setPayType={setPayType} />
           </div>
         </div>
         <Box sx={{ display: "flex", flexDirection: "row", pt: 2, mb: 5 }}>
@@ -81,6 +135,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
           </Button>
         </Box>
       </form>
+      <AlertSignOut alert={alert} setAlert={setAlert} />
     </FormProvider>
   );
 };

@@ -26,7 +26,7 @@ export const FormInputText = ({
             id={`${name} - form checkout`}
             error={!!error}
             fullWidth
-            label={label}
+            label={`${label} *`}
             variant="standard"
             {...field}
           />

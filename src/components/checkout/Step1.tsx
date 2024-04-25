@@ -12,10 +12,11 @@ import dayjs from "dayjs";
 import { VNPay } from "vnpay";
 import { useStoreCart } from "@/hooks/cart";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
 import AlertSignOut from "../nav/AlertSignOut";
 import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
+import { useStoreOrder } from "../../hooks/order";
 
 const vnpay = new VNPay({
   tmnCode: "8P19JVPK",
@@ -23,16 +24,18 @@ const vnpay = new VNPay({
   vnpayHost: "https://sandbox.vnpayment.vn",
 });
 
-const Step1 = ({ handleNext }: { handleNext: () => void }) => {
-  const { profile, token } = useAuthStore();
-  const [alert, setAlert] = useState<IAlert>({
-    open: false,
-    message: "Tạo đơn hàng thành công",
-    severity: "success",
-  });
+const Step1 = ({
+  handleNext,
+  setAlert,
+}: {
+  handleNext: () => void;
+  setAlert: Dispatch<SetStateAction<IAlert>>;
+}) => {
+  const { profile, token, setToken } = useAuthStore();
+  const { updateOrder } = useStoreOrder();
   const { cart } = useStoreCart();
   const router = useRouter();
-  const [payType, setPayType] = useState<number>(2);
+  const [payType, setPayType] = useState<number>(0);
 
   const defaultValues: IFormCheckout = {
     lastName: profile?.lastName || "",
@@ -43,6 +46,10 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
     birthDate: profile?.birthDate ? dayjs(profile.birthDate) : dayjs(),
   };
   const methods = useForm<IFormCheckout>({ defaultValues });
+  const {
+    getValues,
+    formState: { isSubmitSuccessful },
+  } = methods;
   const urlString = vnpay.buildPaymentUrl({
     vnp_Amount: cart?.total || 0,
     vnp_IpAddr: "1.1.1.1",
@@ -64,7 +71,28 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
         break;
     }
   };
-  const onSubmit = async (data: IFormCheckout) => {
+  const getProfile = async (): Promise<void> => {
+    try {
+      const response = await axios.request({
+        url: "http://localhost:8082/api/user/myInfo",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response?.data && token) {
+        setToken(token, response?.data);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
+
+  const onSubmitOrder = async () => {
+    const data = getValues();
+
     const convertValue = {
       status: "ORDERED_PAYMENT_PENDING",
       listingId: cart?.book?.id,
@@ -74,7 +102,6 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
       toDate: dayjs(cart?.dayRent.dateEnd).format("YYYY-MM-DD"),
       paymentMethod: convertPaymentType(),
     };
-    console.log({ data, convertValue });
     try {
       const response = await axios.request({
         method: "post",
@@ -87,23 +114,67 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
         data: JSON.stringify(convertValue),
       });
       if (response?.data) {
-        setAlert((state) => ({ ...state, open: true }));
+        setAlert({
+          message: "Tạo đơn hàng thành công",
+          open: true,
+          severity: "success",
+        });
+        updateOrder(response?.data?.id);
+        handleNext();
+        
         if (payType == 2) {
           router.push(urlString);
-        } else {
-          handleNext()
         }
       }
     } catch (error) {
-      console.log(error);
       setAlert({
-        message:"Lỗi",
-        open:true,
-        severity: "error"
-      })
+        message: "Lỗi",
+        open: true,
+        severity: "error",
+      });
     }
   };
+  const onSubmit = async (data: IFormCheckout) => {
+    const { email, phoneNumber, firstName, lastName, birthDate, address } =
+      data;
+    let dataRes = JSON.stringify({
+      id: profile?.id,
+      username: profile?.username,
+      email,
+      phoneNumber,
+      firstName,
+      lastName,
+      birthDate: dayjs(birthDate).format("YYYY-MM-DD"),
+      address,
+      password: null,
+    });
+    let config = {
+      method: "put",
+      maxBodyLength: Infinity,
+      url: `http://localhost:8082/api/user/${profile?.id}`,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      data: dataRes,
+    };
 
+    return await axios
+      .request(config)
+      .then((response) => {
+        if (response.data) {
+          setAlert({
+            message:
+              "Xác nhận thông tin thành công, mời bạn chọn thanh toán rồi tạo đơn hàng",
+            open: true,
+            severity: "success",
+          });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)}>
@@ -130,12 +201,16 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
           </Link>
           <Box sx={{ flex: "1 1 auto" }} />
 
-          <Button size="large" type="submit" variant="contained">
+          <Button
+            size="large"
+            disabled={!isSubmitSuccessful}
+            variant="contained"
+            onClick={onSubmitOrder}
+          >
             Tạo đơn hàng
           </Button>
         </Box>
       </form>
-      <AlertSignOut alert={alert} setAlert={setAlert} />
     </FormProvider>
   );
 };

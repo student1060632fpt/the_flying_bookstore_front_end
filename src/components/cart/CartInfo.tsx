@@ -8,10 +8,12 @@ import { useAuthStore } from "@/hooks/user";
 import AlertSignOut from "../nav/AlertSignOut";
 import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
 import { useState } from "react";
+import { useStoreStep } from "../../hooks/step";
 
 const CartInfo = () => {
   const router = useRouter();
   const { isLogin } = useAuthStore();
+  const {resetStep} = useStoreStep()
   const [alert, setAlert] = useState<IAlert>({
     open: false,
     message: "Bạn cần đăng nhập trước",
@@ -19,6 +21,7 @@ const CartInfo = () => {
   });
   const onClickNavigate = () => {
     if (isLogin) {
+      resetStep()
       router.push("/checkout");
     } else {
       setAlert((state) => ({ ...state, open: true }));

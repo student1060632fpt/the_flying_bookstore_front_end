@@ -1,5 +1,8 @@
 "use client";
 import {
+  Alert,
+  Box,
+  Button,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -7,6 +10,7 @@ import {
   Select,
   SelectChangeEvent,
   TextField,
+  Typography,
 } from "@mui/material";
 import "./Step.scss";
 import {
@@ -23,7 +27,10 @@ import { FormInputText } from "./FormInputText";
 
 const InfoRent = () => {
   const [cleared, setCleared] = useState<boolean>(false);
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { isValid, isSubmitSuccessful },
+  } = useFormContext();
 
   useEffect(() => {
     if (cleared) {
@@ -35,6 +42,16 @@ const InfoRent = () => {
     }
     return () => {};
   }, [cleared]);
+  const renderInfo = () => {
+    if (isSubmitSuccessful)
+      return <Alert severity="success">Chọn thanh toán rồi tạo đơn hàng</Alert>;
+    if (!isValid) {
+      return (
+        <Alert severity="warning">Điền thông tin đặt thuê còn thiếu</Alert>
+      );
+    }
+    return <div></div>;
+  };
   return (
     <>
       <div className="row-2">
@@ -64,17 +81,14 @@ const InfoRent = () => {
               field: { onChange, value, ref },
               formState: { errors },
             }) => {
-              console.log({errors});
-              
               return (
                 <>
                   <DatePicker
-                    sx={{ width: "100%",borderColor:"red" }}
+                    sx={{ width: "100%", borderColor: "red" }}
                     label="Ngày sinh"
                     inputRef={ref}
                     format="DD/MM/YYYY"
                     disableFuture
-                    
                     slotProps={{
                       field: {
                         clearable: true,
@@ -85,7 +99,12 @@ const InfoRent = () => {
                     onAccept={onChange}
                     value={value}
                   />
-                  <FormHelperText required={errors?.birthDate?.type == "required"} style={{color: "#d32f2f"}}>{errors?.birthDate?.message}</FormHelperText>
+                  <FormHelperText
+                    required={errors?.birthDate?.type == "required"}
+                    style={{ color: "#d32f2f" }}
+                  >
+                    {errors?.birthDate?.message}
+                  </FormHelperText>
                 </>
               );
             }}
@@ -98,6 +117,18 @@ const InfoRent = () => {
       <div className="grid grid-cols-1 mt-5">
         <FormInputText name={"address"} label={"Địa chỉ"} required />
       </div>
+      <Box
+        justifyContent={"space-between"}
+        mt={2}
+        alignItems={"center"}
+        display={"flex"}
+      >
+        {renderInfo()}
+
+        <Button size="large" type="submit" variant="outlined">
+          Xác nhận
+        </Button>
+      </Box>
     </>
   );
 };

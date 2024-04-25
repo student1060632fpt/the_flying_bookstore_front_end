@@ -41,7 +41,6 @@ const Login = () => {
         },
       });
       if (response?.data) {
-        console.log("b2: response?.data",response?.data)
         setToken(token,response?.data);
         setAlert((state) => ({
           ...state,

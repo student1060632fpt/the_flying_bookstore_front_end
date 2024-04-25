@@ -14,8 +14,26 @@ import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import Order from "./Order";
+import { useStoreOrder } from "../../hooks/order";
+import { useEffect } from "react";
+import axios from "axios";
 
 const Step2 = ({ handleNext }: { handleNext: () => void }) => {
+  const { order } = useStoreOrder();
+  const getDetailOrder = async () => {
+    axios
+      .request({ url: "http://localhost:8082/api/leaseOrder/" + order })
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  useEffect(() => {
+    getDetailOrder();
+  }, [order]);
+
   return (
     <>
       <div className="w-2/3 mx-auto border rounded-lg py-8 mt-20 px-10">
@@ -29,8 +47,8 @@ const Step2 = ({ handleNext }: { handleNext: () => void }) => {
       </div>
       <div className="mt-10 w-2/3 mx-auto">
         <Alert severity="info" onClose={() => {}}>
-          Sau khi đến được chỗ thuê sách và nhận được sách, bạn hãy bấm nút &apos;Xác
-          nhận lấy hàng&apos; dưới đây
+          Sau khi đến được chỗ thuê sách và nhận được sách, bạn hãy bấm nút
+          &apos;Xác nhận lấy hàng&apos; dưới đây
         </Alert>
       </div>
       <div className=" mt-10 mb-20 w-2/3 mx-auto flex justify-between">
@@ -45,7 +63,7 @@ const Step2 = ({ handleNext }: { handleNext: () => void }) => {
             Tiếp tục mua sắm
           </Button>
         </Link>
-        <Link href="/">
+        <Link href="/my-order">
           <Button
             variant="outlined"
             sx={{ textTransform: "none" }}

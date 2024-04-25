@@ -17,6 +17,9 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import { useUrl } from "nextjs-current-url";
 import React, { useEffect, useState } from "react";
+import AlertSignOut from "../../../components/nav/AlertSignOut";
+import { IAlert } from "../../(auth)/sign-up/[[...sign-up]]/page";
+import { useStoreStep } from "../../../hooks/step";
 
 const steps = ["Điền thông tin", "Xuất đơn hàng", "Lấy hàng"];
 const parseUrlParams = (url: string) => {
@@ -46,17 +49,24 @@ const parseUrlParams = (url: string) => {
   return params;
 };
 const Checkout = () => {
-  const [activeStep, setActiveStep] = useState(0);
-  const { isLogin } = useAuthStore();
-  const { href: currentUrl } = useUrl() ?? {};
+  const [alert, setAlert] = useState<IAlert>({
+    open: false,
+    message: "Tạo đơn hàng thành công",
+    severity: "success",
+  });
+  const {changeStep,step}  = useStoreStep()
+  const { href: currentUrl,pathname } = useUrl() ?? {};
   const { removeCart } = useStoreCart();
   const getStatusOrder = () => {
-    console.log({ currentUrl });
-    if (!currentUrl) return;
+    if (!currentUrl ) return;
     const params = parseUrlParams(currentUrl);
     if (params.vnp_TransactionStatus == "00") {
-      // gọi api tạo đơn hàng ở đây
-      handleNext()
+      // gọi api thay đổi trạng thái đơn hàng ở đây
+      setAlert({
+        open:true,
+        message: "Thanh toán thành công",
+        severity: "success"
+      })
     }
   };
   useEffect(() => {
@@ -64,15 +74,14 @@ const Checkout = () => {
   }, [currentUrl]);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    changeStep(step + 1);
     removeCart();
-
   };
 
   const chooseStep = () => {
-    switch (activeStep) {
+    switch (step) {
       case 0:
-        return <Step1 handleNext={handleNext} />;
+        return <Step1 handleNext={handleNext} setAlert={setAlert} />;
       case 1:
         return <Step2 handleNext={handleNext} />;
       case 2:
@@ -84,7 +93,7 @@ const Checkout = () => {
 
   return (
     <>
-      <Stepper activeStep={activeStep}>
+      <Stepper activeStep={step}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           return (
@@ -95,6 +104,8 @@ const Checkout = () => {
         })}
       </Stepper>
       {chooseStep()}
+      <AlertSignOut alert={alert} setAlert={setAlert} />
+
     </>
   );
 };

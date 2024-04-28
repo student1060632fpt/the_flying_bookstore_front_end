@@ -98,7 +98,7 @@ const SignIn = () => {
         </div>
       </div>
       <div className="auth__right">
-        <Image src={Background} alt="background" fill className="img" />
+        <Image src={Background} unoptimized alt="background" fill className="img" />
       </div>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

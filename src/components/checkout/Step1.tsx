@@ -102,6 +102,7 @@ const Step1 = ({
       toDate: dayjs(cart?.dayRent.dateEnd).format("YYYY-MM-DD"),
       paymentMethod: convertPaymentType(),
     };
+
     try {
       const response = await axios.request({
         method: "post",
@@ -121,7 +122,7 @@ const Step1 = ({
         });
         updateOrder(response?.data?.id);
         handleNext();
-        
+
         if (payType == 2) {
           router.push(urlString);
         }

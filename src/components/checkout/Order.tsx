@@ -1,5 +1,5 @@
-import { Divider } from "@mui/material";
-import React from "react";
+import { Alert, Divider } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import BookItem from "./BookItem";
 import { BsFileText } from "react-icons/bs";
 import { PiCalendarCheck } from "react-icons/pi";
@@ -7,12 +7,22 @@ import CartInfoRent from "../cart/CartInfoRent";
 import { LuFlag } from "react-icons/lu";
 import { CgCreditCard } from "react-icons/cg";
 import CartTotal from "../cart/CartTotal";
+import { useStoreOrder } from "../../hooks/order";
+import axios from "axios";
+import { IOrder, IOrderStatus, IPaymentMethod } from "../../types/order";
+import dayjs from "dayjs";
+import OrderInfoRent from "./OrderInfoRent";
+import OrderTotal from "./OrderTotal";
+import { renderPayment, renderStatus } from "./PaymentStatus";
 
-const Order = ({ status }: { status?: string }) => {
+
+
+const Order = ({orderDetail}:{orderDetail?:IOrder|undefined}) => {
+ 
+  
   return (
     <>
       <Divider>Giỏ hàng</Divider>
-      <BookItem />
       <BookItem />
       <Divider sx={{ mt: 3 }} />
       <h4 className="text-lg font-medium text-center mt-5 my-3">
@@ -23,29 +33,33 @@ const Order = ({ status }: { status?: string }) => {
           <div className="flex total__row">
             <BsFileText className="total__icon" />
             <p className="total__title">Mã đơn hàng</p>
-            <p className="total__description">123123</p>
+            <p className="total__description">{orderDetail?.id}</p>
           </div>
           <div className="flex total__row">
             <PiCalendarCheck className="total__icon" />
             <p className="total__title">Ngày đặt thuê</p>
-            <p className="total__description">10/10/2023</p>
+            <p className="total__description">
+              {dayjs(orderDetail?.createdDate).format("DD/MM/YYYY")}
+            </p>
           </div>
-          <CartInfoRent />
+          <OrderInfoRent order={orderDetail} />
         </div>
         <div className="total">
           <div className="flex total__row">
             <LuFlag className="total__icon" />
             <p className="total__title">Trạng thái</p>
-            <p className="total__description">
-              {status ? status : "Chờ lấy hàng"}
-            </p>
+            <div className="total__description">
+              {renderStatus(orderDetail?.status)}
+            </div>
           </div>
           <div className="flex total__row">
             <CgCreditCard className="total__icon" />
             <p className="total__title">Phương thức thanh toán</p>
-            <p className="total__description">COD</p>
+            <p className="total__description">
+              {renderPayment(orderDetail?.paymentMethod)}
+            </p>
           </div>
-          <CartTotal />
+          <OrderTotal order={orderDetail} />
         </div>
       </div>
     </>

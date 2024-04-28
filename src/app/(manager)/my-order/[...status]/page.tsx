@@ -15,23 +15,24 @@ import {
 import { useState } from "react";
 import CustomTabPanel, {
   orderProps,
-} from "../../../components/order/CustomTabPanel";
+} from "../../../../components/order/CustomTabPanel";
 
+const arrStatus = [
+  { label: "Tất cả", index: 0 },
+  { label: "Đã đặt hàng", index: 1 },
+  { label: "Đã nhận", index: 2 },
+  { label: "Đã trả sách", index: 3 },
+  { label: "Đã quá hạn", index: 4 },
+  { label: "Đã hủy", index: 5 },
+];
 const Order = () => {
   const [value, setValue] = useState(0);
-  const handleChange = (e: any, newValue: number) =>
+  const handleChange = (_:any, newValue: number) =>
     setValue(newValue);
-  const arrStatus = [
-    { label: "Tất cả", index: 0 },
-    { label: "Đã đặt hàng", index: 1 },
-    { label: "Đã nhận", index: 2 },
-    { label: "Đã trả sách", index: 3 },
-    { label: "Đã quá hạn", index: 4 },
-  ];
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Quản lý đơn hàng của khách
+        Quản lý đơn hàng của tôi
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} aria-label="order tab">
@@ -43,11 +44,10 @@ const Order = () => {
       {arrStatus.map(({ label, index }) => {
         return (
           <CustomTabPanel value={value} index={index} key={index}>
-            <ListOrder status={index} changeStatus={handleChange}/>
+            <ListOrder status={index} changeStatus={handleChange} />
           </CustomTabPanel>
         );
       })}
-     
     </>
   );
 };

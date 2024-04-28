@@ -1,3 +1,4 @@
+"use client"
 import { Alert, Grow, GrowProps, Snackbar } from "@mui/material";
 import { useStoreAlert } from "../../hooks/alert";
 

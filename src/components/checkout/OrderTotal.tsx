@@ -12,7 +12,7 @@ const OrderTotal = ({ order }: { order: IOrder | undefined }) => {
   const renderDurationRent = () => {
     const firstDayEnd = order?.leaseOrder.toDate;
     const dateStart = order?.leaseOrder.fromDate;
-    const dateEnd = dayjs(firstDayEnd);
+    const dateEnd = dayjs(firstDayEnd).add(1,"day");
     if (!dateStart || !dateEnd) return 0;
     const duration = dateEnd.diff(dateStart, "day");
     return duration;

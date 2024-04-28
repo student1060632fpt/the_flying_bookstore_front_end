@@ -7,8 +7,8 @@ import OrderFooter from "./OrderFooter";
 import { IOrder } from "../../types/order";
 import { useState } from "react";
 
-const DetailOrder = ({ order }: { order: IOrder }) => {
-  const [listBook, setListBook] = useState<IRow[]>([convertToRow(order)]);
+const DetailOrder = ({ order,changeStatus }: { order: IOrder,changeStatus: (e: any, newValue: number) => void; }) => {
+  const listBook:IRow[] = [convertToRow(order)]
   return (
     <Box
       sx={{
@@ -31,7 +31,7 @@ const DetailOrder = ({ order }: { order: IOrder }) => {
         hideFooterSelectedRowCount
         hideFooter
       />
-      <OrderFooter  order={order}/>
+      <OrderFooter changeStatus={changeStatus} order={order}/>
     </Box>
   );
 };

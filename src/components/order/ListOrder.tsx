@@ -5,22 +5,27 @@ import { Grid, Typography, useTheme } from "@mui/material";
 import OrderFooter from "./OrderFooter";
 import { HeaderOrder } from "./HeaderOrder";
 import { IRow, columnsOrder, convertToRow } from "./column";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../../hooks/user";
 import { IOrder } from "../../types/order";
 import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
 
-export default function ListOrder({ status }: { status: number }) {
+export default function ListOrder({
+  status,
+  changeStatus,
+}: {
+  status: number;
+  changeStatus: (e: any, newValue: number) => void;
+}) {
   const { profile } = useAuthStore();
   const [listOrder, setListOrder] = useState<Array<IOrder>>();
   const callApiGetAllOrder = async () => {
     if (!profile?.id) return;
-    return await getAllOrder(profile?.id)
-      .then((response) => {
-        setListOrder(response);
-      })
+    return await getAllOrder(profile?.id).then((response) => {
+      setListOrder(response);
+    });
   };
   const getOrderWithStatus = async (status: number) => {
     return await axios
@@ -40,7 +45,7 @@ export default function ListOrder({ status }: { status: number }) {
         console.log(error);
       });
   };
-  const callWhichApi = async () => {
+  const callWhichApi =async () => {
     switch (status) {
       case 1:
       case 2:
@@ -51,7 +56,8 @@ export default function ListOrder({ status }: { status: number }) {
       default:
         return await callApiGetAllOrder();
     }
-  };
+  }
+
   useEffect(() => {
     callWhichApi();
   }, [status]);
@@ -60,7 +66,7 @@ export default function ListOrder({ status }: { status: number }) {
     <Grid container spacing={3}>
       {listOrder.map((order, index) => (
         <Grid item xs={12} key={index}>
-          <DetailOrder order={order} />
+          <DetailOrder order={order} changeStatus={changeStatus} />
         </Grid>
       ))}
     </Grid>

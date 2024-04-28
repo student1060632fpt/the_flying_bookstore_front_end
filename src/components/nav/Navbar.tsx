@@ -78,15 +78,17 @@ export default function Navbar() {
   };
 
   React.useEffect(() => {
-  const callApiGetAllOrder = async () => {
-    if (!profile?.id) return;
-    return await getAllOrder(profile?.id).then((res) => {
-      setOrderNumber(res.length)
-    });
-  };
-  callApiGetAllOrder();
-  }, [])
-  
+    const callApiGetAllOrder = async () => {
+      if (!profile?.id) return;
+      return await getAllOrder(profile?.id).then((res) => {
+        if (res && Array.isArray(res)) {
+          setOrderNumber(res?.length);
+        }
+      });
+    };
+    callApiGetAllOrder();
+  }, []);
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -130,7 +132,7 @@ export default function Navbar() {
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={cart ? 1 : 0} color="error">
             <CiShoppingCart />
           </Badge>
         </IconButton>

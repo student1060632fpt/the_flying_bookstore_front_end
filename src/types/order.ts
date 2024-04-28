@@ -18,6 +18,7 @@ export type IOrderStatus =
   | "RETURNING"
   | "RETURNED"
   | "DEPOSIT_RETURNED"
+  | "USER_PAID"
   | "PAID_OWNER";
 export type IPaymentMethod = "COD" | "BANK_TRANSFER" | "VNPAY";
 

@@ -1,15 +1,5 @@
-import { Alert, Box, Button, Divider } from "@mui/material";
-import Image from "next/image";
-import BookItem from "./BookItem";
-import { PiFileTextLight } from "react-icons/pi";
-import CartTotal from "../cart/CartTotal";
+import { Alert, Button } from "@mui/material";
 import "./../cart/Cart.scss";
-import { MdOutlineFaceUnlock } from "react-icons/md";
-import { BsFileText } from "react-icons/bs";
-import CartInfoRent from "../cart/CartInfoRent";
-import { PiCalendarCheck } from "react-icons/pi";
-import { LuFlag } from "react-icons/lu";
-import { CgCreditCard } from "react-icons/cg";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
@@ -34,35 +24,44 @@ const Step2 = ({
   const { order: orderId } = useStoreOrder();
   const [orderDetail, setOrderDetail] = useState<IOrder>();
   const { href: currentUrl } = useUrl() ?? {};
-  const updateStatusOrder = async (params: IParamsVNpay) => {
+  const updateStatusOrder = async (status: IOrderStatus) => {
     return await axios
       .request({
         url: `http://localhost:8082/api/leaseOrder/edit/status`,
-        params: { id: orderId, status: "PAYMENT_SUCCESS" },
+        params: { id: orderId, status },
       })
       .then((response) => {
-        console.log(JSON.stringify(response.data));
-        setAlert({
-          open: true,
-          message: "Thanh toán thành công",
-          severity: "success",
-        });
-        getDetailOrder()
       })
       .catch((error) => {
         console.log(error);
       });
   };
-
-  const getStatusOrder = () => {
-    if (!currentUrl) return;
-    const params: IParamsVNpay = parseUrlParams(currentUrl);
-    if (params.vnp_TransactionStatus == "00") {
-      // gọi api thay đổi trạng thái đơn hàng ở đây
-      updateStatusOrder(params);
-    }
+  const getOrder = async () => {
+    return await updateStatusOrder("DELIVERED").then(() => {
+      setAlert({
+        open: true,
+        message: "Cập nhập đơn hàng thành công",
+        severity: "success",
+      });
+      handleNext();
+    });
   };
   useEffect(() => {
+    const getStatusOrder = async () => {
+      if (!currentUrl) return;
+      const params: IParamsVNpay = parseUrlParams(currentUrl);
+      if (params.vnp_TransactionStatus == "00") {
+        // gọi api thay đổi trạng thái đơn hàng ở đây
+        return await updateStatusOrder("PAYMENT_SUCCESS").then(() => {
+          setAlert({
+            open: true,
+            message: "Thanh toán thành công",
+            severity: "success",
+          });
+          getDetailOrder();
+        });
+      }
+    };
     getStatusOrder();
   }, [currentUrl]);
 
@@ -82,6 +81,7 @@ const Step2 = ({
   useEffect(() => {
     getDetailOrder();
   }, [orderId]);
+
   const renderAlert = (status?: IOrderStatus | undefined) => {
     if (!status) return <></>;
     let contentAlert = <></>;
@@ -98,7 +98,7 @@ const Step2 = ({
         contentAlert = (
           <>
             Bạn hãy nhanh chóng thanh toán theo phương thức{" "}
-            {renderPayment(orderDetail?.paymentMethod)} để kịp lấy hàng
+            {renderPayment(orderDetail?.leaseOrder.paymentMethod)} để lấy hàng
           </>
         );
         break;
@@ -122,7 +122,7 @@ const Step2 = ({
 
         <Order orderDetail={orderDetail} />
       </div>
-      {renderAlert(orderDetail?.status)}
+      {renderAlert(orderDetail?.leaseOrder.status)}
 
       <div className=" mt-10 mb-20 w-2/3 mx-auto flex justify-between">
         <Link href="/">
@@ -150,9 +150,9 @@ const Step2 = ({
           variant="contained"
           sx={{ textTransform: "none", color: "white" }}
           size="large"
-          disabled={orderDetail?.status != "PAYMENT_SUCCESS"}
+          disabled={orderDetail?.leaseOrder.status != "PAYMENT_SUCCESS"}
           startIcon={<IoCheckmarkCircleOutline />}
-          onClick={handleNext}
+          onClick={getOrder}
         >
           Xác nhận lấy hàng
         </Button>

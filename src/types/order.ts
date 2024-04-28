@@ -1,9 +1,13 @@
+import { IListing, IReview } from "./book";
+import { IUser } from "./user";
+
 interface ILeaseOrderDetail {
   id: number;
   listingId: number;
   leaseRate: number;
   depositFee: number;
   penaltyRate: number;
+  title: string;
 }
 export type IOrderStatus =
   | "ORDERED_PAYMENT_PENDING"
@@ -16,7 +20,14 @@ export type IOrderStatus =
   | "DEPOSIT_RETURNED"
   | "PAID_OWNER";
 export type IPaymentMethod = "COD" | "BANK_TRANSFER" | "VNPAY";
+
 export interface IOrder {
+  leaseOrder: ILeaseOrder;
+  listing: IListing;
+  lessor: IUser;
+}
+
+interface ILeaseOrder {
   id: number;
   listingId: number;
   status: IOrderStatus;
@@ -26,19 +37,19 @@ export interface IOrder {
   lesseeAddress: string;
   fromDate: string;
   toDate: string;
-  receiveDate: string | null;
-  returnDate: string | null;
+  receiveDate: null;
+  returnDate: null;
   totalLeaseFee: number;
   totalPenaltyRate: number;
   totalDeposit: number;
   paymentMethod: IPaymentMethod;
-  imageLink: string | null;
-  depositPaymentId: number | null;
-  refundPaymentId: number | null;
-  payOwnerPaymentId: number | null;
-  createdDate: string | null;
-  updatedDate: string | null;
-  deletedDate: string | null;
+  imageLink: null;
+  leaseAndDepositPaymentId: number;
+  refundDepositPaymentId: null;
+  payOwnerPaymentId: null;
+  createdDate: string;
+  updatedDate: null;
+  deletedDate: null;
   leaseOrderDetails: ILeaseOrderDetail[];
-  reviews: any[]; // You might want to replace 'any' with a specific review type if available
+  reviews: IReview[];
 }

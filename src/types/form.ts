@@ -7,5 +7,5 @@ export type IFormCheckout = {
   email: string;
   phoneNumber: string;
   address: string;
-  birthDate: Dayjs;
+  birthDate: Dayjs|null;
 };

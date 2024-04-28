@@ -3,6 +3,9 @@ import dayjs from "dayjs";
 import { GrUserManager } from "react-icons/gr";
 import { RiCalendarTodoLine } from "react-icons/ri";
 import { RiMapPin2Line } from "react-icons/ri";
+import { PiPhone } from "react-icons/pi";
+import { formatPhoneNumber } from "../../utils/helps";
+
 
 const CartInfoRent = () => {
   const cart = useStoreCart(state=>state.cart)
@@ -25,6 +28,14 @@ const CartInfoRent = () => {
         <p className="total__title">Địa chỉ</p>
         <p className="total__description">
           {cart?.book.address}
+        </p>
+      </div>
+
+      <div className="total__row">
+        <PiPhone className="total__icon" />
+        <p className="total__title">Số điện thoại</p>
+        <p className="total__description">
+          {formatPhoneNumber(cart?.book.user.phoneNumber)}
         </p>
       </div>
     </div>

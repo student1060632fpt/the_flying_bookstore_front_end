@@ -1,22 +1,52 @@
-import React from 'react'
-import Order from './Order'
-import Link from 'next/link'
-import { Button } from '@mui/material'
-import { CiShoppingCart } from 'react-icons/ci'
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import Order from "./Order";
+import Link from "next/link";
+import { Button } from "@mui/material";
+import { CiShoppingCart } from "react-icons/ci";
+import { IAlert } from "../../app/(auth)/sign-up/[[...sign-up]]/page";
+import { useStoreOrder } from "../../hooks/order";
+import { IOrder } from "../../types/order";
+import axios from "axios";
 
-const Step3 = () => {
+const Step3 = ({
+  handleNext,
+  setAlert,
+}: {
+  handleNext: () => void;
+  setAlert: Dispatch<SetStateAction<IAlert>>;
+}) => {
+  const { order: orderId } = useStoreOrder();
+  const [orderDetail, setOrderDetail] = useState<IOrder>();
+
+  useEffect(() => {
+    const getDetailOrder = async () => {
+      axios
+        .request({ url: "http://localhost:8082/api/leaseOrder/" + orderId })
+        .then((response) => {
+          if (response.data) {
+            console.log("response.data", response.data);
+            setOrderDetail(response.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    getDetailOrder();
+  }, [orderId]);
+
   return (
     <>
       <div className="w-2/3 mx-auto border rounded-lg py-8 mt-20 px-10">
         <h3 className="text-center text-primary text-2xl font-semibold text-primary">
-        Lấy thành công đơn hàng!
+          Lấy thành công đơn hàng!
         </h3>
         <p className="text-gray-500 text-sm mt-1 text-center mb-4 ">
-        Đọc sách vui bạn nhé!
+          Đọc sách vui bạn nhé!
         </p>
-        <Order status="Đã lấy hàng"/>
+        <Order orderDetail={orderDetail} />
       </div>
-      
+
       <div className=" mt-10 mb-20 w-2/3 mx-auto flex justify-between">
         <Link href="/">
           <Button
@@ -38,10 +68,9 @@ const Step3 = () => {
             Quản lý đơn hàng
           </Button>
         </Link>
-
       </div>
     </>
-  )
-}
+  );
+};
 
-export default Step3
+export default Step3;

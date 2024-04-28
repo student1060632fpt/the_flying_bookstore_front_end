@@ -10,8 +10,8 @@ import dayjs from "dayjs";
 
 const OrderTotal = ({ order }: { order: IOrder | undefined }) => {
   const renderDurationRent = () => {
-    const firstDayEnd = order?.toDate;
-    const dateStart = order?.fromDate;
+    const firstDayEnd = order?.leaseOrder.toDate;
+    const dateStart = order?.leaseOrder.fromDate;
     const dateEnd = dayjs(firstDayEnd);
     if (!dateStart || !dateEnd) return 0;
     const duration = dateEnd.diff(dateStart, "day");
@@ -28,21 +28,21 @@ const OrderTotal = ({ order }: { order: IOrder | undefined }) => {
         <PiMoney className="total__icon" />
         <p className="total__title">Tiền thuê</p>
         <p className="total__description">
-          {formatCurrency(order?.totalLeaseFee)}
+          {formatCurrency(order?.leaseOrder.totalLeaseFee)}
         </p>
       </div>
       <div className="total__row">
         <GiMoneyStack className="total__icon" />
         <p className="total__title">Tiền cọc</p>
         <p className="total__description">
-          {formatCurrency(order?.totalDeposit)}
+          {formatCurrency(order?.leaseOrder.totalDeposit)}
         </p>
       </div>
       <div className="total__row border-t">
         <TbSum className="total__icon" />
         <p className="total__title">Tổng cộng</p>
         <p className="total__description">
-          {!!order?.totalDeposit && !!order?.totalLeaseFee && formatCurrency(order?.totalDeposit + order?.totalLeaseFee)}
+          {!!order?.leaseOrder.totalDeposit && !!order?.leaseOrder.totalLeaseFee && formatCurrency(order?.leaseOrder.totalDeposit + order?.leaseOrder.totalLeaseFee)}
         </p>
       </div>
     </div>

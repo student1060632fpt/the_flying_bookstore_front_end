@@ -43,7 +43,7 @@ const Step1 = ({
     email: profile?.email || "",
     phoneNumber: profile?.phoneNumber || "",
     address: profile?.address || "",
-    birthDate: profile?.birthDate ? dayjs(profile.birthDate) : dayjs(),
+    birthDate: profile?.birthDate ? dayjs(profile.birthDate) : null,
   };
   const methods = useForm<IFormCheckout>({ defaultValues });
   const {
@@ -71,24 +71,25 @@ const Step1 = ({
         break;
     }
   };
-  const getProfile = async (): Promise<void> => {
-    try {
-      const response = await axios.request({
-        url: "http://localhost:8082/api/user/myInfo",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response?.data && token) {
-        setToken(token, response?.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  
   useEffect(() => {
+    const getProfile = async (): Promise<void> => {
+      try {
+        const response = await axios.request({
+          url: "http://localhost:8082/api/user/myInfo",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response?.data && token) {
+          setToken(token, response?.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
     getProfile();
-  }, []);
+  }, [setToken, token]);
 
   const onSubmitOrder = async () => {
     const data = getValues();

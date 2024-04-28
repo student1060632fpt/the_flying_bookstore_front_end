@@ -12,8 +12,8 @@ const chunkArray = (array: Array<any>, chunkSize: number) => {
   return chunks;
 };
 
-const formatCurrency = (amount: number|undefined) => {
-  if(!amount) return 0;
+const formatCurrency = (amount: number | undefined) => {
+  if (!amount) return 0;
   // Chuyển số tiền thành chuỗi và thêm dấu chấm phẩy giữa các hàng nghìn
   const formattedAmount = amount
     .toString()
@@ -29,12 +29,26 @@ const arrayToString = (arr: Array<string> | undefined) => {
   );
 };
 
-const countAvarageReview = (arrayReview: Array<IReview> | undefined)=>{
-  if(!arrayReview) return 0;
-  const totalScore = arrayReview.reduce((accumulator, review) => accumulator + review.score, 0);
+const countAvarageReview = (arrayReview: Array<IReview> | undefined) => {
+  if (!arrayReview) return 0;
+  const totalScore = arrayReview.reduce(
+    (accumulator, review) => accumulator + review.score,
+    0
+  );
   const avarage = totalScore / arrayReview.length;
   const roundedAverageScore = Math.round(avarage * 2) / 2;
   return roundedAverageScore | 0;
+};
+function formatPhoneNumber(phoneNumber: string | undefined) {
+  if (!phoneNumber) return phoneNumber;
+  // Định dạng số điện thoại thành (0x) xxx-xxx-xxx hoặc (0x) xxxx-xxx-xxx
+  return phoneNumber.replace(/(\d{1})(\d{3})(\d{3})(\d{3})/, "$1$2 $3 $4");
 }
 
-export { chunkArray, formatCurrency, arrayToString,countAvarageReview};
+export {
+  chunkArray,
+  formatCurrency,
+  arrayToString,
+  countAvarageReview,
+  formatPhoneNumber,
+};

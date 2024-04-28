@@ -29,9 +29,9 @@ const Checkout = () => {
     message: "Tạo đơn hàng thành công",
     severity: "success",
   });
-  const {changeStep,step}  = useStoreStep()
+  const { changeStep, step } = useStoreStep();
   const { removeCart } = useStoreCart();
-  
+
   const handleNext = () => {
     changeStep(step + 1);
     removeCart();
@@ -42,9 +42,9 @@ const Checkout = () => {
       case 0:
         return <Step1 handleNext={handleNext} setAlert={setAlert} />;
       case 1:
-        return <Step2 handleNext={handleNext} setAlert={setAlert}  />;
+        return <Step2 handleNext={handleNext} setAlert={setAlert} />;
       case 2:
-        return <Step3 />;
+        return <Step3 handleNext={handleNext} setAlert={setAlert} />;
       default:
         return <></>;
     }
@@ -64,7 +64,6 @@ const Checkout = () => {
       </Stepper>
       {chooseStep()}
       <AlertSignOut alert={alert} setAlert={setAlert} />
-
     </>
   );
 };

@@ -9,4 +9,5 @@ export type IUser = {
   avatarUrl: string | null;
   address: string;
   password: string | null;
+  
 };

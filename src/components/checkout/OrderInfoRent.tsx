@@ -5,6 +5,7 @@ import { RiCalendarTodoLine } from "react-icons/ri";
 import { RiMapPin2Line } from "react-icons/ri";
 import { IOrder } from "../../types/order";
 import { PiPhone } from "react-icons/pi";
+import { formatPhoneNumber } from "../../utils/helps";
 
 const OrderInfoRent = ({ order }: { order: IOrder | undefined }) => {
   const cart = useStoreCart((state) => state.cart);
@@ -14,7 +15,7 @@ const OrderInfoRent = ({ order }: { order: IOrder | undefined }) => {
         <GrUserManager className="total__icon" />
         <p className="total__title">Người cho thuê</p>
         <p className="total__description">
-          {cart?.book.user.lastName} {cart?.book.user.firstName}
+        {order?.lessor.lastName} {order?.lessor.firstName} 
         </p>
       </div>
 
@@ -22,20 +23,20 @@ const OrderInfoRent = ({ order }: { order: IOrder | undefined }) => {
         <RiCalendarTodoLine className="total__icon" />
         <p className="total__title">Thời gian thuê</p>
         <p className="total__description">
-          {dayjs(order?.fromDate).format("DD/MM/YYYY")} -{" "}
-          {dayjs(order?.toDate).format("DD/MM/YYYY")}
+          {dayjs(order?.leaseOrder.fromDate).format("DD/MM/YYYY")} -{" "}
+          {dayjs(order?.leaseOrder.toDate).format("DD/MM/YYYY")}
         </p>
       </div>
 
       <div className="total__row">
         <RiMapPin2Line className="total__icon" />
         <p className="total__title">Địa chỉ</p>
-        <p className="total__description">{order?.lessorAddress}</p>
+        <p className="total__description">{order?.leaseOrder.lessorAddress}</p>
       </div>
       <div className="total__row">
         <PiPhone className="total__icon" />
         <p className="total__title">Số điện thoại</p>
-        <p className="total__description">{order?.lessorAddress}</p>
+        <p className="total__description">{formatPhoneNumber(order?.lessor.phoneNumber)}</p>
       </div>
     </div>
   );

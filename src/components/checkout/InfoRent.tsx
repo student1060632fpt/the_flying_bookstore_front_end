@@ -85,7 +85,7 @@ const InfoRent = () => {
                 <>
                   <DatePicker
                     sx={{ width: "100%", borderColor: "red" }}
-                    label="Ngày sinh"
+                    label="Ngày sinh *"
                     inputRef={ref}
                     format="DD/MM/YYYY"
                     disableFuture

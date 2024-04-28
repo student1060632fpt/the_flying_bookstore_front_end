@@ -17,17 +17,17 @@ import CustomTabPanel, {
   orderProps,
 } from "../../../components/order/CustomTabPanel";
 
+const arrStatus = [
+  { label: "Tất cả", index: 0 },
+  { label: "Đã đặt hàng", index: 1 },
+  { label: "Đã nhận", index: 2 },
+  { label: "Đã trả sách", index: 3 },
+  { label: "Đã quá hạn", index: 4 },
+];
 const Order = () => {
   const [value, setValue] = useState(0);
   const handleChange = (e: React.SyntheticEvent, newValue: number) =>
     setValue(newValue);
-  const arrStatus = [
-    { label: "Tất cả", index: 0 },
-    { label: "Đã đặt hàng", index: 1 },
-    { label: "Đã nhận", index: 2 },
-    { label: "Đã trả sách", index: 3 },
-    { label: "Đã quá hạn", index: 4 },
-  ];
   return (
     <>
       <Typography variant="h4" gutterBottom>

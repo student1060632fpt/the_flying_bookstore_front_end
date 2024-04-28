@@ -1,6 +1,7 @@
 import { GridColDef } from "@mui/x-data-grid";
+import { IOrder } from "../../types/order";
 
-type IRow = {
+export type IRow = {
   id: number;
   title: string;
   deposit: number;
@@ -8,9 +9,29 @@ type IRow = {
   price: number;
   total: number;
 };
+// Function to convert IOrder and ILeaseOrderDetail to IRow
+export function convertToRow(order: IOrder): IRow {
+  const {
+    listing: {
+      id,
+      book: { title },
+    },
+    leaseOrder: { totalDeposit, totalLeaseFee },
+  } = order;
+  const row: IRow = {
+    id,
+    title,
+    deposit: totalDeposit,
+    quantity: 1,
+    price: totalLeaseFee,
+    total: totalDeposit + totalLeaseFee,
+  };
+  return row;
+}
 
-export const columnsOrder: GridColDef<(typeof rowsOrder)[number]>[] = [
-  { field: "id", headerName: "Stt", width: 90, sortable: false },
+// Example usage:
+export const columnsOrder: GridColDef<IRow>[] = [
+  { field: "id", headerName: "Id", width: 90, sortable: false },
   {
     field: "title",
     headerName: "Tên sách",

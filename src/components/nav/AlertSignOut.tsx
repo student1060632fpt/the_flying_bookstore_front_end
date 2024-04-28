@@ -5,7 +5,13 @@ import React, { Dispatch, SetStateAction } from "react";
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
 }
-const AlertSignOut = ({alert,setAlert}:{alert: IAlert,setAlert:Dispatch<SetStateAction<IAlert>>}) => {
+const AlertSignOut = ({
+  alert,
+  setAlert,
+}: {
+  alert: IAlert;
+  setAlert: Dispatch<SetStateAction<IAlert>>;
+}) => {
   const { message, open, severity } = alert;
   const handleClose = () => setAlert((state) => ({ ...state, open: false }));
 

@@ -13,7 +13,7 @@ import { useUrl } from "nextjs-current-url";
 import { parseUrlParams } from "./parseUrlParams";
 import { IAlert } from "../../app/(auth)/sign-up/[[...sign-up]]/page";
 import { IParamsVNpay } from "../../types/checkout";
-import { getDetailOrder } from "../../api/order";
+import { getDetailOrder, updateStatusOrder } from "../../api/order";
 
 const Step2 = ({
   handleNext,
@@ -25,19 +25,13 @@ const Step2 = ({
   const { order: orderId } = useStoreOrder();
   const [orderDetail, setOrderDetail] = useState<IOrder>();
   const { href: currentUrl } = useUrl() ?? {};
-  const updateStatusOrder = async (status: IOrderStatus) => {
-    return await axios
-      .request({
-        url: `http://localhost:8082/api/leaseOrder/edit/status`,
-        params: { id: orderId, status },
-      })
-      .then((response) => {})
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+
   const getOrder = async () => {
-    return await updateStatusOrder("DELIVERED").then(() => {
+    if (!orderId) return;
+    return await updateStatusOrder(
+      "DELIVERED",
+      orderId
+    ).then(() => {
       setAlert({
         open: true,
         message: "Cập nhập đơn hàng thành công",
@@ -50,9 +44,9 @@ const Step2 = ({
     const getStatusOrder = async () => {
       if (!currentUrl) return;
       const params: IParamsVNpay = parseUrlParams(currentUrl);
-      if (params.vnp_TransactionStatus == "00") {
+      if (params.vnp_TransactionStatus == "00" && orderId) {
         // gọi api thay đổi trạng thái đơn hàng ở đây
-        return await updateStatusOrder("PAYMENT_SUCCESS").then(async () => {
+        return await updateStatusOrder("PAYMENT_SUCCESS",orderId).then(async () => {
           setAlert({
             open: true,
             message: "Thanh toán thành công",

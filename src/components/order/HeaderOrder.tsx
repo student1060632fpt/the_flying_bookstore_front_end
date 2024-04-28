@@ -1,39 +1,45 @@
-import { Grid, Typography, useTheme } from "@mui/material";
-
-export const HeaderOrder = () => {
+import { Button, Grid, Typography, useTheme } from "@mui/material";
+import Link from "next/link";
+import { PiNavigationArrow } from "react-icons/pi";
+import { CiLocationArrow1 } from "react-icons/ci";
+import { IOrder } from "../../types/order";
+import dayjs from "dayjs";
+import { renderStatus } from "../checkout/PaymentStatus";
+export const HeaderOrder = ({ order }: { order: IOrder }) => {
   const theme = useTheme();
   return (
-    <Grid container mt={0.25} mb={1} spacing={2} justifyItems="center" alignItems="center">
+    <Grid
+      container
+      mt={0.25}
+      mb={1}
+      spacing={2}
+      justifyItems="center"
+      alignItems="center"
+    >
+      <Grid item xs={2}>
+        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
+          Id đơn hàng
+        </Typography>
+        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
+          #{order.leaseOrder.id}
+        </Typography>
+      </Grid>
       <Grid item xs={2}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
           Chủ sách
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          Nguyễn Thảo
+          {order.lessor.lastName} {order.lessor.firstName}
         </Typography>
       </Grid>
-      <Grid item xs={2}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Số điện thoại
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          0905 907 362
-        </Typography>
-      </Grid>
-      <Grid item xs={3}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Địa chỉ
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          1 Lý Thái Tổ, p12, q.10
-        </Typography>
-      </Grid>
+
       <Grid item xs={2}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
           Thời gian thuê
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          12/2/2024 - 4/3/2024
+          {dayjs(order.leaseOrder.fromDate).format("DD/MM")} -{" "}
+          {dayjs(order.leaseOrder.toDate).format("DD/MM/YYYY")}
         </Typography>
       </Grid>
       <Grid item xs={3}>
@@ -41,8 +47,19 @@ export const HeaderOrder = () => {
           Trạng thái người thuê
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          Chuẩn bị nhận hàng
+        {renderStatus(order?.leaseOrder.status)}
         </Typography>
+      </Grid>
+      <Grid item xs={2}>
+        <Link href={`/order/${order.leaseOrder.id}`}>
+          <Button
+            endIcon={<CiLocationArrow1 />}
+            sx={{ textTransform: "none" }}
+            variant="text"
+          >
+            Xem chi tiết
+          </Button>
+        </Link>
       </Grid>
     </Grid>
   );

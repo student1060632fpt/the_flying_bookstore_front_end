@@ -24,6 +24,7 @@ import { useStoreCart } from "@/hooks/cart";
 import { useAuthStore } from "@/hooks/user";
 import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
 import AlertSignOut from "./AlertSignOut";
+import { getAllOrder } from "../../api/order";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -32,6 +33,7 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
+  const [orderNumber, setOrderNumber] = React.useState(0);
   const cart = useStoreCart((state) => state.cart);
   const [alert, setAlert] = React.useState<IAlert>({
     open: false,
@@ -75,6 +77,16 @@ export default function Navbar() {
     handleMenuClose();
   };
 
+  React.useEffect(() => {
+  const callApiGetAllOrder = async () => {
+    if (!profile?.id) return;
+    return await getAllOrder(profile?.id).then((res) => {
+      setOrderNumber(res.length)
+    });
+  };
+  callApiGetAllOrder();
+  }, [])
+  
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -194,7 +206,7 @@ export default function Navbar() {
             aria-expanded={openMenu ? "true" : undefined}
             onClick={handleClickOpenMenuOrder}
           >
-            <Badge badgeContent={5} color="error">
+            <Badge badgeContent={orderNumber} color="error">
               <CiBag1 color={theme.palette.primary.main} />
             </Badge>
           </IconButton>

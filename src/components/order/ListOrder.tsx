@@ -4,25 +4,23 @@ import NoData from "./NoData";
 import { Grid, Typography, useTheme } from "@mui/material";
 import OrderFooter from "./OrderFooter";
 import { HeaderOrder } from "./HeaderOrder";
-import { columnsOrder, rowsOrder } from "./column";
-import { useEffect } from "react";
+import { IRow, columnsOrder, convertToRow } from "./column";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../../hooks/user";
+import { IOrder } from "../../types/order";
+import DetailOrder from "./DetailOrder";
+import { getAllOrder } from "../../api/order";
 
 export default function ListOrder({ status }: { status: number }) {
   const { profile } = useAuthStore();
-
-  const getAllOrder = async () => {
-    return await axios
-      .request({
-        url: `http://localhost:8082/api/leaseOrder/search/lessee/${profile?.id}`,
-      })
+  const [listOrder, setListOrder] = useState<Array<IOrder>>();
+  const callApiGetAllOrder = async () => {
+    if (!profile?.id) return;
+    return await getAllOrder(profile?.id)
       .then((response) => {
-        console.log(response.data);
+        setListOrder(response);
       })
-      .catch((error) => {
-        console.log(error);
-      });
   };
   const getOrderWithStatus = async (status: number) => {
     return await axios
@@ -33,7 +31,10 @@ export default function ListOrder({ status }: { status: number }) {
         },
       })
       .then((response) => {
-        console.log(response.data);
+        if (response.data) {
+          console.log(response.data);
+          setListOrder(response.data);
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -48,35 +49,20 @@ export default function ListOrder({ status }: { status: number }) {
         return await getOrderWithStatus(status);
       case 0:
       default:
-        return await getAllOrder();
+        return await callApiGetAllOrder();
     }
   };
   useEffect(() => {
     callWhichApi();
   }, [status]);
-
+  if (!listOrder) return <></>;
   return (
-    <Box
-      sx={{
-        width: "100%",
-        border: 1,
-        borderRadius: 3,
-        px: 2,
-        py: 1,
-        height: rowsOrder[0]!! ? "auto" : "500px",
-      }}
-    >
-      <HeaderOrder />
-      <DataGrid
-        rows={rowsOrder}
-        columns={columnsOrder}
-        disableRowSelectionOnClick
-        slots={{ noRowsOverlay: NoData, footer: OrderFooter }}
-        sx={{ border: "none" }}
-        hideFooterPagination
-        hideFooterSelectedRowCount
-        slotProps={{ footer: {} }}
-      />
-    </Box>
+    <Grid container spacing={3}>
+      {listOrder.map((order, index) => (
+        <Grid item xs={12} key={index}>
+          <DetailOrder order={order} />
+        </Grid>
+      ))}
+    </Grid>
   );
 }

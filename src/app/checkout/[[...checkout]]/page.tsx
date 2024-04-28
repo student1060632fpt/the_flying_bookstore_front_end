@@ -44,7 +44,7 @@ const Checkout = () => {
       case 1:
         return <Step2 handleNext={handleNext} setAlert={setAlert} />;
       case 2:
-        return <Step3 handleNext={handleNext} setAlert={setAlert} />;
+        return <Step3 />;
       default:
         return <></>;
     }

@@ -1,20 +1,13 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Order from "./Order";
 import Link from "next/link";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
-import { IAlert } from "../../app/(auth)/sign-up/[[...sign-up]]/page";
 import { useStoreOrder } from "../../hooks/order";
 import { IOrder } from "../../types/order";
 import axios from "axios";
 
-const Step3 = ({
-  handleNext,
-  setAlert,
-}: {
-  handleNext: () => void;
-  setAlert: Dispatch<SetStateAction<IAlert>>;
-}) => {
+const Step3 = () => {
   const { order: orderId } = useStoreOrder();
   const [orderDetail, setOrderDetail] = useState<IOrder>();
 
@@ -59,13 +52,13 @@ const Step3 = ({
             Tiếp tục mua sắm
           </Button>
         </Link>
-        <Link href="/">
+        <Link href="/my-order">
           <Button
             variant="outlined"
             sx={{ textTransform: "none" }}
             size="large"
           >
-            Quản lý đơn hàng
+            Quản lý đơn hàng của tôi
           </Button>
         </Link>
       </div>

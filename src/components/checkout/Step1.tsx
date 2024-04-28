@@ -12,7 +12,7 @@ import dayjs from "dayjs";
 import { VNPay } from "vnpay";
 import { useStoreCart } from "@/hooks/cart";
 import { useRouter } from "next/navigation";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import AlertSignOut from "../nav/AlertSignOut";
 import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
@@ -24,6 +24,18 @@ const vnpay = new VNPay({
   vnpayHost: "https://sandbox.vnpayment.vn",
 });
 
+const convertPaymentType = (paymentType: number) => {
+  switch (paymentType) {
+    case 0:
+      return "COD";
+    case 1:
+      return "BANK_TRANSFER";
+    case 2:
+      return "VNPAY";
+    default:
+      break;
+  }
+};
 const Step1 = ({
   handleNext,
   setAlert,
@@ -37,41 +49,23 @@ const Step1 = ({
   const router = useRouter();
   const [payType, setPayType] = useState<number>(0);
 
-  const defaultValues: IFormCheckout = {
-    lastName: profile?.lastName || "",
-    firstName: profile?.firstName || "",
-    email: profile?.email || "",
-    phoneNumber: profile?.phoneNumber || "",
-    address: profile?.address || "",
-    birthDate: profile?.birthDate ? dayjs(profile.birthDate) : null,
-  };
+  const defaultValues: IFormCheckout = useMemo(() => {
+    return {
+      lastName: profile?.lastName || "",
+      firstName: profile?.firstName || "",
+      email: profile?.email || "",
+      phoneNumber: profile?.phoneNumber || "",
+      address: profile?.address || "",
+      birthDate: profile?.birthDate ? dayjs(profile.birthDate) : null,
+    };
+  }, [profile]);
+
   const methods = useForm<IFormCheckout>({ defaultValues });
   const {
     getValues,
     formState: { isSubmitSuccessful },
   } = methods;
-  const urlString = vnpay.buildPaymentUrl({
-    vnp_Amount: cart?.total || 0,
-    vnp_IpAddr: "1.1.1.1",
-    vnp_TxnRef: dayjs().valueOf().toPrecision(),
-    vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.total}`,
-    vnp_OrderType: "other",
-    vnp_ReturnUrl: `http://localhost:3000/checkout`,
-  });
 
-  const convertPaymentType = () => {
-    switch (payType) {
-      case 0:
-        return "COD";
-      case 1:
-        return "BANK_TRANSFER";
-      case 2:
-        return "VNPAY";
-      default:
-        break;
-    }
-  };
-  
   useEffect(() => {
     const getProfile = async (): Promise<void> => {
       try {
@@ -101,7 +95,7 @@ const Step1 = ({
       lesseeAddress: data.address,
       fromDate: dayjs(cart?.dayRent.dateStart).format("YYYY-MM-DD"),
       toDate: dayjs(cart?.dayRent.dateEnd).format("YYYY-MM-DD"),
-      paymentMethod: convertPaymentType(),
+      paymentMethod: convertPaymentType(payType),
     };
 
     try {
@@ -123,8 +117,15 @@ const Step1 = ({
         });
         updateOrder(response?.data?.id);
         handleNext();
-
         if (payType == 2) {
+          const urlString = vnpay.buildPaymentUrl({
+            vnp_Amount: cart?.total || 0,
+            vnp_IpAddr: "1.1.1.1",
+            vnp_TxnRef: dayjs().valueOf().toPrecision(),
+            vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.total}`,
+            vnp_OrderType: "other",
+            vnp_ReturnUrl: `http://localhost:3000/checkout`,
+          });
           router.push(urlString);
         }
       }

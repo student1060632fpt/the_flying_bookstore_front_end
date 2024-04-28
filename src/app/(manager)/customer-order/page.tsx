@@ -13,66 +13,41 @@ import {
   styled,
 } from "@mui/material";
 import { useState } from "react";
-
-const a11yProps = (index: number) => {
-  return {
-    id: `order-tab-${index}`,
-    "aria-controls": `order-tabpanel-${index}`,
-  };
-};
-interface CustomTabPanelProps extends TabPanelProps {
-  index: number;
-}
-
-const CustomTabPanel = (props: CustomTabPanelProps) => {
-  const { children, value, index, ...other } = props;
-  // Rest of the code...
-  return (
-    <div
-      role="tabpanel"
-      hidden={value != index}
-      id={`order-tabpanel-${index}`}
-      aria-labelledby={`order-tab-${index}`}
-      {...other}
-    >
-      {value == index && <Box sx={{ mt: 2 }}>{children}</Box>}
-    </div>
-  );
-};
+import CustomTabPanel, {
+  orderProps,
+} from "../../../components/order/CustomTabPanel";
 
 const Order = () => {
   const [value, setValue] = useState(0);
   const handleChange = (e: React.SyntheticEvent, newValue: number) =>
     setValue(newValue);
+  const arrStatus = [
+    { label: "Tất cả", index: 0 },
+    { label: "Đã đặt hàng", index: 1 },
+    { label: "Đã nhận", index: 2 },
+    { label: "Đã trả sách", index: 3 },
+    { label: "Đã quá hạn", index: 4 },
+  ];
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Quản lý đơn hàng của tôi
+        Quản lý đơn hàng của khách
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} aria-label="order tab">
-          <Tab label="Tât cả" {...a11yProps(0)} />
-          <Tab label="Đã đặt hàng" {...a11yProps(1)} />
-          <Tab label="Đã nhận" {...a11yProps(2)} />
-          <Tab label="Đã trả sách" {...a11yProps(3)} />
-          <Tab label="Đã quá hạn" {...a11yProps(4)} />
+          {arrStatus.map(({ label, index }) => {
+            return <Tab label={label} {...orderProps(index)} key={index} />;
+          })}
         </Tabs>
       </Box>
-      <CustomTabPanel value={value} index={0}>
-        <ListOrder />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={1}>
-        <ListOrder />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={2}>
-        <ListOrder />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={3}>
-        <ListOrder />
-      </CustomTabPanel>
-      <CustomTabPanel value={value} index={4}>
-        <ListOrder />
-      </CustomTabPanel>
+      {arrStatus.map(({ label, index }) => {
+        return (
+          <CustomTabPanel value={value} index={index} key={index}>
+            <ListOrder status={index} />
+          </CustomTabPanel>
+        );
+      })}
+     
     </>
   );
 };

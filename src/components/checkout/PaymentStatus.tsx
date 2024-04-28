@@ -7,6 +7,8 @@ const renderStatus = (status?: IOrderStatus | undefined) => {
       return <>Chờ lấy hàng</>;
     case "ORDERED_PAYMENT_PENDING":
       return <>Chờ thanh toán</>;
+    case "DELIVERED":
+      return <>Đã lấy hàng</>;
     default:
       return <>Chưa định nghĩa</>;
   }
@@ -24,4 +26,4 @@ const renderPayment = (method?: IPaymentMethod | undefined) => {
       return <>Lỗi tí</>;
   }
 };
-export {renderPayment,renderStatus}
+export { renderPayment, renderStatus };

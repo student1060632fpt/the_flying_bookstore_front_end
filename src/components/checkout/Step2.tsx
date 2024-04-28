@@ -13,6 +13,7 @@ import { useUrl } from "nextjs-current-url";
 import { parseUrlParams } from "./parseUrlParams";
 import { IAlert } from "../../app/(auth)/sign-up/[[...sign-up]]/page";
 import { IParamsVNpay } from "../../types/checkout";
+import { getDetailOrder } from "../../api/order";
 
 const Step2 = ({
   handleNext,
@@ -30,8 +31,7 @@ const Step2 = ({
         url: `http://localhost:8082/api/leaseOrder/edit/status`,
         params: { id: orderId, status },
       })
-      .then((response) => {
-      })
+      .then((response) => {})
       .catch((error) => {
         console.log(error);
       });
@@ -52,34 +52,33 @@ const Step2 = ({
       const params: IParamsVNpay = parseUrlParams(currentUrl);
       if (params.vnp_TransactionStatus == "00") {
         // gọi api thay đổi trạng thái đơn hàng ở đây
-        return await updateStatusOrder("PAYMENT_SUCCESS").then(() => {
+        return await updateStatusOrder("PAYMENT_SUCCESS").then(async () => {
           setAlert({
             open: true,
             message: "Thanh toán thành công",
             severity: "success",
           });
-          getDetailOrder();
+          return await getDetailOrder(orderId).then((response) => {
+            if (response?.data) {
+              setOrderDetail(response.data);
+            }
+          });
         });
       }
     };
     getStatusOrder();
   }, [currentUrl]);
 
-  const getDetailOrder = async () => {
-    axios
-      .request({ url: "http://localhost:8082/api/leaseOrder/" + orderId })
-      .then((response) => {
-        if (response.data) {
-          console.log("response.data", response.data);
-          setOrderDetail(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const getOrderApi = async () => {
+    try {
+      const response = await getDetailOrder(orderId);
+      if (response?.data) {
+        setOrderDetail(response.data);
+      }
+    } catch (error) {}
   };
   useEffect(() => {
-    getDetailOrder();
+    getOrderApi();
   }, [orderId]);
 
   const renderAlert = (status?: IOrderStatus | undefined) => {

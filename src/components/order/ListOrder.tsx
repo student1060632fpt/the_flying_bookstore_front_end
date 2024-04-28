@@ -1,147 +1,60 @@
 import Box from "@mui/material/Box";
-import {
-  DataGrid,
-  GridColDef,
-} from "@mui/x-data-grid";
+import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import NoData from "./NoData";
-import {
-  Grid,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Grid, Typography, useTheme } from "@mui/material";
 import OrderFooter from "./OrderFooter";
+import { HeaderOrder } from "./HeaderOrder";
+import { columnsOrder, rowsOrder } from "./column";
+import { useEffect } from "react";
+import axios from "axios";
+import { useAuthStore } from "../../hooks/user";
 
-type IRow = {
-  id: number;
-  title: string;
-  deposit: number;
-  quantity: number;
-  price: number;
-  total: number;
-};
+export default function ListOrder({ status }: { status: number }) {
+  const { profile } = useAuthStore();
 
-const columns: GridColDef<(typeof rows)[number]>[] = [
-  { field: "id", headerName: "Stt", width: 90, sortable: false },
-  {
-    field: "title",
-    headerName: "Tên sách",
-    minWidth: 150,
-    sortable: false,
-  },
-  {
-    field: "deposit",
-    headerName: "Tiền cọc",
-    width: 120,
-    type: "number",
-    sortable: false,
-  },
-  {
-    field: "quantity",
-    headerName: "Số lượng",
-    type: "number",
-    sortable: false,
-    width: 150,
-  },
-  {
-    field: "price",
-    headerName: "Tiền thuê",
-    type: "number",
-    sortable: false,
-    width: 150,
-  },
-  {
-    field: "total",
-    headerName: "Tổng cộng",
-    sortable: false,
-    type: "number",
-    width: 150,
-  },
-];
+  const getAllOrder = async () => {
+    return await axios
+      .request({
+        url: `http://localhost:8082/api/leaseOrder/search/lessee/${profile?.id}`,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const getOrderWithStatus = async (status: number) => {
+    return await axios
+      .request({
+        url: `http://localhost:8082/api/leaseOrder/search/lessee/status/${profile?.id}`,
+        params: {
+          status,
+        },
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const callWhichApi = async () => {
+    switch (status) {
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        return await getOrderWithStatus(status);
+      case 0:
+      default:
+        return await getAllOrder();
+    }
+  };
+  useEffect(() => {
+    callWhichApi();
+  }, [status]);
 
-const rows: Array<IRow> = [
-  {
-    id: 1,
-    title: "Snow",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
-  },
-  {
-    id: 2,
-    title: "Lannister",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
-  },
-  {
-    id: 3,
-    title: "Lannister",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
-  },
-  {
-    id: 4,
-    title: "Stark",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
-  },
-];
-
-
-const HeaderOrder = () => {
-  const theme = useTheme();
-  return (
-    <Grid container spacing={2} justifyItems="center" alignItems="center">
-      <Grid item xs={2}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Chủ sách
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          Nguyễn Thảo
-        </Typography>
-      </Grid>
-      <Grid item xs={2}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Số điện thoại
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          0905 907 362
-        </Typography>
-      </Grid>
-      <Grid item xs={3}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Địa chỉ
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          1 Lý Thái Tổ, p12, q.10
-        </Typography>
-      </Grid>
-      <Grid item xs={2}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Thời gian thuê
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          12/2/2024 - 4/3/2024
-        </Typography>
-      </Grid>
-      <Grid item xs={3}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Trạng thái người thuê
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          Chuẩn bị nhận hàng
-        </Typography>
-      </Grid>
-    </Grid>
-  );
-};
-export default function ListOrder() {
   return (
     <Box
       sx={{
@@ -150,13 +63,13 @@ export default function ListOrder() {
         borderRadius: 3,
         px: 2,
         py: 1,
-        height: rows[0]!! ? "auto" : "500px",
+        height: rowsOrder[0]!! ? "auto" : "500px",
       }}
     >
       <HeaderOrder />
       <DataGrid
-        rows={rows}
-        columns={columns}
+        rows={rowsOrder}
+        columns={columnsOrder}
         disableRowSelectionOnClick
         slots={{ noRowsOverlay: NoData, footer: OrderFooter }}
         sx={{ border: "none" }}

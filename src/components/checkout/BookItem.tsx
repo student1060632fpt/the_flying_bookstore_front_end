@@ -18,6 +18,7 @@ const BookItem = ({ orderDetail }: { orderDetail?: IOrder | undefined }) => {
               }
               alt="book"
               fill
+              unoptimized
               className="object-cover rounded-lg"
             />
           </Link>

@@ -172,7 +172,7 @@ export default function Navbar() {
       onClose={handleCloseMenuOrder}
       MenuListProps={{ "aria-labelledby": "order-button" }}
     >
-      <Link href={"/my-order"}>
+      <Link href={"/my-order/0"}>
         <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của tôi</MenuItem>
       </Link>
       <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của khách</MenuItem>
@@ -199,7 +199,7 @@ export default function Navbar() {
 
     return (
       <Box sx={{ display: { xs: "none", md: "flex" } }}>
-        <Link href="/my-order">
+        <Link href="/my-order/0">
           <IconButton
             size="large"
             aria-label="show 4 new mails"

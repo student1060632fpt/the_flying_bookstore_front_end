@@ -58,7 +58,7 @@ const OrderFooter = ({
         "Vui lòng thanh toán đơn hàng trong 24 giờ, nếu đã chuyển khoản bạn nhấn nút Xác nhận đã trả",
       USER_PAID: "Vui lòng chờ admin xác nhận đã nhận tiền của bạn thành công",
       DELIVERED: dayjs().isSame(order.leaseOrder.toDate, "day")
-        ? "Bạn đã đến "
+        ? "Bạn đã đến hạn trả sách"
         : `Bạn còn ${duration} ngày nữa, bạn có muốn trả sách sớm?`,
     };
 
@@ -82,8 +82,8 @@ const OrderFooter = ({
     return await updateStatusOrder(statusMessage, order.leaseOrder.id).then(
       () => {
         callAlert(`${alertMessage} thành công`);
-        window.location.reload();
         changeStatus(null, status);
+        router.refresh()
       }
     );
   };

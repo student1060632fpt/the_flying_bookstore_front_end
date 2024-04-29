@@ -11,6 +11,7 @@ import { useAuthStore } from "../../hooks/user";
 import { IOrder } from "../../types/order";
 import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
+import { useParams } from "next/navigation";
 
 export default function ListOrder({
   status,
@@ -19,6 +20,9 @@ export default function ListOrder({
   status: number;
   changeStatus: (e: any, newValue: number) => void;
 }) {
+  const params = useParams<{  status: string[] }>()
+  console.log({params});
+
   const { profile } = useAuthStore();
   const [listOrder, setListOrder] = useState<Array<IOrder>>();
   const callApiGetAllOrder = async () => {

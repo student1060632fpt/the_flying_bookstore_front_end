@@ -44,7 +44,7 @@ const MenuProfile = () => {
         <ListItemIcon>
           <CiBag1 size={22} />
         </ListItemIcon>
-        <Link href="/my-order">
+        <Link href="/my-order/0">
           <ListItemText>Quản lý đơn hàng của tôi</ListItemText>
         </Link>
       </MenuItem>

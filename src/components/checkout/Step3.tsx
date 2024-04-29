@@ -52,7 +52,7 @@ const Step3 = () => {
             Tiếp tục mua sắm
           </Button>
         </Link>
-        <Link href="/my-order">
+        <Link href="/my-order/0">
           <Button
             variant="outlined"
             sx={{ textTransform: "none" }}

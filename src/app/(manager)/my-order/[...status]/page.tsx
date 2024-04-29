@@ -25,8 +25,10 @@ const arrStatus = [
   { label: "Đã quá hạn", index: 4 },
   { label: "Đã hủy", index: 5 },
 ];
-const Order = () => {
-  const [value, setValue] = useState(0);
+const Order = ({params}:{params:{status:string[]}}) => {
+  console.log("Order",{params});
+  
+  const [value, setValue] = useState(parseInt(params.status[0]));
   const handleChange = (_:any, newValue: number) =>
     setValue(newValue);
   return (

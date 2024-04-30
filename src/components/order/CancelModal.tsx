@@ -54,7 +54,7 @@ export default function CancelModal({
         open={open}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Bạn có muốn hủy đơn hàng #{order.leaseOrder.id}?
+          Bạn có muốn hủy đơn hàng #{order?.leaseOrder?.id}?
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -70,9 +70,9 @@ export default function CancelModal({
         </IconButton>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Bạn có chắc chắn muốn hủy đơn hàng {order.leaseOrder.id} của{" "}
-            {order.lessor.lastName} {order.lessor.firstName} với cuốn sách{" "}
-            {order.listing.book.title}?
+            Bạn có chắc chắn muốn hủy đơn hàng {order?.leaseOrder?.id} của{" "}
+            {order?.lessor?.lastName} {order?.lessor?.firstName} với cuốn sách{" "}
+            {order?.listing?.book.title}?
           </Typography>
           <Typography gutterBottom>
             Bạn sẽ không thể hoàn lại thao tác này được. Bạn có chắc chắn chứ?

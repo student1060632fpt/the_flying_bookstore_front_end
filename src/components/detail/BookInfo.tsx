@@ -147,7 +147,7 @@ const BookInfo = ({ book }: { book: IListing | undefined }) => {
           {book?.quantity == 0 ? (
             "Tạm thời hết sách"
           ) : (
-            <p>Hiện còn {book?.quantity} cuốn</p>
+            <p>Hiện vẫn còn hàng</p>
           )}
         </div>
       </div>

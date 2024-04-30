@@ -9,8 +9,6 @@ interface IChoosenBook {
 export const useStoreBook = create<IChoosenBook>((set) => ({
   bookChoosen: null,
   updateBook: (newBook) => {
-    console.log({newBook});
-    
     set({ bookChoosen: newBook });
   },
 }));

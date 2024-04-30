@@ -12,12 +12,14 @@ export type IRow = {
 // Function to convert IOrder and ILeaseOrderDetail to IRow
 export function convertToRow(order: IOrder): IRow {
   const {
-    listing: {
-      id,
-      book: { title },
-    },
-    leaseOrder: { totalDeposit, totalLeaseFee },
+    listing,
+    leaseOrder,
   } = order;
+  const id = listing?.id || 0;
+  const title = listing?.book.title || "";
+  const totalDeposit = leaseOrder?.totalDeposit || 0;
+  const totalLeaseFee = leaseOrder?.totalLeaseFee || 0;
+
   const row: IRow = {
     id,
     title,
@@ -26,12 +28,13 @@ export function convertToRow(order: IOrder): IRow {
     price: totalLeaseFee,
     total: totalDeposit + totalLeaseFee,
   };
+
   return row;
 }
 
 // Example usage:
 export const columnsOrder: GridColDef<IRow>[] = [
-  { field: "id", headerName: "Id", width: 90, sortable: false },
+  { field: "id", headerName: "Id bài đăng", width: 90, sortable: false },
   {
     field: "title",
     headerName: "Tên sách",
@@ -65,40 +68,5 @@ export const columnsOrder: GridColDef<IRow>[] = [
     sortable: false,
     type: "number",
     width: 150,
-  },
-];
-
-export const rowsOrder: Array<IRow> = [
-  {
-    id: 1,
-    title: "Snow",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
-  },
-  {
-    id: 2,
-    title: "Lannister",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
-  },
-  {
-    id: 3,
-    title: "Lannister",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
-  },
-  {
-    id: 4,
-    title: "Stark",
-    deposit: 100000,
-    quantity: 3,
-    price: 5000,
-    total: 10000,
   },
 ];

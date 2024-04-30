@@ -60,7 +60,13 @@ const Pay = ({
               Tỉnh/TP: TP.Hồ Chí Minh
             </p>
             <h4 className="text-xl my-5 font-semibold">
-              Bước 2: Chờ quản trị xác nhận
+              Bước 2: Tin nhắn chuyển khoản theo cú pháp: 
+            </h4>
+            <p className="text-md text-gray-600 mt-3">
+            &lt;Tên khách hàng&gt;_&lt;Tổng tiền&gt;_Thanh toán cọc sách
+            </p>
+            <h4 className="text-xl my-5 font-semibold">
+              Bước 3: Chờ quản trị xác nhận
             </h4>
           </>
         );
@@ -98,7 +104,12 @@ const Pay = ({
           className={`pay-card ${payType == 2 && "choose"}`}
           onClick={() => setPayType(2)}
         >
-          <Image src={MomoLogo} alt="momo" className="mx-auto mb-2" width={65} />
+          <Image
+            src={MomoLogo}
+            alt="momo"
+            className="mx-auto mb-2"
+            width={65}
+          />
           <p className="">Thanh toán VNPay</p>
         </div>
       </div>

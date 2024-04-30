@@ -44,7 +44,7 @@ const RentDay = ({ book }: IPropsBook) => {
   const renderCountTotal = () =>{
     const totalRent = renderTotalRent();
     if(!book?.depositFee || totalRent == 0) return 0;
-    return book?.depositFee + totalRent;
+    return book?.depositFee;
   }
   const onSubmit = (data: IFormValueDayRent) => {
     if(!book) return;

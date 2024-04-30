@@ -9,6 +9,14 @@ const renderStatus = (status?: IOrderStatus | undefined) => {
       return <>Chờ thanh toán</>;
     case "DELIVERED":
       return <>Đã lấy hàng</>;
+    case "CANCELED":
+      return <>Đã hủy</>;
+    case "USER_PAID":
+      return <>Chờ admin duyệt thanh toán</>;
+    case "RETURNING":
+      return <>Chờ chủ sách nhận sách</>;
+    case "RETURNED":
+      return <>Đã trả sách</>;
     default:
       return <>Chưa định nghĩa</>;
   }

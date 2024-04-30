@@ -23,9 +23,9 @@ export type IOrderStatus =
 export type IPaymentMethod = "COD" | "BANK_TRANSFER" | "VNPAY";
 
 export interface IOrder {
-  leaseOrder: ILeaseOrder;
-  listing: IListing;
-  lessor: IUser;
+  leaseOrder?: ILeaseOrder;
+  listing?: IListing;
+  lessor?: IUser;
 }
 
 interface ILeaseOrder {

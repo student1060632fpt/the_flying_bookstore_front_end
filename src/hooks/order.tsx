@@ -4,6 +4,7 @@ import { createJSONStorage, persist } from "zustand/middleware";
 interface IOrder {
   order: number | null;
   updateOrder: (arg: number | null) => void;
+  removeOrder: () =>void;
 }
 
 const orderSlice: StateCreator<IOrder, [["zustand/persist", unknown]]> = (
@@ -13,6 +14,7 @@ const orderSlice: StateCreator<IOrder, [["zustand/persist", unknown]]> = (
   updateOrder: (newOrder) => {
     set({ order: newOrder });
   },
+  removeOrder: () => set({order:null})
 });
 export const useStoreOrder = create<IOrder>()(
   persist(orderSlice, {

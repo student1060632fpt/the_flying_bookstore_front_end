@@ -7,8 +7,17 @@ import OrderFooter from "./OrderFooter";
 import { IOrder } from "../../types/order";
 import { useState } from "react";
 
-const DetailOrder = ({ order,changeStatus }: { order: IOrder,changeStatus: (e: any, newValue: number) => void; }) => {
-  const listBook:IRow[] = [convertToRow(order)]
+const DetailOrder = ({
+  order,
+  changeStatus,
+}: {
+  order: IOrder;
+  changeStatus: (e: any, newValue: number) => void;
+}) => {
+
+  const [listBook, setlistBook] = useState<IRow[]>(order && order.listing ? [convertToRow(order)] : []);
+  
+  if (!order) return <>Hiện chưa có đơn hàng</>;
   return (
     <Box
       sx={{
@@ -17,7 +26,7 @@ const DetailOrder = ({ order,changeStatus }: { order: IOrder,changeStatus: (e: a
         borderRadius: 3,
         px: 2,
         py: 1,
-        height: listBook ? "auto" : "500px",
+        height: listBook.length != 0 ? "auto" : "500px",
       }}
     >
       <HeaderOrder order={order} />
@@ -31,7 +40,7 @@ const DetailOrder = ({ order,changeStatus }: { order: IOrder,changeStatus: (e: a
         hideFooterSelectedRowCount
         hideFooter
       />
-      <OrderFooter changeStatus={changeStatus} order={order}/>
+      <OrderFooter changeStatus={changeStatus} order={order} />
     </Box>
   );
 };

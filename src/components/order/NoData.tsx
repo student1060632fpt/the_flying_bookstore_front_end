@@ -66,7 +66,7 @@ const  NoData=()=> {
           </g>
         </g>
       </svg>
-      <Box sx={{ mt: 1 }}>Không có dữ liệu</Box>
+      <Box sx={{ my: 1 }}>Không có dữ liệu</Box>
     </StyledGridOverlay>
   );
 }

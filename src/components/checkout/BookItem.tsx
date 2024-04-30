@@ -9,7 +9,7 @@ const BookItem = ({ orderDetail }: { orderDetail?: IOrder | undefined }) => {
     <div className="hover:shadow-lg hover:shadow-indigo-500/50 ease-in-out duration-200 p-3 rounded-lg book flex justify-between align-center  mt-5 gap-5">
       <div className="flex">
         <div className="relative w-32 h-48 mr-6">
-          <Link href="/detail#isbn">
+          <Link href={`/detail/${orderDetail?.listing.id}`}>
             <Image
               src={
                 orderDetail?.listing.copy.imageLink
@@ -24,7 +24,7 @@ const BookItem = ({ orderDetail }: { orderDetail?: IOrder | undefined }) => {
           </Link>
         </div>
         <div className="flex flex-col  justify-center">
-          <Link href="/detail#isbn">
+          <Link href={`/detail/${orderDetail?.listing.id}`}>
             <h5 className="text-lg font-semibold">{orderDetail?.listing.book.title}</h5>
           </Link>
           <p className="text-sm text-gray-400">{orderDetail?.listing.book.authors}</p>

@@ -21,7 +21,7 @@ export const HeaderOrder = ({ order }: { order: IOrder }) => {
           Id đơn hàng
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          #{order.leaseOrder.id}
+          #{order?.leaseOrder?.id}
         </Typography>
       </Grid>
       <Grid item xs={2}>
@@ -29,7 +29,7 @@ export const HeaderOrder = ({ order }: { order: IOrder }) => {
           Chủ sách
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          {order.lessor.lastName} {order.lessor.firstName}
+          {order?.lessor?.lastName} {order?.lessor?.firstName}
         </Typography>
       </Grid>
 
@@ -38,8 +38,8 @@ export const HeaderOrder = ({ order }: { order: IOrder }) => {
           Thời gian thuê
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          {dayjs(order.leaseOrder.fromDate).format("DD/MM")} -{" "}
-          {dayjs(order.leaseOrder.toDate).format("DD/MM/YYYY")}
+          {dayjs(order?.leaseOrder?.fromDate).format("DD/MM")} -{" "}
+          {dayjs(order?.leaseOrder?.toDate).format("DD/MM/YYYY")}
         </Typography>
       </Grid>
       <Grid item xs={3}>
@@ -47,11 +47,11 @@ export const HeaderOrder = ({ order }: { order: IOrder }) => {
           Trạng thái người thuê
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-        {renderStatus(order?.leaseOrder.status)}
+        {renderStatus(order?.leaseOrder?.status)}
         </Typography>
       </Grid>
       <Grid item xs={2}>
-        <Link href={`/order/${order.leaseOrder.id}`}>
+        <Link href={`/order/${order?.leaseOrder?.id}`}>
           <Button
             endIcon={<CiLocationArrow1 />}
             sx={{ textTransform: "none" }}

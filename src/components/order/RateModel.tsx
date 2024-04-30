@@ -9,22 +9,61 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import { Dispatch, useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
+import { IRateModal } from "./OrderFooter";
+import { useAuthStore } from "../../hooks/user";
+import axios from "axios";
 
 const RateModel = ({
-  openRateModal,
-  setOpenRateModal,
+  rateModal,
+  setRateModal,
 }: {
-  openRateModal: boolean;
-  setOpenRateModal: Dispatch<boolean>;
+  rateModal: IRateModal;
+  setRateModal: Dispatch<SetStateAction<IRateModal>>;
 }) => {
+  const { open, order } = rateModal;
+  const { profile } = useAuthStore();
   const handleClose = () => {
-    setOpenRateModal(false);
+    setRateModal((state) => ({ ...state, open: false }));
   };
-  const [value, setValue] = useState<number | null>(2);
+
+  const [rate, setRate] = useState<number | null>(5);
+  const [description, setDescription] = useState<string>("");
+  const onSubmit =async () => {
+    const formData = {
+      score: rate,
+      imageLink: null,
+      leaseOrderId: order?.leaseOrder?.id,
+      userId: profile?.id,
+      listingId: order?.listing?.id,
+      description,
+    };
+    console.log(formData);
+
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:8082/api/review",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data: formData,
+    };
+
+    return await axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <Dialog
-      open={openRateModal}
+      open={open}
       onClose={handleClose}
       PaperProps={{
         component: "form",
@@ -41,33 +80,36 @@ const RateModel = ({
       <DialogTitle>Đánh giá đơn hàng</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          Bạn đánh giá thế nào về đơn hàng #123 của chủ sách Thảo Nguyễn?
+          Bạn đánh giá thế nào về đơn hàng #{order?.leaseOrder?.id} của{" "}
+          {order?.lessor?.lastName} {order?.lessor?.firstName}?
         </DialogContentText>
-        <Stack spacing={1} sx={{mt:1}} alignItems={"center"}>
+        <Stack spacing={1} sx={{ mt: 1 }} alignItems={"center"}>
           <Rating
-            name="simple-controlled"
-            value={value}
+            name="simple-rate"
+            value={rate}
             size="large"
-            onChange={(event, newValue) => {
-              setValue(newValue);
+            onChange={(_, newValue) => {
+              setRate(newValue);
             }}
           />
           <TextField
             autoFocus
-            required
             margin="dense"
             id="name"
-            name="email"
+            name="description"
             label="Mô tả"
-            type="email"
+            type="description"
             fullWidth
             variant="standard"
+            onChange={(event) => {
+              setDescription(event.target.value);
+            }}
           />
         </Stack>
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Hủy</Button>
-        <Button type="submit">Đánh giá</Button>
+        <Button onClick={onSubmit}>Đánh giá</Button>
       </DialogActions>
     </Dialog>
   );

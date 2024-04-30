@@ -25,6 +25,9 @@ import { useAuthStore } from "@/hooks/user";
 import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
 import AlertSignOut from "./AlertSignOut";
 import { getAllOrder } from "../../api/order";
+import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useStoreOrder } from "../../hooks/order";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -35,6 +38,9 @@ export default function Navbar() {
   const theme = useTheme();
   const [orderNumber, setOrderNumber] = React.useState(0);
   const cart = useStoreCart((state) => state.cart);
+  const {removeOrder}=useStoreOrder()
+  const pathname = usePathname();
+  const router = useRouter();
   const [alert, setAlert] = React.useState<IAlert>({
     open: false,
     message: "",
@@ -69,14 +75,26 @@ export default function Navbar() {
   };
   const logout = () => {
     removeToken();
+    removeOrder();
     setAlert({
       message: "Đăng xuất thành công",
       severity: "success",
       open: true,
     });
     handleMenuClose();
+    const url: string[] = pathname ? pathname.split("/") : [];
+    console.log("url", url[1]);
+    const urlMain: string | null = url[1].toString() || null;
+    if (
+      urlMain == "my-order" ||
+      urlMain == "customer-order" ||
+      urlMain == "order" ||
+      urlMain == "checkout" ||
+      urlMain == "profile"
+    ) {
+      router.push("/")
+    }
   };
-
   React.useEffect(() => {
     const callApiGetAllOrder = async () => {
       if (!profile?.id) return;
@@ -87,7 +105,7 @@ export default function Navbar() {
       });
     };
     callApiGetAllOrder();
-  }, []);
+  }, [profile?.id]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -175,7 +193,9 @@ export default function Navbar() {
       <Link href={"/my-order/0"}>
         <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của tôi</MenuItem>
       </Link>
-      <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của khách</MenuItem>
+      <Link href={"/customer-order"}>
+        <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của khách</MenuItem>
+      </Link>
     </Menu>
   );
 

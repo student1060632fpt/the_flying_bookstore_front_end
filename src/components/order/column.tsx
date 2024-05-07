@@ -1,5 +1,7 @@
-import { GridColDef } from "@mui/x-data-grid";
+import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { IOrder } from "../../types/order";
+import Button from "@mui/material/Button";
+import Link from "next/link";
 
 export type IRow = {
   id: number;
@@ -11,10 +13,7 @@ export type IRow = {
 };
 // Function to convert IOrder and ILeaseOrderDetail to IRow
 export function convertToRow(order: IOrder): IRow {
-  const {
-    listing,
-    leaseOrder,
-  } = order;
+  const { listing, leaseOrder } = order;
   const id = listing?.id || 0;
   const title = listing?.book.title || "";
   const totalDeposit = leaseOrder?.totalDeposit || 0;
@@ -68,5 +67,25 @@ export const columnsOrder: GridColDef<IRow>[] = [
     sortable: false,
     type: "number",
     width: 150,
+  },
+  {
+    field: "date",
+    headerName: "",
+    renderCell: (params: GridRenderCellParams<IRow, any>) => {
+      console.log("value",params.row?.id);
+      
+      return (
+        <Link href={`/detail/${params.row?.id}`}>
+          <Button
+            variant="outlined"
+            size="small"
+            tabIndex={params.hasFocus ? 0 : -1}
+            sx={{textTransform: "none"}}
+          >
+            Xem sách
+          </Button>
+        </Link>
+      )
+    },
   },
 ];

@@ -58,8 +58,8 @@ const OrderFooter = ({
     let content: IOrderStatusMessage = {
       PAYMENT_SUCCESS:
         "Vui lòng chỉ nhấn “đã nhận được hàng” khi đơn hàng đã được giao đến bạn và bạn đã nhận được hàng",
-      ORDERED_PAYMENT_PENDING:
-        "Vui lòng thanh toán đơn hàng trong 24 giờ, nếu đã chọn phương thức chuyển khoản và chuyển khoản thành công, bạn nhấn nút Đã trả tiền",
+      ORDERED_PAYMENT_PENDING: order.leaseOrder.paymentMethod == "COD"? "Vui lòng thanh toán đơn hàng trong 24 giờ":
+        "Vui lòng thanh toán đơn hàng trong 24 giờ, nếu chuyển khoản thành công, bạn hãy nhấn nút Đã trả tiền",
       USER_PAID: "Vui lòng chờ admin xác nhận đã nhận tiền của bạn thành công",
       DELIVERED: dayjs().isSame(order?.leaseOrder?.toDate, "day")
         ? "Bạn đã đến hạn trả sách"

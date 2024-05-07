@@ -13,6 +13,7 @@ import { Dispatch, SetStateAction, useState } from "react";
 import { IRateModal } from "./OrderFooter";
 import { useAuthStore } from "../../hooks/user";
 import axios from "axios";
+import { useStoreAlert } from "../../hooks/alert";
 
 const RateModel = ({
   rateModal,
@@ -22,6 +23,7 @@ const RateModel = ({
   setRateModal: Dispatch<SetStateAction<IRateModal>>;
 }) => {
   const { open, order } = rateModal;
+  const {callAlert} = useStoreAlert()
   const { profile } = useAuthStore();
   const handleClose = () => {
     setRateModal((state) => ({ ...state, open: false }));
@@ -55,6 +57,8 @@ const RateModel = ({
       .request(config)
       .then((response) => {
         console.log(JSON.stringify(response.data));
+        handleClose()
+        callAlert("Đánh giá thành công")
       })
       .catch((error) => {
         console.log(error);

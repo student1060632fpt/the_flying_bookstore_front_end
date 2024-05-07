@@ -67,7 +67,6 @@ const Login = () => {
 
       if (response.data) {
         // Registration successful, handle the response accordingly
-        console.log("b1: response.data", response.data);
         await getProfile(response.data.token)
       } else {
         throw new Error("Registration failed");

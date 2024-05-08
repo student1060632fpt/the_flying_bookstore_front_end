@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { top100Films } from "@/app/(manager)/manager-post/add-post/top100film";
 import { Accordion, AccordionSummary } from "./AccordionCustom";
 export type TFieldPostValue = {
   description: string;
@@ -42,7 +41,7 @@ const CreatePost = () => {
               <Autocomplete
                 disablePortal
                 id="combo-post"
-                options={top100Films}
+                options={[]}
                 fullWidth
                 renderInput={(params) => (
                   <TextField {...params} label="Thể loại" variant="standard" />

@@ -93,6 +93,16 @@ const OrderFooter = ({
       }
     );
   };
+  const cancelButton = (<IconButton
+    color="error"
+    aria-label="delete"
+    sx={{ ml: 2 }}
+    onClick={() =>
+      setCancelModal((state) => ({ ...state, open: true }))
+    }
+  >
+    <CiTrash />
+  </IconButton>)
   const renderButton = () => {
     let message = "";
     switch (order?.leaseOrder?.status) {
@@ -107,7 +117,7 @@ const OrderFooter = ({
           </Button>
         );
       case "ORDERED_PAYMENT_PENDING":
-        if(order.leaseOrder.paymentMethod == "COD") return <></>
+        if(order.leaseOrder.paymentMethod == "COD") return cancelButton
         message = `Đã trả tiền`;
         return (
           <>
@@ -117,16 +127,7 @@ const OrderFooter = ({
             >
               {message}
             </Button>
-            <IconButton
-              color="error"
-              aria-label="delete"
-              sx={{ ml: 2 }}
-              onClick={() =>
-                setCancelModal((state) => ({ ...state, open: true }))
-              }
-            >
-              <CiTrash />
-            </IconButton>
+            {cancelButton}
           </>
         );
       case "DELIVERED":

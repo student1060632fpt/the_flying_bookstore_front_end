@@ -43,7 +43,7 @@ export default function CancelModal({
     setCancelModal((state) => ({ ...state, open: false }));
   };
   const handleCancelOrder = async () => {
-    return await callUpdateStatus("CANCELED", 4, "Hủy đơn hàng");
+    return await callUpdateStatus("CANCELED", 5, "Hủy đơn hàng");
   };
 
   return (

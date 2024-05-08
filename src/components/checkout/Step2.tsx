@@ -91,7 +91,7 @@ const Step2 = ({
         contentAlert = (
           <>
             Bạn hãy nhanh chóng thanh toán theo phương thức{" "}
-            {renderPayment(orderDetail?.leaseOrder.paymentMethod)} để lấy hàng
+            {renderPayment(orderDetail?.leaseOrder?.paymentMethod)} để lấy hàng
           </>
         );
         break;

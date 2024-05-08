@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { top100Films } from "@/app/(manager)/manager-post/add-post/top100film";
 import { useEffect, useMemo, useState } from "react";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Image from "next/image";
@@ -95,7 +94,7 @@ const CreateDocument = () => {
               <Autocomplete
                 disablePortal
                 id="auto-create-doc"
-                options={[{ label: "Tạo tài liệu mới" }, ...top100Films]}
+                options={[{ label: "Tạo tài liệu mới" }, ...[]]}
                 fullWidth
                 renderInput={(params) => (
                   <TextField

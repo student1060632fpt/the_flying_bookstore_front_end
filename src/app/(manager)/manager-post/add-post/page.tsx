@@ -1,6 +1,6 @@
 "use client";
 import { Button, Typography } from "@mui/material";
-import CreateBook, { TBookValue } from "@/components/createPost/CreateBook";
+import CreateBook from "@/components/createPost/CreateBook";
 import CreateDocument, {
   TFieldDocumentValue,
 } from "@/components/createPost/CreateDocument";
@@ -8,7 +8,7 @@ import CreatePost, {
   TFieldPostValue,
 } from "@/components/createPost/CreatePost";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-type TFieldValue = TFieldDocumentValue & TBookValue & TFieldPostValue;
+type TFieldValue = TFieldDocumentValue  & TFieldPostValue;
 const AddPost = () => {
   const methods = useForm<TFieldValue>();
   const onSubmit: SubmitHandler<TFieldValue> = (data) => console.log(data);

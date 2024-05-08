@@ -17,6 +17,8 @@ const renderStatus = (status?: IOrderStatus | undefined) => {
       return <>Chờ chủ sách nhận sách</>;
     case "RETURNED":
       return <>Đã trả sách</>;
+    case "LATE_RETURN":
+      return <>Trả trễ</>;
     default:
       return <>Chưa định nghĩa</>;
   }

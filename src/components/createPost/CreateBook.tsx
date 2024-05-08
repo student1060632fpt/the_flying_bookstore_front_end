@@ -1,260 +1,189 @@
 "use client";
-import { top100Films } from "@/app/(manager)/manager-post/add-post/top100film";
+
 import {
   AccordionDetails,
   Autocomplete,
+  Box,
+  Button,
+  CircularProgress,
   Grid,
-  InputAdornment,
   TextField,
 } from "@mui/material";
-import { SubmitHandler, useForm, useFormContext } from "react-hook-form";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionSummary } from "./AccordionCustom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { CiSearch } from "react-icons/ci";
-import ModalSearchBook from "./ModalSearchBook";
-import { useStoreBook } from "@/hooks/choosenBook";
-export type TBookValue = {
-  title: string;
-  author: string;
-  publisher: string;
-  pageNumber: number;
-  size: string;
-  isbn: string;
-  datePublish: string;
-  language: string;
-};
-const BookExistOrNot = () => {
-  const {
-    register,
-    getValues,
-    formState: { errors },
-    reset,
-  } = useFormContext<TBookValue>();
-  const bookChoosen = useStoreBook((state) => state.bookChoosen);
-  console.log({ bookChoosen });
-  useEffect(() => {
-    reset();
-    console.log("getValues", getValues());
-    
-  }, [bookChoosen, reset]);
+import { IBook } from "../../types/book";
+import FindBookAutocomplete from "./FindBookAutocomplete";
+import { InputListing } from "./InputListing";
+import GenreAutocomplete from "./GenreAutocomplete";
+import { useStoreAlert } from "../../hooks/alert";
 
-  if (bookChoosen?.id) {
-    return (
-      <>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            label="Tác giả"
-            variant="standard"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              readOnly: true,
-            }}
-            value={bookChoosen.authors}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            label="Nhà xuất bản"
-            variant="standard"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              readOnly: true,
-            }}
-            value={bookChoosen.publisher}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            label="Số trang"
-            variant="standard"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              readOnly: true,
-            }}
-            value={bookChoosen.pageCount}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            label="Kích thước"
-            variant="standard"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              readOnly: true,
-            }}
-            value={bookChoosen.size}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            label="ISBN"
-            variant="standard"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              readOnly: true,
-            }}
-            value={bookChoosen.isbn}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            label="Ngày phát hành"
-            variant="standard"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              readOnly: true,
-            }}
-            value={bookChoosen.publishedDate}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            label="Ngôn ngữ"
-            variant="standard"
-            InputLabelProps={{ shrink: true }}
-            InputProps={{
-              readOnly: true,
-            }}
-            value={bookChoosen.languageCode}
-          />
-        </Grid>
-      </>
-    );
-  } else {
-    return (
-      <>
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            required
-            label="Tiêu đề"
-            variant="standard"
-            {...register("title", {
-              required: "Cần phải điền trường này",
-            })}
-            error={!!errors?.title}
-            helperText={errors.title && errors.title?.message}
-          />
-        </Grid>
-        <Grid item xs={6}>
-          <TextField
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            label="Tác giả"
-            variant="standard"
-            {...register("author")}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            label="Nhà xuất bản"
-            variant="standard"
-            {...register("publisher")}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            type="number"
-            InputLabelProps={{ shrink: true }}
-            label="Số trang"
-            variant="standard"
-            {...register("pageNumber")}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            label="Kích thước"
-            variant="standard"
-            {...register("size")}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            label="ISBN"
-            variant="standard"
-            {...register("isbn")}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            label="Ngày phát hành"
-            variant="standard"
-            {...register("datePublish")}
-          />
-        </Grid>
-        <Grid item xs={4}>
-          <TextField
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            label="Ngôn ngữ"
-            variant="standard"
-            {...register("language")}
-          />
-        </Grid>
-      </>
-    );
-  }
+const addBookDefault: IBook = {
+  title: "Thêm mới sách",
+  id: -1,
+  isbn: "",
+  authors: [],
+  languageCode: "",
+  genre: [],
+  publisher: "",
+  publishedDate: "",
+  pageCount: undefined,
+  size: "",
 };
 const CreateBook = () => {
+  const [options, setOptions] = useState<readonly IBook[]>([addBookDefault]);
   const [open, setOpen] = useState(false);
-  const bookChoosen = useStoreBook((state) => state.bookChoosen);
+  const { callAlert } = useStoreAlert();
+  const methods = useForm<IBook>();
+  const { handleSubmit, getValues } = methods;
+  const id = getValues("id");
+
+  const loading = open && options.length === 0;
+  const onSubmit: SubmitHandler<IBook> = async (value) => {
+    if (value?.id !== -1 && value?.id !== 0) {
+      return callAlert("Chọn sách thành công");
+    }
+    const {
+      authors,
+      genre,
+      isbn,
+      languageCode,
+      pageCount,
+      publishedDate,
+      publisher,
+      size,
+      title,
+    } = value;
+
+    let data = JSON.stringify({
+      isbn,
+      title,
+      authors: [authors],
+      publisher,
+      pageCount: parseInt(pageCount),
+      languageCode,
+      genre: genre.map((item) => item.name),
+      publishedDate,
+      size,
+    });
+
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:8082/api/book",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data,
+    };
+
+    return await axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        callAlert("Tạo sách thành công");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    let active = true;
+
+    if (!loading) {
+      return undefined;
+    }
+    axios
+      .request({ url: "http://localhost:8082/api/book" })
+      .then((response) => {
+        if (active) {
+          setOptions([addBookDefault, ...response?.data]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    return () => {
+      active = false;
+    };
+  }, [loading]);
+
   return (
-    <>
-      <Accordion defaultExpanded>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1-content"
-          id="panel1-header"
-          sx={{ borderBottom: 1, borderBottomColor: "lightgray" }}
-        >
-          Sách
-        </AccordionSummary>
-        <AccordionDetails>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                fullWidth
-                required
-                defaultValue={""}
-                label="Tìm sách"
-                variant="standard"
-                InputProps={{
-                  readOnly: true,
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <CiSearch size={25} />
-                    </InputAdornment>
-                  ),
-                }}
-                onClick={() => setOpen(true)}
-                value={bookChoosen ? bookChoosen.title : "Thêm sách mới"}
-              />
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Accordion defaultExpanded>
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1-content"
+            id="panel1-header"
+            sx={{ borderBottom: 1, borderBottomColor: "lightgray" }}
+          >
+            Sách
+          </AccordionSummary>
+          <AccordionDetails>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FindBookAutocomplete
+                  open={open}
+                  options={options}
+                  setOpen={setOpen}
+                  setOptions={setOptions}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <InputListing label="Tiêu đề" name="title" required />
+              </Grid>
+              <Grid item xs={6}>
+                <InputListing label="Tác giả" name="authors" required />
+              </Grid>
+              <Grid item xs={12}>
+                <GenreAutocomplete />
+              </Grid>
+              <Grid item xs={4}>
+                <InputListing label="Nhà xuất bản" name="publisher" required />
+              </Grid>
+              <Grid item xs={4}>
+                <InputListing label="Số trang" name="pageCount" required />
+              </Grid>
+              <Grid item xs={4}>
+                <InputListing label="Kích thước" name="size" />
+              </Grid>
+              <Grid item xs={4}>
+                <InputListing label="ISBN" name="isbn" required />
+              </Grid>
+              <Grid item xs={4}>
+                <InputListing
+                  label="Ngày phát hành"
+                  name="publishedDate"
+                  required
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputListing label="Ngôn ngữ" name="languageCode" required />
+              </Grid>
             </Grid>
-            <BookExistOrNot />
-          </Grid>
-        </AccordionDetails>
-      </Accordion>
-      <ModalSearchBook open={open} setOpen={setOpen} />
-    </>
+            <Box
+              width={"100%"}
+              display={"flex"}
+              justifyContent={"flex-end"}
+              mt={2}
+            >
+              <Button
+                variant="outlined"
+                type="submit"
+                onClick={handleSubmit(onSubmit)}
+              >
+                {id == -1 ? `Tạo sách` : `Chọn sách`}
+              </Button>
+            </Box>
+          </AccordionDetails>
+        </Accordion>
+      </form>
+    </FormProvider>
   );
 };
 

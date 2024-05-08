@@ -33,7 +33,7 @@ interface ICopy {
   
 }
 export type IBook = {
-  id: number;
+  id?: number;
   isbn: string;
   title: string;
   authors: string[];
@@ -41,7 +41,7 @@ export type IBook = {
   genre: string[];
   publisher: string;
   publishedDate: string;
-  pageCount: number;
+  pageCount?: number;
   size: string;
   
 };

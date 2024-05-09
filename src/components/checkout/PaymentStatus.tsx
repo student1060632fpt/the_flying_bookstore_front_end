@@ -1,27 +1,47 @@
 import { IOrderStatus, IPaymentMethod } from "../../types/order";
-
-const renderStatus = (status?: IOrderStatus | undefined) => {
+type IOrderStatusMessage = {
+  isCustomer: {
+    [key in IOrderStatus]?: string;
+  };
+  isManager: {
+    [key in IOrderStatus]?: string;
+  };
+};
+const renderStatus = (
+  status?: IOrderStatus | undefined,
+  isCustomer?: boolean
+) => {
   if (!status) return <></>;
-  switch (status) {
-    case "PAYMENT_SUCCESS":
-      return <>Chờ lấy hàng</>;
-    case "ORDERED_PAYMENT_PENDING":
-      return <>Chờ thanh toán</>;
-    case "DELIVERED":
-      return <>Đã lấy hàng</>;
-    case "CANCELED":
-      return <>Đã hủy</>;
-    case "USER_PAID":
-      return <>Chờ admin duyệt thanh toán</>;
-    case "RETURNING":
-      return <>Chờ chủ sách nhận sách</>;
-    case "RETURNED":
-      return <>Đã trả sách</>;
-    case "LATE_RETURN":
-      return <>Trả trễ</>;
-    default:
-      return <>Chưa định nghĩa</>;
+  const content: IOrderStatusMessage = {
+    isCustomer: {
+      PAYMENT_SUCCESS: `Chờ khách lấy hàng`,
+      ORDERED_PAYMENT_PENDING: `Chờ khách thanh toán`,
+      DELIVERED: `Chủ sách đã đưa hàng`,
+      CANCELED: `Khách đã hủy`,
+      USER_PAID: `Chờ admin duyệt thanh toán`,
+      RETURNING: `Chủ sách chờ nhận sách`,
+      RETURNED: `Chủ sách đã lấy lại sách`,
+      LATE_RETURN: `Khách trả trễ`,
+    },
+    isManager: {
+      PAYMENT_SUCCESS: `Lấy hàng`,
+      ORDERED_PAYMENT_PENDING: `Chờ thanh toán`,
+      DELIVERED: `Đã lấy hàng`,
+      CANCELED: `Đã hủy`,
+      USER_PAID: `Chờ admin duyệt thanh toán`,
+      RETURNING: `Chờ chủ sách nhận sách`,
+      RETURNED: `Đã trả sách`,
+      LATE_RETURN: `Trả trễ`,
+    },
+  };
+  if (isCustomer) {
+    if (content.isCustomer[status]) {
+      return content.isCustomer[status];
+    }
+    return <>Chưa định nghĩa</>;
   }
+  if (content.isManager[status]) return content.isManager[status];
+  return <>Chưa định nghĩa</>;
 };
 const renderPayment = (method?: IPaymentMethod | undefined) => {
   if (!method) return <></>;

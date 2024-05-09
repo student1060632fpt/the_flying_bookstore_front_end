@@ -22,19 +22,20 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useRouter } from "next/navigation";
 import CancelModal from "./CancelModal";
+import { callContentAlert } from "./contentAlert";
 dayjs.extend(localizedFormat);
 //tiếng việt
 require("dayjs/locale/vi");
 dayjs.locale("vi"); // use locale globally
 dayjs.extend(relativeTime);
-type IOrderStatusMessage = {
-  [key in IOrderStatus]?: string;
-};
+
 export type IRateModal = { open: boolean; order: IOrder };
 const OrderFooter = ({
   order,
   changeStatus,
+  isCustomer,
 }: {
+  isCustomer?: boolean;
   order: IOrder;
   changeStatus: (e: any, newValue: number) => void;
 }) => {
@@ -47,36 +48,37 @@ const OrderFooter = ({
     order,
   });
   const { callAlert } = useStoreAlert();
-  const dateEnd = dayjs(order?.leaseOrder?.toDate);
-  const duration = dateEnd.diff(order?.leaseOrder?.fromDate, "day");
-  const router = useRouter();
   const handleClickOpenRateModal = () => {
     setRateModal((state) => ({ ...state, open: true }));
   };
   const renderAlert = () => {
     if (!order?.leaseOrder?.status) return <></>;
-    let content: IOrderStatusMessage = {
-      PAYMENT_SUCCESS:
-        "Vui lòng chỉ nhấn “đã nhận được hàng” khi đơn hàng đã được giao đến bạn và bạn đã nhận được hàng",
-      ORDERED_PAYMENT_PENDING: order.leaseOrder.paymentMethod == "COD"? "Vui lòng thanh toán đơn hàng trong 24 giờ":
-        "Vui lòng thanh toán đơn hàng trong 24 giờ, nếu chuyển khoản thành công, bạn hãy nhấn nút Đã trả tiền",
-      USER_PAID: "Vui lòng chờ admin xác nhận đã nhận tiền của bạn thành công",
-      DELIVERED: dayjs().isSame(order?.leaseOrder?.toDate, "day")
-        ? "Bạn đã đến hạn trả sách"
-        : `Bạn còn ${duration} ngày nữa, bạn có muốn trả sách sớm?`,
-      RETURNED: "Bạn chờ admin trả lại tiền cọc trong 3-5 ngày làm việc nhé",
-    };
-
-    if (
-      !content[order?.leaseOrder?.status] ||
-      content[order?.leaseOrder?.status] == ""
-    )
-      return <></>;
-    return (
-      <Alert variant="standard" color="info">
-        {content[order?.leaseOrder?.status]}
-      </Alert>
-    );
+    const content = callContentAlert(order);
+    if (isCustomer) {
+      if (
+        !content?.isCustomer[order?.leaseOrder?.status] ||
+        content?.isCustomer[order?.leaseOrder?.status] == ""
+      ) {
+        return <></>;
+      }
+      return (
+        <Alert variant="standard" color="info">
+          {content?.isCustomer[order?.leaseOrder?.status]}
+        </Alert>
+      );
+    } else {
+      if (
+        !content?.isManager[order?.leaseOrder?.status] ||
+        content?.isManager[order?.leaseOrder?.status] == ""
+      ) {
+        return <></>;
+      }
+      return (
+        <Alert variant="standard" color="info">
+          {content?.isManager[order?.leaseOrder?.status]}
+        </Alert>
+      );
+    }
   };
 
   const callUpdateStatus = async (
@@ -89,22 +91,37 @@ const OrderFooter = ({
       () => {
         callAlert(`${alertMessage} thành công`);
         changeStatus(null, status);
-        router.refresh();
       }
     );
   };
-  const cancelButton = (<IconButton
-    color="error"
-    aria-label="delete"
-    sx={{ ml: 2 }}
-    onClick={() =>
-      setCancelModal((state) => ({ ...state, open: true }))
-    }
-  >
-    <CiTrash />
-  </IconButton>)
+  const cancelButton = (
+    <IconButton
+      color="error"
+      aria-label="delete"
+      sx={{ ml: 2 }}
+      onClick={() => setCancelModal((state) => ({ ...state, open: true }))}
+    >
+      <CiTrash />
+    </IconButton>
+  );
   const renderButton = () => {
     let message = "";
+    if (isCustomer) {
+      switch (order?.leaseOrder?.status) {
+        case "RETURNING":
+          message = `Đã trả lại sách`;
+          return (
+            <Button
+              variant="contained"
+              onClick={() => callUpdateStatus("RETURNED", 4, message)}
+            >
+              {message}
+            </Button>
+          );
+        default:
+          return <></>;
+      }
+    }
     switch (order?.leaseOrder?.status) {
       case "PAYMENT_SUCCESS":
         message = `Đã nhận được hàng`;
@@ -117,7 +134,7 @@ const OrderFooter = ({
           </Button>
         );
       case "ORDERED_PAYMENT_PENDING":
-        if(order.leaseOrder.paymentMethod == "COD") return cancelButton
+        if (order.leaseOrder.paymentMethod == "COD") return cancelButton;
         message = `Đã trả tiền`;
         return (
           <>

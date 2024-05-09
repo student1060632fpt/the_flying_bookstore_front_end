@@ -12,22 +12,24 @@ export const getDetailOrder = async (orderId: number | null) => {
     });
 };
 
-export const getAllOrder = async (userId:number) => {
+export const getAllOrder = async (userId: number, isCustomer?: boolean) => {
   return await axios
     .request({
-      url: `http://localhost:8082/api/leaseOrder/search/lessee/${userId}`,
+      url: `http://localhost:8082/api/leaseOrder/search/${
+        isCustomer ? `lessor` : `lessee`
+      }/${userId}`,
     })
     .then((response) => {
       const resultListOrder = response.data;
       if (resultListOrder) {
-        return resultListOrder
+        return resultListOrder;
       }
     })
     .catch((error) => {
       console.log(error);
     });
 };
-export const updateStatusOrder = async (status: IOrderStatus,id:number) => {
+export const updateStatusOrder = async (status: IOrderStatus, id: number) => {
   return await axios
     .request({
       url: `http://localhost:8082/api/leaseOrder/edit/status`,

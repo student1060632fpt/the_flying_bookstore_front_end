@@ -5,7 +5,13 @@ import { CiLocationArrow1 } from "react-icons/ci";
 import { IOrder } from "../../types/order";
 import dayjs from "dayjs";
 import { renderStatus } from "../checkout/PaymentStatus";
-export const HeaderOrder = ({ order }: { order: IOrder }) => {
+export const HeaderOrder = ({
+  order,
+  isCustomer,
+}: {
+  order: IOrder;
+  isCustomer?: boolean;
+}) => {
   const theme = useTheme();
   return (
     <Grid
@@ -16,9 +22,9 @@ export const HeaderOrder = ({ order }: { order: IOrder }) => {
       justifyItems="center"
       alignItems="center"
     >
-      <Grid item xs={2}>
+      <Grid item xs={1}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Id đơn hàng
+          Id
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
           #{order?.leaseOrder?.id}
@@ -26,7 +32,7 @@ export const HeaderOrder = ({ order }: { order: IOrder }) => {
       </Grid>
       <Grid item xs={2}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Chủ sách
+          {isCustomer ? `Người thuê` : `Chủ sách`}
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
           {order?.lessor?.lastName} {order?.lessor?.firstName}
@@ -42,12 +48,20 @@ export const HeaderOrder = ({ order }: { order: IOrder }) => {
           {dayjs(order?.leaseOrder?.toDate).format("DD/MM/YYYY")}
         </Typography>
       </Grid>
-      <Grid item xs={3}>
+      <Grid item xs={2}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Trạng thái người thuê
+          Trạng thái chủ sách
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-        {renderStatus(order?.leaseOrder?.status)}
+          {renderStatus(order?.leaseOrder?.status,isCustomer)}
+        </Typography>
+      </Grid>
+      <Grid item xs={3}>
+        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
+          Trạng thái người thuê sách
+        </Typography>
+        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
+          {renderStatus(order?.leaseOrder?.status)}
         </Typography>
       </Grid>
       <Grid item xs={2}>

@@ -1,22 +1,15 @@
 "use client";
 import ListOrder from "@/components/order/ListOrder";
-import MenuProfile from "@/components/order/MenuProfile";
-import { TabPanelProps } from "@mui/joy";
 import {
   Box,
-  Container,
-  Grid,
-  Paper,
   Tab,
   Tabs,
   Typography,
-  styled,
 } from "@mui/material";
 import { useState } from "react";
 import CustomTabPanel, {
   orderProps,
 } from "../../../../components/order/CustomTabPanel";
-import { useRouter } from "next/navigation";
 
 const arrStatus = [
   { label: "Tất cả", index: 0 },
@@ -26,18 +19,18 @@ const arrStatus = [
   { label: "Đã trả sách", index: 4 },
   { label: "Đã hủy", index: 5 },
 ];
-const Order = ({params}:{params:{status:string[]}}) => {
-  const router = useRouter()
+const MyOrder = ({isCustomer}:{isCustomer?:boolean}) => {
+  const [value, setValue] = useState(0);
   const handleChange = (_:any, newValue: number) => {
-    router.push(`/my-order/${newValue}`)
+    setValue(newValue);
   }
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Quản lý đơn hàng của tôi
+        Quản lý đơn hàng của {isCustomer?`khách`: `tôi`}
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-        <Tabs value={parseInt(params.status[0])} onChange={handleChange} aria-label="order tab">
+        <Tabs value={value} onChange={handleChange} aria-label="order tab">
           {arrStatus.map(({ label, index }) => {
             return <Tab label={label} {...orderProps(index)} key={index} />;
           })}
@@ -45,12 +38,12 @@ const Order = ({params}:{params:{status:string[]}}) => {
       </Box>
       {arrStatus.map(({ label, index }) => {
         return (
-          <CustomTabPanel value={parseInt(params.status[0])} index={index} key={index}>
-            <ListOrder status={index} changeStatus={handleChange} />
+          <CustomTabPanel value={value} index={index} key={index}>
+            <ListOrder status={index} changeStatus={handleChange} isCustomer={isCustomer}/>
           </CustomTabPanel>
         );
       })}
     </>
   );
 };
-export default Order;
+export default MyOrder;

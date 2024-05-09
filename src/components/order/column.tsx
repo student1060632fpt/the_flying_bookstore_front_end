@@ -72,8 +72,6 @@ export const columnsOrder: GridColDef<IRow>[] = [
     field: "date",
     headerName: "",
     renderCell: (params: GridRenderCellParams<IRow, any>) => {
-      console.log("value",params.row?.id);
-      
       return (
         <Link href={`/detail/${params.row?.id}`}>
           <Button

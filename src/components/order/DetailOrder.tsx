@@ -10,13 +10,16 @@ import { useState } from "react";
 const DetailOrder = ({
   order,
   changeStatus,
+  isCustomer,
 }: {
   order: IOrder;
+  isCustomer?: boolean;
   changeStatus: (e: any, newValue: number) => void;
 }) => {
+  const [listBook, setlistBook] = useState<IRow[]>(
+    order && order.listing ? [convertToRow(order)] : []
+  );
 
-  const [listBook, setlistBook] = useState<IRow[]>(order && order.listing ? [convertToRow(order)] : []);
-  
   if (!order) return <>Hiện chưa có đơn hàng</>;
   return (
     <Box
@@ -29,7 +32,7 @@ const DetailOrder = ({
         height: listBook.length != 0 ? "auto" : "500px",
       }}
     >
-      <HeaderOrder order={order} />
+      <HeaderOrder order={order} isCustomer={isCustomer}/>
       <DataGrid
         rows={listBook}
         columns={columnsOrder}
@@ -40,7 +43,7 @@ const DetailOrder = ({
         hideFooterSelectedRowCount
         hideFooter
       />
-      <OrderFooter changeStatus={changeStatus} order={order} />
+      <OrderFooter changeStatus={changeStatus} order={order}  isCustomer={isCustomer}/>
     </Box>
   );
 };

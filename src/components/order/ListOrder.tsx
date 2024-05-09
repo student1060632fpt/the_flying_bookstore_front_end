@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../../hooks/user";
@@ -7,16 +7,17 @@ import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
 import { useParams } from "next/navigation";
 import { useStoreAlert } from "../../hooks/alert";
+import { RxReload } from "react-icons/rx";
 
 export default function ListOrder({
   status,
   changeStatus,
+  isCustomer,
 }: {
+  isCustomer?: boolean;
   status: number;
   changeStatus: (e: any, newValue: number) => void;
 }) {
-  const params = useParams<{ status: string[] }>();
-
   const { profile } = useAuthStore();
   const [listOrder, setListOrder] = useState<Array<IOrder>>();
   const { callAlert } = useStoreAlert();
@@ -25,14 +26,16 @@ export default function ListOrder({
       callAlert("Mời bạn đăng nhập lại!");
       return;
     }
-    return await getAllOrder(profile?.id).then((response) => {
+    return await getAllOrder(profile?.id, isCustomer).then((response) => {
       setListOrder(response);
     });
   };
   const getOrderWithStatus = async (status: number) => {
     return await axios
       .request({
-        url: `http://localhost:8082/api/leaseOrder/search/lessee/status/${profile?.id}`,
+        url: `http://localhost:8082/api/leaseOrder/search/${
+          isCustomer ? `lessor` : `lessee`
+        }/status/${profile?.id}`,
         params: {
           status,
         },
@@ -57,20 +60,38 @@ export default function ListOrder({
       case 0:
         return await callApiGetAllOrder();
       default:
-        return callAlert("Cần thêm status mới")
+        return callAlert("Cần thêm status mới");
     }
   };
 
   useEffect(() => {
     callWhichApi();
   }, [status]);
+  const reloadStatus = (e: any, newValue: number) => {
+    callWhichApi();
+    changeStatus(e, newValue);
+  };
   if (!listOrder || !Array.isArray(listOrder) || listOrder?.length == 0)
     return <>Không có đơn hàng nào</>;
   return (
     <Grid container spacing={3}>
+      <Grid item xs={12} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+        <Typography>Bạn hiện có {listOrder?.length} đơn hàng</Typography>
+        <Button
+          startIcon={<RxReload />}
+          variant="outlined"
+          onClick={callWhichApi}
+        >
+          Tải lại
+        </Button>
+      </Grid>
       {listOrder.map((order, index) => (
         <Grid item xs={12} key={index}>
-          <DetailOrder order={order} changeStatus={changeStatus} />
+          <DetailOrder
+            order={order}
+            changeStatus={reloadStatus}
+            isCustomer={isCustomer}
+          />
         </Grid>
       ))}
     </Grid>

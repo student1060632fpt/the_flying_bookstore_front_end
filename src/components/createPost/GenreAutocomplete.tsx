@@ -25,8 +25,6 @@ const GenreAutocomplete = ({}: {}) => {
       });
       return genreFinded?.nameVn;
     });
-    console.log({ arr });
-
     return arr;
   };
   if (id !== -1 && id !== 0) {

@@ -2,6 +2,7 @@
 import {
   AccordionDetails,
   Autocomplete,
+  Box,
   Button,
   FormControl,
   FormControlLabel,
@@ -22,6 +23,9 @@ import NoImage from "./../../assets/images/noimg.png";
 import { useStaticPicker } from "@mui/x-date-pickers/internals";
 import axios, { AxiosProgressEvent } from "axios";
 import { Accordion, AccordionSummary } from "./AccordionCustom";
+import { IPostState } from "../../app/(manager)/manager-post/add-post/page";
+import { useAuthStore } from "../../hooks/user";
+import { useStoreAlert } from "../../hooks/alert";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -36,20 +40,32 @@ const VisuallyHiddenInput = styled("input")({
 });
 
 export type TFieldDocumentValue = {
-  damagePercent: number;
+  damagePercent: string;
   linkImage: string;
 };
 
-const CreateDocument = () => {
+const CreateDocument = ({
+  updateDocumentId,
+  bookId,
+}: {
+  updateDocumentId: (documentId: IPostState["copyId"]) => void;
+  bookId: IPostState["bookId"];
+}) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<TFieldDocumentValue>();
   const [uploadProgress, setUploadProgress] = useState(0);
-  const onSubmit: SubmitHandler<TFieldDocumentValue> = (data) => console.log(data);
   const [imgUrl, setImgUrl] = useState<string>();
+  const { profile } = useAuthStore();
+  const {callAlert} = useStoreAlert()
   const handleFileUpload = (event: any) => {
+    if (uploadProgress == 100 || imgUrl !== "") {
+      setImgUrl("");
+      setUploadProgress(0);
+    }
+
     console.log(event.target.files[0], "bebe");
 
     const file = event.target.files[0];
@@ -77,7 +93,40 @@ const CreateDocument = () => {
         console.error(error);
       });
   };
+  const onSubmit: SubmitHandler<TFieldDocumentValue> = async (value) => {
+    let data = ({
+      bookId,
+      ownerId: profile?.id,
+      quantity: 1,
+      imageLink: imgUrl,
+      damagePercent: parseFloat(value.damagePercent),
+      updatedDate: "",
+      deletedDate: "",
+      copyStatus: "UNLISTED",
+    });
+    console.log({data});
 
+    let config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://localhost:8082/api/copy",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      data,
+    };
+
+    return await axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        updateDocumentId(response.data.id)
+        callAlert(`Tạo tài liệu #${response.data.id} thành công` )
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Accordion sx={{ my: 2 }} defaultExpanded>
@@ -90,21 +139,6 @@ const CreateDocument = () => {
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Autocomplete
-                disablePortal
-                id="auto-create-doc"
-                options={[{ label: "Tạo tài liệu mới" }, ...[]]}
-                fullWidth
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Chọn tài liệu"
-                    variant="standard"
-                  />
-                )}
-              />
-            </Grid>
             <Grid item xs={12}>
               <TextField
                 fullWidth
@@ -151,17 +185,21 @@ const CreateDocument = () => {
                 />
               </div>
             </Grid>
-            <Grid item xs={12} >
-              <Grid container gap={2}>
-                <Grid item xs={3}>
-                  <Button fullWidth variant="outlined" color="error" onClick={() => {setImgUrl("");setUploadProgress(0)}}>Xóa ảnh</Button>
-                </Grid>
-                <Grid item xs={3}>
-                  <Button fullWidth variant="contained">Thêm ảnh</Button>
-                </Grid>
-              </Grid>
-            </Grid>
           </Grid>
+          <Box
+            width={"100%"}
+            display={"flex"}
+            justifyContent={"flex-end"}
+            mt={2}
+          >
+            <Button
+              variant="outlined"
+              type="submit"
+              onClick={handleSubmit(onSubmit)}
+            >
+              Tạo tài liệu
+            </Button>
+          </Box>
         </AccordionDetails>
       </Accordion>
     </form>

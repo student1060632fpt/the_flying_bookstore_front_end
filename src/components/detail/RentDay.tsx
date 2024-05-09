@@ -4,7 +4,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { Button } from "@mui/material";
+import { Alert, Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
 import Link from "next/link";
 import { IPropsBook } from "./DocumentInfo";
@@ -15,7 +15,7 @@ import { viVN } from "@mui/x-date-pickers/locales";
 import { ICart, IFormValueDayRent } from "@/types/cart";
 import { useStoreCart } from "@/hooks/cart";
 import { useRouter } from "next/navigation";
-
+import { useAuthStore } from "../../hooks/user";
 
 const tomorrow = dayjs().add(1, "day");
 const RentDay = ({ book }: IPropsBook) => {
@@ -25,15 +25,16 @@ const RentDay = ({ book }: IPropsBook) => {
       dateEnd: null,
     },
   });
-  const router = useRouter()
-  const addToCart = useStoreCart(state=>state.addCart)
+  const { profile } = useAuthStore();
+  const router = useRouter();
+  const addToCart = useStoreCart((state) => state.addCart);
   const renderDurationRent = () => {
-    const firstDayEnd = watch("dateEnd")
-    if(!firstDayEnd) return 0
+    const firstDayEnd = watch("dateEnd");
+    if (!firstDayEnd) return 0;
     const dateStart = watch("dateStart");
-    const dateEnd = dayjs(firstDayEnd).add(1,"day");
+    const dateEnd = dayjs(firstDayEnd).add(1, "day");
     if (!dateStart || !dateEnd) return 0;
-    const duration = dateEnd.diff(dateStart, "day")
+    const duration = dateEnd.diff(dateStart, "day");
     return duration;
   };
   const renderTotalRent = () => {
@@ -41,23 +42,23 @@ const RentDay = ({ book }: IPropsBook) => {
     if (!book?.leaseRate) return 0;
     return duration * book?.leaseRate;
   };
-  const renderCountTotal = () =>{
+  const renderCountTotal = () => {
     const totalRent = renderTotalRent();
-    if(!book?.depositFee || totalRent == 0) return 0;
+    if (!book?.depositFee || totalRent == 0) return 0;
     return book?.depositFee;
-  }
+  };
   const onSubmit = (data: IFormValueDayRent) => {
-    if(!book) return;
+    if (!book) return;
     const submitCart: ICart = {
-      dayRent:data,
+      dayRent: data,
       book,
       total: renderCountTotal(),
       totalRent: renderTotalRent(),
-      duration: renderDurationRent()
-    }
-    
+      duration: renderDurationRent(),
+    };
+
     addToCart(submitCart);
-    router.push("/cart")
+    router.push("/cart");
   };
   return (
     <>
@@ -126,27 +127,49 @@ const RentDay = ({ book }: IPropsBook) => {
         </div>
         <div className="columns-2 mt-3">
           <p className="text-sm">Tổng tiền thuê</p>
-          <p className="font-semibold text-right">{formatCurrency(renderTotalRent())}</p>
+          <p className="font-semibold text-right">
+            {formatCurrency(renderTotalRent())}
+          </p>
         </div>
         <div className="columns-2 border-b py-3">
           <p className="text-sm">Tiền cọc</p>
-          <p className="font-semibold text-right">{formatCurrency(book?.depositFee)}</p>
+          <p className="font-semibold text-right">
+            {formatCurrency(book?.depositFee)}
+          </p>
         </div>
         <div className="columns-2 my-2">
           <p className="font-semibold text-lg">Tổng tiền</p>
-          <p className="font-semibold text-right text-lg">{formatCurrency(renderCountTotal())}</p>
+          <p className="font-semibold text-right text-lg">
+            {formatCurrency(renderCountTotal())}
+          </p>
         </div>
-        <Button
-          variant="contained"
-          color="secondary"
-          size="large"
-          type="submit"
-          disabled={renderCountTotal() == 0? true:false}
-          sx={{ width: "100%", color: "white" }}
-          startIcon={<CiShoppingCart />}
-        >
-          Đặt thuê ngay
-        </Button>
+
+        {profile?.id == book?.user.id ? (
+          <Alert severity="info">
+            Đây là sách của bạn, bạn không thể thêm vào giỏ hàng
+          </Alert>
+        ) : (
+          <>
+            {renderCountTotal() == 0 ? (
+              <Alert severity="error" sx={{ mb: 1 }}>
+                Bạn cần chọn ngày trả
+              </Alert>
+            ) : (
+              <></>
+            )}
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              type="submit"
+              disabled={renderCountTotal() == 0 ? true : false}
+              sx={{ width: "100%", color: "white" }}
+              startIcon={<CiShoppingCart />}
+            >
+              Đặt thuê ngay
+            </Button>
+          </>
+        )}
       </form>
     </>
   );

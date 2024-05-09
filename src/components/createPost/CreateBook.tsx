@@ -32,7 +32,11 @@ const addBookDefault: IBook = {
   pageCount: undefined,
   size: "",
 };
-const CreateBook = () => {
+const CreateBook = ({
+  updateBookId,
+}: {
+  updateBookId: (bookId: number | string | undefined) => void;
+}) => {
   const [options, setOptions] = useState<readonly IBook[]>([addBookDefault]);
   const [open, setOpen] = useState(false);
   const { callAlert } = useStoreAlert();
@@ -43,6 +47,7 @@ const CreateBook = () => {
   const loading = open && options.length === 0;
   const onSubmit: SubmitHandler<IBook> = async (value) => {
     if (value?.id !== -1 && value?.id !== 0) {
+      updateBookId(value?.id);
       return callAlert("Chọn sách thành công");
     }
     const {
@@ -62,7 +67,7 @@ const CreateBook = () => {
       title,
       authors: [authors],
       publisher,
-      pageCount: parseInt(pageCount),
+      pageCount: parseFloat(pageCount),
       languageCode,
       genre: genre.map((item) => item.name),
       publishedDate,
@@ -82,7 +87,8 @@ const CreateBook = () => {
     return await axios
       .request(config)
       .then((response) => {
-        console.log(JSON.stringify(response.data));
+        console.log(JSON.stringify(response?.data));
+        updateBookId(response?.data?.id);
         callAlert("Tạo sách thành công");
       })
       .catch((error) => {
@@ -147,7 +153,7 @@ const CreateBook = () => {
                 <InputListing label="Nhà xuất bản" name="publisher" required />
               </Grid>
               <Grid item xs={4}>
-                <InputListing label="Số trang" name="pageCount" required />
+                <InputListing label="Số trang" name="pageCount" required type="number" />
               </Grid>
               <Grid item xs={4}>
                 <InputListing label="Kích thước" name="size" />

@@ -1,17 +1,17 @@
 import { Controller, useFormContext } from "react-hook-form";
-import TextField from "@mui/material/TextField";
+import TextField, { TextFieldProps } from "@mui/material/TextField";
 import { IBook } from "../../types/book";
-
-export const InputListing = ({
-  name,
-  label,
-  required,
-}: {
+import { TFieldPostValue } from "./CreatePost";
+interface IProps extends React.InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
-  name: keyof IBook; // TODO fix to IFormCheckout
+  name: string; // TODO fix to IBook
   label: string;
-}) => {
-  const { control, getValues } = useFormContext<IBook>();
+  isPost?: boolean; // nếu là posting thì ko disable các thứ đó
+}
+export const InputListing = (props: IProps) => {
+  const { name, label, required, isPost, ...inputProps } = props;
+  const { control, getValues } = useFormContext() ?? {};
+  if (!control) return <></>;
   const id = getValues("id");
   return (
     <Controller
@@ -21,16 +21,17 @@ export const InputListing = ({
       render={({ field, fieldState: { error } }) => (
         <>
           <TextField
+            {...inputProps}
             helperText={error ? error.message : null}
             size="medium"
             id={`${name} - form listing`}
             error={!!error}
             fullWidth
-            type={name == "pageCount" ? "number" : "text"}
             InputLabelProps={{ shrink: true }}
             label={`${label} ${required ? "*" : ""}`}
             variant="standard"
-            disabled={id !== -1 && id !== 0}
+            disabled={!isPost && id !== -1 && id !== 0}
+            color="primary" // Add this line to specify the color prop
             {...field}
           />
         </>

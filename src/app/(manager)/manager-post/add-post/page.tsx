@@ -8,27 +8,38 @@ import CreatePost, {
   TFieldPostValue,
 } from "@/components/createPost/CreatePost";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-type TFieldValue = TFieldDocumentValue  & TFieldPostValue;
+import { useState } from "react";
+type TFieldValue = TFieldDocumentValue & TFieldPostValue;
+export interface IPostState {
+  bookId: number | string | undefined;
+  copyId: string | undefined;
+  postId: string | undefined;
+}
 const AddPost = () => {
+  const [post, setPost] = useState<IPostState>({
+    bookId: undefined,
+    copyId: undefined,
+    postId: undefined,
+  });
+  const updateBookId = (bookId: IPostState["bookId"]): void =>
+    setPost((state) => ({ ...state, bookId }));
+  const updateDocumentId = (copyId: IPostState["copyId"]): void =>
+    setPost((state) => ({ ...state, copyId }));
   const methods = useForm<TFieldValue>();
   const onSubmit: SubmitHandler<TFieldValue> = (data) => console.log(data);
+
   return (
     <>
-      <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
-          <Typography variant="h4" sx={{ mb: 2 }}>
-            Đăng bài mới
-          </Typography>
+      <Typography variant="h4" sx={{ mb: 2 }}>
+        Đăng bài mới
+      </Typography>
 
-          <CreateBook />
-          <CreateDocument />
-          <CreatePost />
-
-          <Button type="submit" variant="contained" sx={{ mt: 2 }}>
-            Nộp
-          </Button>
-        </form>
-      </FormProvider>
+      <CreateBook updateBookId={updateBookId} />
+      <CreateDocument
+        bookId={post.bookId}
+        updateDocumentId={updateDocumentId}
+      />
+      <CreatePost copyId={post.copyId}/>
     </>
   );
 };

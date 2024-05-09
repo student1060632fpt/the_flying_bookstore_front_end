@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useAuthStore } from "../hooks/user";
 import { IOrderStatus } from "../types/order";
 
 export const getDetailOrder = async (orderId: number | null) => {

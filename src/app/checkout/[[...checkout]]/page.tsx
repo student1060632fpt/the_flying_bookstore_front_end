@@ -40,7 +40,7 @@ const Checkout = () => {
   const chooseStep = () => {
     switch (step) {
       case 0:
-        return <Step1 handleNext={handleNext} setAlert={setAlert} />;
+        return <Step1 handleNext={handleNext}/>;
       case 1:
         return <Step2 handleNext={handleNext} setAlert={setAlert} />;
       case 2:

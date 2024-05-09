@@ -17,6 +17,8 @@ import axios from "axios";
 import AlertSignOut from "../nav/AlertSignOut";
 import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
 import { useStoreOrder } from "../../hooks/order";
+import { getProfile, onSubmitProfile } from "../../api/profile";
+import { useStoreAlert } from "../../hooks/alert";
 
 const vnpay = new VNPay({
   tmnCode: "8P19JVPK",
@@ -36,21 +38,23 @@ const convertPaymentType = (paymentType: number) => {
       break;
   }
 };
-const Step1 = ({
-  handleNext,
-  setAlert,
-}: {
-  handleNext: () => void;
-  setAlert: Dispatch<SetStateAction<IAlert>>;
-}) => {
+const Step1 = ({ handleNext }: { handleNext: () => void }) => {
+  const { callAlert, callErrorAlert } = useStoreAlert();
   const { profile, token, setToken } = useAuthStore();
   const { updateOrder } = useStoreOrder();
   const { cart } = useStoreCart();
   const router = useRouter();
   const [payType, setPayType] = useState<number>(0);
+  const methods = useForm<IFormCheckout>();
+  const {
+    handleSubmit,
+    getValues,
+    formState: { isSubmitSuccessful },
+    reset,
+  } = methods;
 
-  const defaultValues: IFormCheckout = useMemo(() => {
-    return {
+  useEffect(() => {
+    const defaultValues: IFormCheckout = {
       lastName: profile?.lastName || "",
       firstName: profile?.firstName || "",
       email: profile?.email || "",
@@ -58,31 +62,11 @@ const Step1 = ({
       address: profile?.address || "",
       birthDate: profile?.birthDate ? dayjs(profile.birthDate) : null,
     };
+    reset(defaultValues);
   }, [profile]);
 
-  const methods = useForm<IFormCheckout>({ defaultValues });
-  const {
-    getValues,
-    formState: { isSubmitSuccessful },
-  } = methods;
-
   useEffect(() => {
-    const getProfile = async (): Promise<void> => {
-      try {
-        const response = await axios.request({
-          url: "http://localhost:8082/api/user/myInfo",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (response?.data && token) {
-          setToken(token, response?.data);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getProfile();
+    getProfile(token, setToken);
   }, [setToken, token]);
 
   const onSubmitOrder = async () => {
@@ -110,11 +94,7 @@ const Step1 = ({
         data: JSON.stringify(convertValue),
       });
       if (response?.data) {
-        setAlert({
-          message: "Tạo đơn hàng thành công",
-          open: true,
-          severity: "success",
-        });
+        callAlert("Tạo đơn hàng thành công");
         updateOrder(response?.data?.id);
         handleNext();
         if (payType == 2) {
@@ -130,57 +110,20 @@ const Step1 = ({
         }
       }
     } catch (error) {
-      setAlert({
-        message: "Lỗi",
-        open: true,
-        severity: "error",
-      });
+      callErrorAlert("Lỗi");
     }
   };
-  const onSubmit = async (data: IFormCheckout) => {
-    const { email, phoneNumber, firstName, lastName, birthDate, address } =
-      data;
-    let dataRes = JSON.stringify({
-      id: profile?.id,
-      username: profile?.username,
-      email,
-      phoneNumber,
-      firstName,
-      lastName,
-      birthDate: dayjs(birthDate).format("YYYY-MM-DD"),
-      address,
-      password: null,
+  const beforeOnSubmitProfile = async (data:IFormCheckout) => {
+    return await onSubmitProfile(data, profile, token).then((res) => {
+      callAlert(
+        "Xác nhận thông tin thành công, mời bạn chọn thanh toán rồi tạo đơn hàng"
+      );
     });
-    let config = {
-      method: "put",
-      maxBodyLength: Infinity,
-      url: `http://localhost:8082/api/user/${profile?.id}`,
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      data: dataRes,
-    };
-
-    return await axios
-      .request(config)
-      .then((response) => {
-        if (response.data) {
-          setAlert({
-            message:
-              "Xác nhận thông tin thành công, mời bạn chọn thanh toán rồi tạo đơn hàng",
-            open: true,
-            severity: "success",
-          });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(beforeOnSubmitProfile)}>
         <div className="step mt-8 grid grid-cols-2">
           {/* thông tin đặt thuê */}
           <div className="card ">

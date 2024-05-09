@@ -3,29 +3,20 @@ import {
   Alert,
   Box,
   Button,
-  FormControl,
   FormHelperText,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
-  Typography,
 } from "@mui/material";
 import "./Step.scss";
 import {
   DatePicker,
-  DateValidationError,
   LocalizationProvider,
   viVN,
 } from "@mui/x-date-pickers";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Controller, useFormContext } from "react-hook-form";
-import { IFormCheckout } from "@/types/form";
 import { FormInputText } from "./FormInputText";
 
-const InfoRent = () => {
+const InfoRent = ({isProfile}:{isProfile?: boolean}) => {
   const [cleared, setCleared] = useState<boolean>(false);
   const {
     control,
@@ -43,6 +34,7 @@ const InfoRent = () => {
     return () => {};
   }, [cleared]);
   const renderInfo = () => {
+    if(isProfile) return <></>
     if (isSubmitSuccessful)
       return <Alert severity="success">Chọn thanh toán rồi tạo đơn hàng</Alert>;
     if (!isValid) {

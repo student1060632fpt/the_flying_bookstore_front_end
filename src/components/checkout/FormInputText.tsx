@@ -13,7 +13,9 @@ export const FormInputText = ({
   name: keyof IFormCheckout; 
   label: string;
 }) => {
-  const { control } = useFormContext();
+  const { control } = useFormContext() ?? {};
+  if (!control) return <></>;
+
   return (
     <Controller
       name={name}

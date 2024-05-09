@@ -4,6 +4,7 @@ import { ICommonAlert } from "../types/common";
 
 interface IAlert extends ICommonAlert {
   callAlert: (message: string) => void;
+  callErrorAlert: (message: string) => void;
   closeAlert: () => void;
 }
 
@@ -12,7 +13,10 @@ export const useStoreAlert = create<IAlert>((set) => ({
   message: "",
   severity: "success",
   callAlert: (message) => {
-    set({ message, open: true });
+    set({ message, open: true, severity: "success" });
+  },
+  callErrorAlert: (message) => {
+    set({ message, open: true, severity: "error" });
   },
   closeAlert: () => set({ open: false }),
 }));

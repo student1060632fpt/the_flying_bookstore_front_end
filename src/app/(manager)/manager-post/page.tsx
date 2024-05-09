@@ -169,7 +169,7 @@ const ManagerPost = () => {
         sx={{ mb: 2 }}
       >
         <Typography variant="h4" gutterBottom>
-          Quản lý bài viết
+          Quản lý bài đăng của tôi
         </Typography>
         <Link href="/manager-post/add-post">
         <Button variant="contained">Thêm bài đăng</Button>

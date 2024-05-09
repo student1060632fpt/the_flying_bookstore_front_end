@@ -15,7 +15,7 @@ import {
 import { useState } from "react";
 import CustomTabPanel, {
   orderProps,
-} from "../../../components/order/CustomTabPanel";
+} from "../../../../components/order/CustomTabPanel";
 
 const Order = () => {
   const [value, setValue] = useState(0);

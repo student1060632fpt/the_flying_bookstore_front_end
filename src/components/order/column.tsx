@@ -1,15 +1,18 @@
-import { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
+import { GridActionsCellItem, GridColDef, GridRenderCellParams, GridRowParams } from "@mui/x-data-grid";
 import { IOrder } from "../../types/order";
-import Button from "@mui/material/Button";
 import Link from "next/link";
+import dayjs from "dayjs";
+import { CiCircleInfo } from "react-icons/ci";
+import theme from "../../utils/theme";
 
 export type IRow = {
   id: number;
   title: string;
   deposit: number;
-  quantity: number;
+  duration: number;
   price: number;
   total: number;
+
 };
 // Function to convert IOrder and ILeaseOrderDetail to IRow
 export function convertToRow(order: IOrder): IRow {
@@ -18,14 +21,16 @@ export function convertToRow(order: IOrder): IRow {
   const title = listing?.book.title || "";
   const totalDeposit = leaseOrder?.totalDeposit || 0;
   const totalLeaseFee = leaseOrder?.totalLeaseFee || 0;
+  const dateEnd = dayjs(leaseOrder?.toDate);
 
+  const duration = dateEnd.diff(leaseOrder?.fromDate, "day");
   const row: IRow = {
     id,
     title,
     deposit: totalDeposit,
-    quantity: 1,
     price: totalLeaseFee,
     total: totalDeposit + totalLeaseFee,
+    duration
   };
 
   return row;
@@ -41,19 +46,21 @@ export const columnsOrder: GridColDef<IRow>[] = [
     sortable: false,
   },
   {
+    field: "duration",
+    headerName: "Thời gian thuê",
+    type: "number",
+    sortable: false,
+    width: 150,
+    valueGetter: (value: number) => `${value} ngày`,
+  },
+  {
     field: "deposit",
     headerName: "Tiền cọc",
     width: 120,
     type: "number",
     sortable: false,
   },
-  {
-    field: "quantity",
-    headerName: "Số lượng",
-    type: "number",
-    sortable: false,
-    width: 150,
-  },
+
   {
     field: "price",
     headerName: "Tiền thuê",
@@ -69,21 +76,16 @@ export const columnsOrder: GridColDef<IRow>[] = [
     width: 150,
   },
   {
-    field: "date",
-    headerName: "",
-    renderCell: (params: GridRenderCellParams<IRow, any>) => {
-      return (
-        <Link href={`/detail/${params.row?.id}`}>
-          <Button
-            variant="outlined"
-            size="small"
-            tabIndex={params.hasFocus ? 0 : -1}
-            sx={{textTransform: "none"}}
-          >
-            Xem sách
-          </Button>
-        </Link>
-      )
-    },
+    field: "actions",
+    type: "actions",
+    width: 50,
+    getActions: (params: GridRowParams<IRow>) => [
+      <Link href={`/detail/${params?.row?.id}`} key="1">
+        <GridActionsCellItem
+          icon={<CiCircleInfo size={20}/>}
+          label="Xem chi tiết"
+          size="large"
+        />
+      </Link>,],
   },
 ];

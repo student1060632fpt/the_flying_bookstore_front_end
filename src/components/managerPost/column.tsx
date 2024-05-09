@@ -106,14 +106,14 @@ export const columnsPost = (
         <Link href={`/detail/${params?.row?.id}`} key="1">
           <GridActionsCellItem
             icon={<CiCircleInfo size={20} />}
-            label="Edit"
+            label="Xem chi tiết"
             size="large"
           />
         </Link>,
         <GridActionsCellItem
           icon={<CiTrash size={20} color={theme.palette.error.main} />}
           key="2"
-          label="Toggle Admin"
+          label="Xóa"
           size="large"
           onClick={() => handleClickOpen(params?.row)}
         />,

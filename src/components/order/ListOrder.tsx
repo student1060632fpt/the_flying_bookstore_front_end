@@ -67,9 +67,14 @@ export default function ListOrder({
   useEffect(() => {
     callWhichApi();
   }, [status]);
-  const reloadStatus = (e: any, newValue: number) => {
-    callWhichApi();
+  const reloadButton = async () => {
+    return await callWhichApi().then(() => {
+      callAlert("Đã tải lại thành công")
+    })
+  }
+  const reloadStatus = async (e: any, newValue: number) => {
     changeStatus(e, newValue);
+    return await callWhichApi();
   };
   if (!listOrder || !Array.isArray(listOrder) || listOrder?.length == 0)
     return <>Không có đơn hàng nào</>;
@@ -80,7 +85,7 @@ export default function ListOrder({
         <Button
           startIcon={<RxReload />}
           variant="outlined"
-          onClick={callWhichApi}
+          onClick={reloadButton}
         >
           Tải lại
         </Button>

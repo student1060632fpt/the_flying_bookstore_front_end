@@ -109,7 +109,7 @@ const OrderFooter = ({
     if (isCustomer) {
       switch (order?.leaseOrder?.status) {
         case "RETURNING":
-          message = `Đã trả lại sách`;
+          message = `Đã nhận lại sách`;
           return (
             <Button
               variant="contained"

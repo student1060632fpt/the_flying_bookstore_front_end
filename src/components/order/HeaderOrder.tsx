@@ -16,15 +16,15 @@ export const HeaderOrder = ({
   return (
     <Grid
       container
-      mt={0.25}
+      mt={0.1}
       mb={1}
       spacing={2}
       justifyItems="center"
       alignItems="center"
     >
-      <Grid item xs={1}>
+      <Grid item xs={2}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Id
+          Id đơn hàng
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
           #{order?.leaseOrder?.id}
@@ -48,22 +48,15 @@ export const HeaderOrder = ({
           {dayjs(order?.leaseOrder?.toDate).format("DD/MM/YYYY")}
         </Typography>
       </Grid>
-      <Grid item xs={2}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Trạng thái chủ sách
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          {renderStatus(order?.leaseOrder?.status,isCustomer)}
-        </Typography>
-      </Grid>
       <Grid item xs={3}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Trạng thái người thuê sách
+          Trạng thái {isCustomer ? `chủ sách` : `người thuê`}
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          {renderStatus(order?.leaseOrder?.status)}
+          {renderStatus(order?.leaseOrder?.status, isCustomer)}
         </Typography>
       </Grid>
+
       <Grid item xs={2}>
         <Link href={`/order/${order?.leaseOrder?.id}`}>
           <Button

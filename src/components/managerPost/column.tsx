@@ -1,146 +1,123 @@
 import { Chip, Rating } from "@mui/material";
-import { GridActionsCellItem, GridColDef } from "@mui/x-data-grid";
+import {
+  GridActionsCellItem,
+  GridColDef,
+  GridRowParams,
+} from "@mui/x-data-grid";
 import { formatCurrency } from "../../utils/helps";
 import { CiEdit, CiTrash } from "react-icons/ci";
 import theme from "../../utils/theme";
+import { CiCircleInfo } from "react-icons/ci";
+import Link from "next/link";
+import { IBook, ICopy } from "../../types/book";
 
-export const rowsPost = [
-  {
-    id: 1,
-    status: 1,
-    title: "Snow",
-    date: "13/03/2024",
-    price: 1400,
-    rate: 3.5,
-  },
-  {
-    id: 2,
-    status: 0,
-    title: "Lannister",
-    date: "13/03/2024",
-    price: 3100,
-    rate: 4,
-  },
-  {
-    id: 3,
-    status: 1,
-    title: "Lannister",
-    date: "13/03/2024",
-    price: 3100,
-    rate: 5,
-  },
-  {
-    id: 4,
-    status: 0,
-    title: "Stark",
-    date: "13/03/2024",
-    price: 1100,
-    rate: 4,
-  },
-  {
-    id: 5,
-    status: 1,
-    title: "Targaryen",
-    date: "13/03/2024",
-    price: 1000,
-    rate: 4,
-  },
-  {
-    id: 6,
-    status: 0,
-    title: "Melisandre",
-    date: "13/03/2024",
-    price: 15000,
-    rate: 3,
-  },
-  {
-    id: 7,
-    status: 1,
-    title: "Clifford",
-    date: "13/03/2024",
-    price: 4400,
-    rate: 3,
-  },
-  {
-    id: 8,
-    status: 0,
-    title: "Frances",
-    date: "13/03/2024",
-    price: 3600,
-    rate: 2,
-  },
-  {
-    id: 9,
-    status: 1,
-    title: "Roxie",
-    date: "13/03/2024",
-    price: 6500,
-    rate: 1,
-  },
-];
-function renderRating(params: any) {
-  return <Rating precision={0.5} readOnly value={params.value} />;
+export interface IRowsPost2 {
+  id: number;
+  title: string;
+  authors: IBook["authors"];
+  leaseRate: number;
+  depositFee: number;
+  penaltyRate: number;
 }
-const renderStatus = (params: any) => {
-  console.log(params);
-
-  if (params.row.status == 0) {
-    return <Chip label="Đã đăng" color="secondary" />;
-  }
-  return <Chip label="Đã có người thuê" color="primary" />;
+interface IRowDraft {
+  id: number;
+  ownerId: number;
+  quantity: number;
+  address: string;
+  expiryDate: null | string;
+  leaseRate: number;
+  depositFee: number;
+  penaltyRate: number;
+  description: string;
+  copy: ICopy;
+  book: IBook;
+}
+export const convertDataToIRow = (data: IRowDraft[]) => {
+  if (!data) return [];
+  return data.map((item) => {
+    const {
+      book: { authors, title },
+      leaseRate,
+      depositFee,
+      penaltyRate,
+      id,
+    } = item;
+    const result: IRowsPost2 = {
+      id,
+      title,
+      authors,
+      leaseRate,
+      depositFee,
+      penaltyRate,
+    };
+    return result;
+  });
 };
-export const columnsPost = (handleClickOpen:()=>void): GridColDef<{ id: number; status: number; title: string; date: string; price: number; rate: number; }>[] => {
+
+export const columnsPost = (
+  handleClickOpen: (arg: IRowsPost2) => void
+): GridColDef<IRowsPost2>[] => {
   return [
+    {
+      field: "id",
+      headerName: "Id bài đăng",
+      width: 100,
+      editable: false,
+    },
     {
       field: "title",
       headerName: "Tên bài đăng",
       width: 100,
-      editable: true,
+      editable: false,
     },
     {
-      field: "date",
-      headerName: "Ngày đăng",
-      width: 100,
-      editable: true,
-    },
-    {
-      field: "rate",
-      headerName: "Đánh giá",
-      renderCell: renderRating,
-      display: "flex" as const,
+      headerName: "Tác giả",
+      field: "authors",
+      editable: false,
       width: 150,
-    },
-    {
-      field: "status",
-      headerName: "Trạng thái",
-      width: 150,
-      renderCell: renderStatus,
     },
     {
       headerName: "Giá thuê",
-      field: "price",
+      editable: false,
+      field: "leaseRate",
       width: 150,
-      valueGetter: (value:number) => `${formatCurrency(value)}đ/ngày`,
+      valueGetter: (value: number) => `${formatCurrency(value)}/ngày`,
+    },
+    {
+      headerName: "Tiền cọc",
+      editable: false,
+      field: "depositFee",
+      width: 150,
+      valueGetter: (value: number) => `${formatCurrency(value)}/ngày`,
+    },
+
+    {
+      headerName: "Tiền phạt",
+      editable: false,
+      field: "penaltyRate",
+      width: 150,
+      valueGetter: (value: number) => `${formatCurrency(value)}/ngày`,
     },
     {
       field: "actions",
       type: "actions",
       width: 100,
-      getActions: () => [
-        <GridActionsCellItem
-          icon={<CiEdit size={20} />}
-          label="Delete"
-          key="1"
-          size="large"
-        />,
+      getActions: (params: GridRowParams<IRowsPost2>) => [
+        <Link href={`/detail/${params?.row?.id}`} key="1">
+          <GridActionsCellItem
+            icon={<CiCircleInfo size={20} />}
+            label="Edit"
+            size="large"
+          />
+        </Link>,
         <GridActionsCellItem
           icon={<CiTrash size={20} color={theme.palette.error.main} />}
           key="2"
           label="Toggle Admin"
           size="large"
-          onClick={handleClickOpen}
+          onClick={() => handleClickOpen(params?.row)}
         />,
       ],
     },
-  ]
+  ];
 };

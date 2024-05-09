@@ -23,9 +23,9 @@ export type TFieldPostValue = {
   description: string;
 };
 const CreatePost = ({ copyId }: { copyId: IPostState["copyId"] }) => {
-  const methods = useForm<TFieldPostValue>();
-  const { handleSubmit } = methods;
   const { profile, token } = useAuthStore();
+  const methods = useForm<TFieldPostValue>({defaultValues: {address: profile?.address}});
+  const { handleSubmit } = methods;
   const router = useRouter()
   const {callAlert} = useStoreAlert()
   const onSubmit: SubmitHandler<TFieldPostValue> = async (value) => {
@@ -59,7 +59,7 @@ const CreatePost = ({ copyId }: { copyId: IPostState["copyId"] }) => {
       .then((response) => {
         console.log(JSON.stringify(response.data));
         callAlert(`Tạo sách #${response.data.id} thành công`)
-        router.push(`/detail/${response.data.id}`)
+        router.push(`/detail/${response.data.id}`) //TODO test in this
       })
       .catch((error) => {
         console.log(error);

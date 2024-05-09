@@ -19,7 +19,7 @@ export type IListing = {
   
 };
 
-interface ICopy {
+export interface ICopy {
   id: number;
   bookId: number;
   ownerId: number | null;

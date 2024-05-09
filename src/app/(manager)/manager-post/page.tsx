@@ -1,31 +1,49 @@
 "use client";
 import NoData from "@/components/order/NoData";
-import theme from "@/utils/theme";
-import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Rating, Slide, Stack, Typography } from "@mui/material";
-import { TransitionProps } from "@mui/material/transitions";
-import {
-  DataGrid,
-  GridActionsCellItem,
-  GridColDef,
-  GridToolbar,
-} from "@mui/x-data-grid";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Link from "next/link";
-import React, { useState } from "react";
-import { CiEdit, CiTrash } from "react-icons/ci";
-import { columnsPost, rowsPost } from "../../../components/managerPost/column";
+import React, { useEffect, useState } from "react";
+import {
+  IRowsPost2,
+  columnsPost,
+  convertDataToIRow,
+} from "../../../components/managerPost/column";
 import DeletePostModal from "../../../components/managerPost/DeletePostModal";
-
+import axios from "axios";
 
 const ManagerPost = () => {
-  const [open, setOpen] = useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
+  const [modalDelete, setModalDelete] = useState<{
+    open: boolean;
+    data: IRowsPost2 | null;
+  }>({
+    open: false,
+    data: null,
+  });
+  const [listPost, setListPost] = useState<IRowsPost2[]>([]);
+  const handleClickOpen = (data: IRowsPost2) => {
+    setModalDelete({ open: true, data });
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setModalDelete((state) => ({ ...state, open: false }));
   };
-  
+  const getListPost = async (): Promise<void> => {
+    try {
+      const response = await axios.request({
+        url: "http://localhost:8082/api/listing/search/byOwnerId/1000",
+      });
+      console.log(JSON.stringify(response.data));
+      const convertData = convertDataToIRow(response?.data?.content);
+      setListPost(convertData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getListPost();
+  }, []);
+
   return (
     <>
       <Stack
@@ -38,12 +56,12 @@ const ManagerPost = () => {
           Quản lý bài đăng của tôi
         </Typography>
         <Link href="/manager-post/add-post">
-        <Button variant="contained">Thêm bài đăng</Button>
+          <Button variant="contained">Thêm bài đăng</Button>
         </Link>
       </Stack>
-      <Box sx={{ width: "100%", height: rowsPost[0]!! ? "auto" : "500px" }}>
+      <Box sx={{ width: "100%", height: listPost[0]!! ? "auto" : "500px" }}>
         <DataGrid
-          rows={rowsPost}
+          rows={listPost}
           columns={columnsPost(handleClickOpen)}
           initialState={{
             pagination: {
@@ -60,8 +78,7 @@ const ManagerPost = () => {
           sx={{ py: 1, px: 2 }}
         />
       </Box>
-      <DeletePostModal handleClose={handleClose} open={open}/>
-      
+      <DeletePostModal handleClose={handleClose} modalDelete={modalDelete} getListPost={getListPost} />
     </>
   );
 };

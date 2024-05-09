@@ -9,24 +9,50 @@ import {
 } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
+import { IRowsPost2 } from "./column";
+import axios from "axios";
+import { useStoreAlert } from "../../hooks/alert";
 
 const DeletePostModal = ({
-  open,
+  modalDelete,
   handleClose,
+  getListPost
 }: {
-  open: boolean;
+  modalDelete: {
+    open: boolean;
+    data: IRowsPost2 | null;
+  };
+  getListPost: () => Promise<void>;
   handleClose: () => void;
 }) => {
+  const { callAlert } = useStoreAlert();
+  const onDelete = async () => {
+    let config = {
+      method: "delete",
+      url: `http://localhost:8082/api/listing/${modalDelete.data?.id}`,
+    };
+    return await axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+        callAlert(`Xóa bài đăng #${modalDelete.data?.id} thành công`);
+        handleClose();
+        getListPost()
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <Dialog
-      open={open}
+      open={modalDelete.open}
       TransitionComponent={Transition}
       keepMounted
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle>
-        Bạn có muốn xóa bài đăng Muôn kiếp nhân sinh không?
+        Bạn có muốn xóa bài đăng {modalDelete.data?.title} không?
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
@@ -35,7 +61,7 @@ const DeletePostModal = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Hủy</Button>
-        <Button onClick={handleClose}>Đồng ý</Button>
+        <Button onClick={onDelete}>Đồng ý</Button>
       </DialogActions>
     </Dialog>
   );

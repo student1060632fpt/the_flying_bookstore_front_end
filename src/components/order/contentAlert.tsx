@@ -21,7 +21,8 @@ export let callContentAlert: (order: IOrder) => IOrderStatusMessage | null = (or
       USER_PAID: "Người thuê đã thanh toán, chờ admin xác nhận đã nhận tiền thành công",
       PAYMENT_SUCCESS: "Người thuê đã thanh toán thành công, chủ sách cần chuẩn bị sách để người thuê lấy sách",
       DELIVERED: "Đã giao sách cho người thuê",
-      RETURNING: "Bạn đã được nhận lại sách chưa?"
+      RETURNING: "Bạn đã được nhận lại sách chưa?",
+      RETURNED: "Bạn chờ admin trả lại tiền thuê trong 3-5 ngày làm việc nhé",
     },
     isManager: {
       ORDERED_PAYMENT_PENDING:

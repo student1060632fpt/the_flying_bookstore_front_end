@@ -11,6 +11,7 @@ import {
 } from "../../../components/managerPost/column";
 import DeletePostModal from "../../../components/managerPost/DeletePostModal";
 import axios from "axios";
+import { useAuthStore } from "../../../hooks/user";
 
 const ManagerPost = () => {
   const [modalDelete, setModalDelete] = useState<{
@@ -20,6 +21,7 @@ const ManagerPost = () => {
     open: false,
     data: null,
   });
+  const {profile} = useAuthStore()
   const [listPost, setListPost] = useState<IRowsPost2[]>([]);
   const handleClickOpen = (data: IRowsPost2) => {
     setModalDelete({ open: true, data });
@@ -31,7 +33,7 @@ const ManagerPost = () => {
   const getListPost = async (): Promise<void> => {
     try {
       const response = await axios.request({
-        url: "http://localhost:8082/api/listing/search/byOwnerId/1000",
+        url: "http://localhost:8082/api/listing/search/byOwnerId/" + profile?.id,
       });
       console.log(JSON.stringify(response.data));
       const convertData = convertDataToIRow(response?.data?.content);

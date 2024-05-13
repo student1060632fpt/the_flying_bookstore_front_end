@@ -38,7 +38,7 @@ export default function Navbar() {
   const theme = useTheme();
   const [orderNumber, setOrderNumber] = React.useState(0);
   const cart = useStoreCart((state) => state.cart);
-  const {removeOrder}=useStoreOrder()
+  const { removeOrder } = useStoreOrder();
   const pathname = usePathname();
   const router = useRouter();
   const [alert, setAlert] = React.useState<IAlert>({
@@ -92,7 +92,7 @@ export default function Navbar() {
       urlMain == "checkout" ||
       urlMain == "profile"
     ) {
-      router.push("/")
+      router.push("/");
     }
   };
   React.useEffect(() => {
@@ -125,8 +125,12 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Chào {profile?.username}</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
+      <Link href={`/profile`}>
+        <MenuItem onClick={handleMenuClose}>Chào {profile?.username}</MenuItem>
+      </Link>
+      <Link href={`/profile`}>
+        <MenuItem onClick={handleMenuClose}>Cài đặt</MenuItem>
+      </Link>
       <MenuItem onClick={logout}>Đăng xuất</MenuItem>
     </Menu>
   );
@@ -156,18 +160,7 @@ export default function Navbar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <CiBellOn />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -240,11 +233,6 @@ export default function Navbar() {
             </Badge>
           </IconButton>
         </Link>
-        <IconButton size="large" aria-label="show 17 new notifications">
-          <Badge badgeContent={17} color="error">
-            <CiBellOn color={theme.palette.primary.main} />
-          </Badge>
-        </IconButton>
 
         <Button
           aria-label="account of current user"

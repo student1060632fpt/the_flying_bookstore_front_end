@@ -26,6 +26,8 @@ export interface IOrder {
   leaseOrder?: ILeaseOrder;
   listing?: IListing;
   lessor?: IUser;
+  lessee?: IUser;
+  totalPenaltyFee?: number
 }
 
 interface ILeaseOrder {

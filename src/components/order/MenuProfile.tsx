@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Divider,
   ListItemIcon,
@@ -32,46 +32,46 @@ const MenuProfile = () => {
         <ListItemText sx={{ ml: 2 }}>Chào {profile?.firstName}</ListItemText>
       </MenuItem>
       <Divider />
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiUser size={22} />
-        </ListItemIcon>
-        <Link href="/profile">
+      <Link href="/profile">
+        <MenuItem sx={{ py: 1.5, px: 2 }}>
+          <ListItemIcon>
+            <CiUser size={22} />
+          </ListItemIcon>
           <ListItemText>Cài đặt tài khoản</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiBag1 size={22} />
-        </ListItemIcon>
-        <Link href="/my-order/0">
+        </MenuItem>
+      </Link>
+      <Link href="/my-order/0">
+        <MenuItem sx={{ py: 1.5, px: 2 }}>
+          <ListItemIcon>
+            <CiBag1 size={22} />
+          </ListItemIcon>
           <ListItemText>Quản lý đơn hàng của tôi</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <PiBriefcaseLight size={22} />
-        </ListItemIcon>
-        <Link href="/customer-order">
+        </MenuItem>
+      </Link>
+      <Link href="/customer-order">
+        <MenuItem sx={{ py: 1.5, px: 2 }}>
+          <ListItemIcon>
+            <PiBriefcaseLight size={22} />
+          </ListItemIcon>
           <ListItemText>Quản lý đơn hàng của khách</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiViewList size={22} />
-        </ListItemIcon>
-        <Link href="/manager-post">
+        </MenuItem>
+      </Link>
+      <Link href="/manager-post">
+        <MenuItem sx={{ py: 1.5, px: 2 }}>
+          <ListItemIcon>
+            <CiViewList size={22} />
+          </ListItemIcon>
           <ListItemText>Quản lý bài đăng</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiCirclePlus size={22} />
-        </ListItemIcon>
-        <Link href="/manager-post/add-post">
+        </MenuItem>
+      </Link>
+      <Link href="/manager-post/add-post">
+        <MenuItem sx={{ py: 1.5, px: 2 }}>
+          <ListItemIcon>
+            <CiCirclePlus size={22} />
+          </ListItemIcon>
           <ListItemText>Thêm bài đăng</ListItemText>
-        </Link>
-      </MenuItem>
+        </MenuItem>
+      </Link>
     </MenuList>
   );
 };

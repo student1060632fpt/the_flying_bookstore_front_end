@@ -10,7 +10,7 @@ import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import { CiShoppingCart } from "react-icons/ci";
+import { CiShoppingCart,CiViewList } from "react-icons/ci";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import Image from "next/image";
 import logoImage from "./../../assets/images/logo.jpg";
@@ -28,6 +28,7 @@ import { getAllOrder } from "../../api/order";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useStoreOrder } from "../../hooks/order";
+
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -88,6 +89,7 @@ export default function Navbar() {
     if (
       urlMain == "my-order" ||
       urlMain == "customer-order" ||
+      urlMain == "manager-post" ||
       urlMain == "order" ||
       urlMain == "checkout" ||
       urlMain == "profile"
@@ -230,6 +232,13 @@ export default function Navbar() {
           <IconButton size="large" aria-label="show 4 new mails">
             <Badge badgeContent={cart ? 1 : 0} color="error">
               <CiShoppingCart color={theme.palette.primary.main} />
+            </Badge>
+          </IconButton>
+        </Link>
+        <Link href="/manager-post">
+          <IconButton size="large" aria-label="show 4 new mails">
+            <Badge badgeContent={cart ? 1 : 0} color="error">
+              <CiViewList color={theme.palette.primary.main} />
             </Badge>
           </IconButton>
         </Link>

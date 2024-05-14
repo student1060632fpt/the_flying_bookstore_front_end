@@ -42,6 +42,7 @@ const DetailOrder = ({
         hideFooterPagination
         hideFooterSelectedRowCount
         hideFooter
+        
       />
       <OrderFooter changeStatus={changeStatus} order={order}  isCustomer={isCustomer}/>
     </Box>

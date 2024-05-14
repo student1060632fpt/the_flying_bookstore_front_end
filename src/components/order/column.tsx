@@ -51,7 +51,7 @@ export const columnsOrder: GridColDef<IRow>[] = [
     type: "number",
     sortable: false,
     width: 150,
-    valueGetter: (value: number) => `${value} ngày`,
+    valueGetter: (value: number) => value == 0 ? `1 ngày` : `${value} ngày`  ,
   },
   {
     field: "deposit",

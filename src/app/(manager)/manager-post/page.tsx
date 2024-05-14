@@ -73,7 +73,7 @@ const ManagerPost = () => {
             },
           }}
           pageSizeOptions={[5]}
-          checkboxSelection
+          
           disableRowSelectionOnClick
           slots={{ toolbar: GridToolbar, noRowsOverlay: NoData }}
           slotProps={{ toolbar: { showQuickFilter: true } }}

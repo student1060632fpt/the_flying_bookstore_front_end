@@ -35,7 +35,9 @@ export const HeaderOrder = ({
           {isCustomer ? `Người thuê` : `Chủ sách`}
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          {order?.lessor?.lastName} {order?.lessor?.firstName}
+          {isCustomer
+            ? `${order?.lessee?.lastName} ${order?.lessee?.firstName}`
+            : `${order?.lessor?.lastName} ${order?.lessor?.firstName}`}
         </Typography>
       </Grid>
 

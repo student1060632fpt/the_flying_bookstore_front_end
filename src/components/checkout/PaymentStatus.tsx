@@ -22,6 +22,8 @@ const renderStatus = (
       RETURNING: `Chủ sách chờ nhận sách`,
       RETURNED: `Chủ sách đã lấy lại sách`,
       LATE_RETURN: `Khách trả trễ`,
+      DEPOSIT_RETURNED: `Admin đã trả tiền cọc cho người thuê`,
+      PAID_OWNER: `Đã trả tiền thuê`
     },
     isManager: {
       PAYMENT_SUCCESS: `Lấy hàng`,
@@ -32,6 +34,8 @@ const renderStatus = (
       RETURNING: `Chờ chủ sách nhận sách`,
       RETURNED: `Đã trả sách`,
       LATE_RETURN: `Trả trễ`,
+      DEPOSIT_RETURNED: `Admin đã trả tiền cọc`,
+      PAID_OWNER:``
     },
   };
   if (isCustomer) {

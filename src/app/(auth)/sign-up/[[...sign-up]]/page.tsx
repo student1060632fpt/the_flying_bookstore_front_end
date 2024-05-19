@@ -60,11 +60,8 @@ const SignIn = () => {
       }
     } catch (error) {
       // Handle any network or server errors
-      const errorTitle = error?.response?.data?.title;
-      if (errorTitle) {
-        console.log({ errorTitle });
-        setAlert((state) => ({ ...state,message: errorTitle, open: true,severity:"error" }));
-      }
+      console.log({ error });
+
     }
   };
   const handleClose = () => setAlert((state) => ({ ...state, open: false }));

@@ -32,7 +32,7 @@ const Login = () => {
   const { message, open, severity } = alert;
   const router = useRouter();
   const { setToken } = useAuthStore();
-  const getProfile = async (token:string) => {
+  const getProfile = async (token: string) => {
     try {
       const response = await axios.request({
         url: "http://localhost:8082/api/user/myInfo",
@@ -41,7 +41,7 @@ const Login = () => {
         },
       });
       if (response?.data) {
-        setToken(token,response?.data);
+        setToken(token, response?.data);
         setAlert((state) => ({
           ...state,
           message: "Đăng nhập thành công",
@@ -53,7 +53,7 @@ const Login = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   const handleFormSubmit = async () => {
     try {
       const response = await axios.request({
@@ -67,21 +67,12 @@ const Login = () => {
 
       if (response.data) {
         // Registration successful, handle the response accordingly
-        await getProfile(response.data.token)
+        await getProfile(response.data.token);
       } else {
         throw new Error("Registration failed");
       }
     } catch (error) {
-      // Handle any network or server errors{}
-      const errorTitle = error?.response?.data?.title;
-      if (errorTitle) {
-        setAlert((state) => ({
-          ...state,
-          message: errorTitle,
-          severity: "error",
-          open: true,
-        }));
-      }
+      console.log({ error });
     }
   };
   const handleClose = () => setAlert((state) => ({ ...state, open: false }));

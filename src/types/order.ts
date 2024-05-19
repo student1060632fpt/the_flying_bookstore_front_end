@@ -19,7 +19,8 @@ export type IOrderStatus =
   | "RETURNED"
   | "DEPOSIT_RETURNED"
   | "USER_PAID"
-  | "PAID_OWNER";
+  | "PAID_OWNER"
+  | "DEPOSIT_RETURNED";
 export type IPaymentMethod = "COD" | "BANK_TRANSFER" | "VNPAY";
 
 export interface IOrder {
@@ -27,7 +28,7 @@ export interface IOrder {
   listing?: IListing;
   lessor?: IUser;
   lessee?: IUser;
-  totalPenaltyFee?: number
+  totalPenaltyFee?: number;
 }
 
 interface ILeaseOrder {

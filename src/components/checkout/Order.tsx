@@ -13,8 +13,9 @@ import { renderPayment, renderStatus } from "./PaymentStatus";
 
 
 
-const Order = ({orderDetail}:{orderDetail?:IOrder|undefined}) => {
- 
+const Order = ({orderDetail}:{orderDetail:IOrder}) => {
+  const {leaseOrder = null} = orderDetail
+  if(!leaseOrder) return <>Không có đơn hàng</>
   
   return (
     <>
@@ -29,13 +30,13 @@ const Order = ({orderDetail}:{orderDetail?:IOrder|undefined}) => {
           <div className="flex total__row">
             <BsFileText className="total__icon" />
             <p className="total__title">Mã đơn hàng</p>
-            <p className="total__description">{orderDetail?.leaseOrder.id}</p>
+            <p className="total__description">{leaseOrder.id}</p>
           </div>
           <div className="flex total__row">
             <PiCalendarCheck className="total__icon" />
             <p className="total__title">Ngày đặt thuê</p>
             <p className="total__description">
-              {dayjs(orderDetail?.leaseOrder.createdDate).format("DD/MM/YYYY")}
+              {dayjs(leaseOrder.createdDate).format("DD/MM/YYYY")}
             </p>
           </div>
           <OrderInfoRent order={orderDetail} />
@@ -45,14 +46,14 @@ const Order = ({orderDetail}:{orderDetail?:IOrder|undefined}) => {
             <LuFlag className="total__icon" />
             <p className="total__title">Trạng thái</p>
             <div className="total__description">
-              {renderStatus(orderDetail?.leaseOrder.status)}
+              {renderStatus(leaseOrder.status)}
             </div>
           </div>
           <div className="flex total__row">
             <CgCreditCard className="total__icon" />
             <p className="total__title">Phương thức thanh toán</p>
             <p className="total__description">
-              {renderPayment(orderDetail?.leaseOrder.paymentMethod)}
+              {renderPayment(leaseOrder.paymentMethod)}
             </p>
           </div>
           <OrderTotal order={orderDetail} />

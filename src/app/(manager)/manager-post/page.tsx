@@ -3,15 +3,15 @@ import NoData from "@/components/order/NoData";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   IRowsPost2,
   columnsPost,
   convertDataToIRow,
-} from "../../../components/managerPost/column";
-import DeletePostModal from "../../../components/managerPost/DeletePostModal";
+} from "@/components/managerPost/column";
+import DeletePostModal from "@/components/managerPost/DeletePostModal";
 import axios from "axios";
-import { useAuthStore } from "../../../hooks/user";
+import { useAuthStore } from "@/hooks/user";
 
 const ManagerPost = () => {
   const [modalDelete, setModalDelete] = useState<{

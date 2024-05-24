@@ -95,7 +95,7 @@ const InfoRent = ({isProfile}:{isProfile?: boolean}) => {
                     required={errors?.birthDate?.type == "required"}
                     style={{ color: "#d32f2f" }}
                   >
-                    {errors?.birthDate?.message}
+                    {String(errors?.birthDate?.message)}
                   </FormHelperText>
                 </>
               );

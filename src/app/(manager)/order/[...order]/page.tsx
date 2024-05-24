@@ -28,8 +28,11 @@ const Page = ({ params }: { params: { order: string } }) => {
         <h3 className="text-center text-primary text-2xl font-semibold text-primary mb-6">
           Chi tiết đơn hàng #{params?.order}
         </h3>
-
-        <Order orderDetail={orderDetail} />
+        {orderDetail ? (
+          <Order orderDetail={orderDetail} />
+        ) : (
+          <>Không có đơn hàng</>
+        )}
       </div>
     </>
   );

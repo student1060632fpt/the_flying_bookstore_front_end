@@ -37,7 +37,7 @@ const FormSignin = ({
         {...register("username", { require: "Username là trường bắt buộc" })}
         error={errors.username}
         id="standard-basic"
-        label="Username"
+        label="Tên đăng nhập"
         variant="standard"
         sx={{ width: "100%" }}
         helperText={errors.username && errors.username.message}

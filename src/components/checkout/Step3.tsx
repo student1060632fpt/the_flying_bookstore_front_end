@@ -37,7 +37,11 @@ const Step3 = () => {
         <p className="text-gray-500 text-sm mt-1 text-center mb-4 ">
           Đọc sách vui bạn nhé!
         </p>
-        <Order orderDetail={orderDetail} />
+        {orderDetail ? (
+          <Order orderDetail={orderDetail} />
+        ) : (
+          <>Không có đơn hàng</>
+        )}
       </div>
 
       <div className=" mt-10 mb-20 w-2/3 mx-auto flex justify-between">

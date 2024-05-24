@@ -19,7 +19,7 @@ const Order = ({orderDetail}:{orderDetail:IOrder}) => {
   
   return (
     <>
-      <Divider>Giỏ hàng</Divider>
+      <Divider>Bài đăng</Divider>
       <BookItem orderDetail={orderDetail} />
       <Divider sx={{ mt: 3 }} />
       <h4 className="text-lg font-medium text-center mt-5 my-3">

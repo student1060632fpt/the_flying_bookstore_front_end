@@ -112,10 +112,13 @@ const Step2 = ({
         <h3 className="mb-5 text-center text-primary text-2xl font-semibold text-primary">
           Đơn hàng được tạo thành công!
         </h3>
-
-        <Order orderDetail={orderDetail} />
+        {orderDetail ? (
+          <Order orderDetail={orderDetail} />
+        ) : (
+          <>Không có đơn hàng</>
+        )}
       </div>
-      {renderAlert(orderDetail?.leaseOrder.status)}
+      {renderAlert(orderDetail?.leaseOrder?.status ?? undefined)}
 
       <div className=" mt-10 mb-20 w-2/3 mx-auto flex justify-between">
         <Link href="/">
@@ -143,7 +146,7 @@ const Step2 = ({
           variant="contained"
           sx={{ textTransform: "none", color: "white" }}
           size="large"
-          disabled={orderDetail?.leaseOrder.status != "PAYMENT_SUCCESS"}
+          disabled={orderDetail?.leaseOrder?.status !== "PAYMENT_SUCCESS"}
           startIcon={<IoCheckmarkCircleOutline />}
           onClick={getOrder}
         >

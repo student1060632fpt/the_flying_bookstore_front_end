@@ -1,15 +1,9 @@
 "use client";
-import { Button, Typography } from "@mui/material";
+import { useState } from "react"; 
+import { Typography } from "@mui/material";
 import CreateBook from "@/components/createPost/CreateBook";
-import CreateDocument, {
-  TFieldDocumentValue,
-} from "@/components/createPost/CreateDocument";
-import CreatePost, {
-  TFieldPostValue,
-} from "@/components/createPost/CreatePost";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-type TFieldValue = TFieldDocumentValue & TFieldPostValue;
+import CreateDocument from "@/components/createPost/CreateDocument";
+import CreatePost from "@/components/createPost/CreatePost";
 export interface IPostState {
   bookId: number | string | undefined;
   copyId: string | undefined;
@@ -25,8 +19,6 @@ const AddPost = () => {
     setPost((state) => ({ ...state, bookId }));
   const updateDocumentId = (copyId: IPostState["copyId"]): void =>
     setPost((state) => ({ ...state, copyId }));
-  const methods = useForm<TFieldValue>();
-  const onSubmit: SubmitHandler<TFieldValue> = (data) => console.log(data);
 
   return (
     <>

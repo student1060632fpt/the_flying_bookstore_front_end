@@ -3,11 +3,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import NoData from "@/components/order/NoData";
 import {
   IRowsPost2,
-  columnsPost,
   convertDataToIRow,
 } from "@/components/managerPost/column";
 import DeletePostModal from "@/components/managerPost/DeletePostModal";
@@ -23,9 +20,6 @@ const ManagerPost = () => {
   });
   const {profile} = useAuthStore()
   const [listPost, setListPost] = useState<IRowsPost2[]>([]);
-  const handleClickOpen = (data: IRowsPost2) => {
-    setModalDelete({ open: true, data });
-  };
 
   const handleClose = () => {
     setModalDelete((state) => ({ ...state, open: false }));
@@ -62,23 +56,7 @@ const ManagerPost = () => {
         </Link>
       </Stack>
       <Box sx={{ width: "100%", height: listPost[0]!! ? "auto" : "500px" }}>
-        <DataGrid
-          rows={listPost}
-          columns={columnsPost(handleClickOpen)}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 5,
-              },
-            },
-          }}
-          pageSizeOptions={[5]}
-          
-          disableRowSelectionOnClick
-          slots={{ toolbar: GridToolbar, noRowsOverlay: NoData }}
-          slotProps={{ toolbar: { showQuickFilter: true } }}
-          sx={{ py: 1, px: 2 }}
-        />
+        
       </Box>
       <DeletePostModal handleClose={handleClose} modalDelete={modalDelete} getListPost={getListPost} />
     </>

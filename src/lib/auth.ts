@@ -1,7 +1,6 @@
-import { FormLogin } from '@/app/login/page';
 import { redirect } from 'next/navigation'
 
-const signIn = async (data: FormLogin) => {
+const signIn = async (data: any) => {
   
   try {
     const response = await fetch("http://localhost:8082/api/user/login", {

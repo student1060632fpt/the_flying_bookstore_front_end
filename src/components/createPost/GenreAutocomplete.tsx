@@ -12,14 +12,18 @@ import { Controller, useFormContext } from "react-hook-form";
 import DoneIcon from "@mui/icons-material/Done";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useGenreStore } from "../../hooks/genre";
+import { ICategory } from "../../types/category";
 
 const GenreAutocomplete = ({}: {}) => {
-  const { control, setValue, getValues } = useFormContext<IBook>();
+  const { control, getValues } = useFormContext<IBook>();
   const { listGenre } = useGenreStore();
   const id = getValues("id");
-  const findValue = (value: string[]) => {
-    if(!value || !Array.isArray(value)) return undefined; 
-    const arr = value.map((item: string) => {
+  const findValue = (value: string[] | ICategory[]) => {
+    if (!value || !Array.isArray(value)) return undefined;
+    const arr = value.map((item: string | ICategory) => {
+      if (typeof item !== "string") {
+        return undefined;
+      }
       const genreFinded = listGenre?.find((option) => {
         return item === option.name;
       });

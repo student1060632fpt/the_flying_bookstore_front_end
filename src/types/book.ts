@@ -1,3 +1,4 @@
+import { ICategory } from "./category";
 import { IUser } from "./user";
 
 export type IListing = {
@@ -38,7 +39,7 @@ export type IBook = {
   title: string;
   authors: string[];
   languageCode: string;
-  genre: string[];
+  genre: string[] | ICategory[];
   publisher: string;
   publishedDate: string;
   pageCount?: number;

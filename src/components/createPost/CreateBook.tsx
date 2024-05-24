@@ -67,11 +67,11 @@ const CreateBook = ({
       title,
       authors: [authors],
       publisher,
-      pageCount: parseFloat(pageCount),
       languageCode,
-      genre: genre.map((item) => item.name),
+      genre: genre.map((item) => (typeof item === 'string' ? item : item.name)),
       publishedDate,
       size,
+      pageCount,
     });
 
     let config = {
@@ -153,7 +153,12 @@ const CreateBook = ({
                 <InputListing label="Nhà xuất bản" name="publisher" required />
               </Grid>
               <Grid item xs={4}>
-                <InputListing label="Số trang" name="pageCount" required type="number" />
+                <InputListing
+                  label="Số trang"
+                  name="pageCount"
+                  required
+                  type="number"
+                />
               </Grid>
               <Grid item xs={4}>
                 <InputListing label="Kích thước" name="size" />

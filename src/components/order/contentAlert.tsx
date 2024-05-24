@@ -26,7 +26,7 @@ export let callContentAlert: (order: IOrder) => IOrderStatusMessage | null = (or
     },
     isManager: {
       ORDERED_PAYMENT_PENDING:
-        order.leaseOrder.paymentMethod == "COD"
+        order?.leaseOrder?.paymentMethod == "COD"
           ? "Vui lòng thanh toán đơn hàng trong 24 giờ"
           : "Vui lòng thanh toán đơn hàng trong 24 giờ, nếu chuyển khoản thành công, bạn hãy nhấn nút Đã trả tiền",
       USER_PAID: "Vui lòng chờ admin xác nhận đã nhận tiền của bạn thành công",

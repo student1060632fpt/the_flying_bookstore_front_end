@@ -134,7 +134,7 @@ const OrderFooter = ({
           </Button>
         );
       case "ORDERED_PAYMENT_PENDING":
-        if (order.leaseOrder.paymentMethod == "COD") return cancelButton;
+        if (order?.leaseOrder?.paymentMethod == "COD") return cancelButton;
         message = `Đã trả tiền`;
         return (
           <>

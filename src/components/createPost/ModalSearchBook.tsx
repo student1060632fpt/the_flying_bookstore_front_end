@@ -91,7 +91,7 @@ export default function ModalSearchBook({
         id="combo-box-demo"
         options={listBook}
         getOptionLabel={getBookTitle}
-        getOptionKey={getBookKey}
+        getOptionKey={(book: IBook) => book?.id?.toString() || 0} // Fix: Convert the book id to a string
         fullWidth
         renderInput={(params) => (
           <TextField {...params} label="Chọn sách" variant="standard" />

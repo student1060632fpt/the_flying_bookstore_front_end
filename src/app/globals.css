@@ -2,4 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
+/* Todo: delete this  */
+nextjs-portal {
+  display: none;
+}

@@ -41,13 +41,11 @@ const FormSignin = ({
         variant="standard"
         sx={{ width: "100%" }}
         helperText={errors.username && errors.username.message}
-        required
         margin="dense"
       />
       <FormControl
         variant="standard"
         sx={{ width: "100%" }}
-        required
         margin="normal"
       >
         <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>

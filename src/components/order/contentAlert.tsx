@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import { IOrder, IOrderStatus } from "../../types/order";
+import { formatCurrency } from "../../utils/helps";
 
 type IOrderStatusMessage = {
   isCustomer: {
@@ -23,6 +24,7 @@ export let callContentAlert: (order: IOrder) => IOrderStatusMessage | null = (or
       DELIVERED: "Đã giao sách cho người thuê",
       RETURNING: "Bạn đã được nhận lại sách chưa?",
       RETURNED: "Bạn chờ admin trả lại tiền thuê trong 3-5 ngày làm việc nhé",
+      LATE_RETURN:"Người thuê đang quá hạn trả sách, người thuê sẽ bị tính thêm tiền phạt trả sách"
     },
     isManager: {
       ORDERED_PAYMENT_PENDING:
@@ -36,6 +38,7 @@ export let callContentAlert: (order: IOrder) => IOrderStatusMessage | null = (or
         ? "Bạn đã đến hạn trả sách"
         : `Bạn còn ${duration} ngày nữa, bạn có muốn trả sách sớm?`,
       RETURNED: "Bạn chờ admin trả lại tiền cọc trong 3-5 ngày làm việc nhé",
+      LATE_RETURN: "Bạn hiện đã quá ngày trả sách, bạn vui lòng trả sách sớm. Với mỗi ngày trả trễ bạn sẽ bị tính thêm tiền phạt là " + formatCurrency(order.leaseOrder.totalPenaltyRate)
     },
   };
 };

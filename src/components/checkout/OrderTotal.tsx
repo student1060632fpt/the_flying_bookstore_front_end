@@ -42,7 +42,7 @@ const OrderTotal = ({ order }: { order: IOrder | undefined }) => {
         <TbSum className="total__icon" />
         <p className="total__title">Tổng cộng</p>
         <p className="total__description">
-          {!!order?.leaseOrder?.totalDeposit && !!order?.leaseOrder?.totalLeaseFee && formatCurrency(order?.leaseOrder?.totalDeposit + order?.leaseOrder?.totalLeaseFee)}
+          {!!order?.leaseOrder?.totalDeposit && formatCurrency(order?.leaseOrder?.totalDeposit)}
         </p>
       </div>
     </div>

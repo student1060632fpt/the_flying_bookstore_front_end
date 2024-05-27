@@ -23,6 +23,7 @@ import localizedFormat from "dayjs/plugin/localizedFormat";
 import { useRouter } from "next/navigation";
 import CancelModal from "./CancelModal";
 import { callContentAlert } from "./contentAlert";
+import { useAuthStore } from "../../hooks/user";
 dayjs.extend(localizedFormat);
 //tiếng việt
 require("dayjs/locale/vi");
@@ -47,6 +48,7 @@ const OrderFooter = ({
     open: false,
     order,
   });
+  const {token} = useAuthStore()
   const { callAlert } = useStoreAlert();
   const handleClickOpenRateModal = () => {
     setRateModal((state) => ({ ...state, open: true }));
@@ -86,8 +88,8 @@ const OrderFooter = ({
     status: number,
     alertMessage: string
   ): Promise<void> => {
-    if (!order?.leaseOrder?.id) return;
-    return await updateStatusOrder(statusMessage, order?.leaseOrder?.id).then(
+    if (!order?.leaseOrder?.id || !token ) return;
+    return await updateStatusOrder(statusMessage, order?.leaseOrder?.id,token).then(
       () => {
         callAlert(`${alertMessage} thành công`);
         changeStatus(null, status);
@@ -164,6 +166,19 @@ const OrderFooter = ({
           <>
             <Button variant="contained" onClick={handleClickOpenRateModal}>
               Đánh giá đơn hàng
+            </Button>
+          </>
+        );
+
+      case "LATE_RETURN":
+        message = `Đã trả sách`;
+        return (
+          <>
+            <Button
+              variant="contained"
+              onClick={() => callUpdateStatus("RETURNING", 2, message)}
+            >
+              {message}
             </Button>
           </>
         );

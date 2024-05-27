@@ -36,7 +36,6 @@ export default function Navbar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const theme = useTheme();
-  const [orderNumber, setOrderNumber] = React.useState(0);
   const cart = useStoreCart((state) => state.cart);
   const { removeOrder } = useStoreOrder();
   const pathname = usePathname();
@@ -96,17 +95,6 @@ export default function Navbar() {
       router.push("/");
     }
   };
-  React.useEffect(() => {
-    const callApiGetAllOrder = async () => {
-      if (!profile?.id) return;
-      return await getAllOrder(profile?.id).then((res) => {
-        if (res && Array.isArray(res)) {
-          setOrderNumber(res?.length);
-        }
-      });
-    };
-    callApiGetAllOrder();
-  }, [profile?.id]);
 
   const menuId = "primary-search-account-menu";
   const renderMenu = (
@@ -222,9 +210,7 @@ export default function Navbar() {
             aria-expanded={openMenu ? "true" : undefined}
             onClick={handleClickOpenMenuOrder}
           >
-            <Badge badgeContent={orderNumber} color="error">
-              <CiBag1 color={theme.palette.primary.main} />
-            </Badge>
+            <CiBag1 color={theme.palette.primary.main} />
           </IconButton>
         </Link>
         <Link href="/cart">

@@ -41,7 +41,6 @@ const FormSignin = ({
         variant="standard"
         sx={{ width: "100%" }}
         helperText={errors.username && errors.username.message}
-        required
         margin="dense"
       />
       <FormControl
@@ -53,7 +52,6 @@ const FormSignin = ({
         <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>
         <Input
           {...register("password", { require: "Mật khẩu là trường bắt buộc" })}
-          required
           error={errors.password}
           id="standard-adornment-password"
           type={showPassword ? "text" : "password"}

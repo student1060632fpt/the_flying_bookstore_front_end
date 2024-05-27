@@ -29,7 +29,7 @@ export function convertToRow(order: IOrder): IRow {
     title,
     deposit: totalDeposit,
     price: totalLeaseFee,
-    total: totalDeposit + totalLeaseFee,
+    total: totalDeposit,
     duration
   };
 

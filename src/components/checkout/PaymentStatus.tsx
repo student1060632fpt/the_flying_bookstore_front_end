@@ -14,8 +14,8 @@ const renderStatus = (
   if (!status) return <></>;
   const content: IOrderStatusMessage = {
     isCustomer: {
-      PAYMENT_SUCCESS: `Chờ khách lấy hàng`,
       ORDERED_PAYMENT_PENDING: `Chờ khách thanh toán`,
+      PAYMENT_SUCCESS: `Chờ khách lấy hàng`,
       DELIVERED: `Chủ sách đã đưa hàng`,
       CANCELED: `Khách đã hủy`,
       USER_PAID: `Chờ admin duyệt thanh toán`,
@@ -26,16 +26,16 @@ const renderStatus = (
       PAID_OWNER: `Đã trả tiền thuê`
     },
     isManager: {
-      PAYMENT_SUCCESS: `Lấy hàng`,
       ORDERED_PAYMENT_PENDING: `Chờ thanh toán`,
-      DELIVERED: `Đã lấy hàng`,
-      CANCELED: `Đã hủy`,
       USER_PAID: `Chờ admin duyệt thanh toán`,
+      CANCELED: `Đã hủy`,
+      PAYMENT_SUCCESS: `Lấy hàng`,
+      DELIVERED: `Đã lấy hàng`,
       RETURNING: `Chờ chủ sách nhận sách`,
       RETURNED: `Đã trả sách`,
-      LATE_RETURN: `Trả trễ`,
       DEPOSIT_RETURNED: `Admin đã trả tiền cọc`,
-      PAID_OWNER:``
+      PAID_OWNER:`Admin đã trả tiền đầy đủ`,
+      LATE_RETURN: `Trả trễ`,
     },
   };
   if (isCustomer) {

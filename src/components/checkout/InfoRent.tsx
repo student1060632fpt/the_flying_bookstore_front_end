@@ -1,22 +1,13 @@
 "use client";
-import {
-  Alert,
-  Box,
-  Button,
-  FormHelperText,
-} from "@mui/material";
+import { Alert, Box, Button, FormHelperText } from "@mui/material";
 import "./Step.scss";
-import {
-  DatePicker,
-  LocalizationProvider,
-  viVN,
-} from "@mui/x-date-pickers";
+import { DatePicker, LocalizationProvider, viVN } from "@mui/x-date-pickers";
 import { useEffect, useState } from "react";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormInputText } from "./FormInputText";
 
-const InfoRent = ({isProfile}:{isProfile?: boolean}) => {
+const InfoRent = ({ isProfile }: { isProfile?: boolean }) => {
   const [cleared, setCleared] = useState<boolean>(false);
   const {
     control,
@@ -34,7 +25,7 @@ const InfoRent = ({isProfile}:{isProfile?: boolean}) => {
     return () => {};
   }, [cleared]);
   const renderInfo = () => {
-    if(isProfile) return <></>
+    if (isProfile) return <></>;
     if (isSubmitSuccessful)
       return <Alert severity="success">Chọn thanh toán rồi tạo đơn hàng</Alert>;
     if (!isValid) {
@@ -73,6 +64,8 @@ const InfoRent = ({isProfile}:{isProfile?: boolean}) => {
               field: { onChange, value, ref },
               formState: { errors },
             }) => {
+              console.log(errors, "errors?.birthDate?.message");
+
               return (
                 <>
                   <DatePicker
@@ -91,19 +84,21 @@ const InfoRent = ({isProfile}:{isProfile?: boolean}) => {
                     onAccept={onChange}
                     value={value}
                   />
-                  <FormHelperText
-                    required={errors?.birthDate?.type == "required"}
-                    style={{ color: "#d32f2f" }}
-                  >
-                    {String(errors?.birthDate?.message)}
-                  </FormHelperText>
+                  {Object.keys(errors).length === 0 ?? (
+                    <FormHelperText
+                      required={errors?.birthDate?.type == "required"}
+                      style={{ color: "#d32f2f" }}
+                    >
+                      {String(errors?.birthDate?.message)}
+                    </FormHelperText>
+                  )}
                 </>
               );
             }}
           />
         </LocalizationProvider>
       </div>
-      <div className="grid grid-cols-1">
+      <div className="grid grid-cols-1 mt-5">
         <FormInputText name={"phoneNumber"} label={"Số điện thoại"} required />
       </div>
       <div className="grid grid-cols-1 mt-5">

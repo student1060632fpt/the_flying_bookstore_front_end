@@ -28,11 +28,14 @@ export const getAllOrder = async (userId: number, isCustomer?: boolean) => {
       console.log(error);
     });
 };
-export const updateStatusOrder = async (status: IOrderStatus, id: number) => {
+export const updateStatusOrder = async (status: IOrderStatus, id: number,token:string) => {
   return await axios
     .request({
       url: `http://localhost:8082/api/leaseOrder/edit/status`,
       params: { id, status },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
     .then((response) => {})
     .catch((error) => {

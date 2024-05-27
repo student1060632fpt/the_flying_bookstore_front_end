@@ -28,8 +28,8 @@ const renderStatus = (
     isManager: {
       ORDERED_PAYMENT_PENDING: `Chờ thanh toán`,
       USER_PAID: `Chờ admin duyệt thanh toán`,
-      CANCELED: `Đã hủy`,
       PAYMENT_SUCCESS: `Lấy hàng`,
+      CANCELED: `Đã hủy`,
       DELIVERED: `Đã lấy hàng`,
       RETURNING: `Chờ chủ sách nhận sách`,
       RETURNED: `Đã trả sách`,

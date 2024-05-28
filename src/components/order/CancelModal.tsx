@@ -9,7 +9,6 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import { IOrder, IOrderStatus } from "../../types/order";
-import { updateStatusOrder } from "../../api/order";
 import { useStoreAlert } from "../../hooks/alert";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({

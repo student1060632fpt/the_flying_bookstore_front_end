@@ -14,7 +14,7 @@ export default function ListOrder({
   changeStatus,
   isCustomer,
 }: {
-  isCustomer?: boolean;
+  isCustomer: boolean;
   status: number;
   changeStatus: (e: any, newValue: number) => void;
 }) {

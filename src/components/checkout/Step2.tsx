@@ -14,6 +14,7 @@ import { parseUrlParams } from "./parseUrlParams";
 import { IAlert } from "../../app/(auth)/sign-up/[[...sign-up]]/page";
 import { IParamsVNpay } from "../../types/checkout";
 import { getDetailOrder, updateStatusOrder } from "../../api/order";
+import { useAuthStore } from "../../hooks/user";
 
 const Step2 = ({
   handleNext,
@@ -25,12 +26,14 @@ const Step2 = ({
   const { order: orderId } = useStoreOrder();
   const [orderDetail, setOrderDetail] = useState<IOrder>();
   const { href: currentUrl } = useUrl() ?? {};
+  const {token} = useAuthStore()
 
   const getOrder = async () => {
-    if (!orderId) return;
+    if (!orderId || !token) return;
     return await updateStatusOrder(
       "DELIVERED",
-      orderId
+      orderId,
+      token
     ).then(() => {
       setAlert({
         open: true,
@@ -42,11 +45,11 @@ const Step2 = ({
   };
   useEffect(() => {
     const getStatusOrder = async () => {
-      if (!currentUrl) return;
+      if (!currentUrl || !token) return;
       const params: IParamsVNpay = parseUrlParams(currentUrl);
       if (params.vnp_TransactionStatus == "00" && orderId) {
         // gọi api thay đổi trạng thái đơn hàng ở đây
-        return await updateStatusOrder("PAYMENT_SUCCESS",orderId).then(async () => {
+        return await updateStatusOrder("PAYMENT_SUCCESS",orderId,token).then(async () => {
           setAlert({
             open: true,
             message: "Thanh toán thành công",

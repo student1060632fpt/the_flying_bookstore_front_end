@@ -5,7 +5,7 @@ import { useAuthStore } from "../../hooks/user";
 import { IOrder } from "../../types/order";
 import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useStoreAlert } from "../../hooks/alert";
 import { RxReload } from "react-icons/rx";
 
@@ -18,6 +18,7 @@ export default function ListOrder({
   status: number;
   changeStatus: (e: any, newValue: number) => void;
 }) {
+  const router = useRouter();
   const { profile } = useAuthStore();
   const [listOrder, setListOrder] = useState<Array<IOrder>>();
   const { callAlert } = useStoreAlert();
@@ -69,18 +70,47 @@ export default function ListOrder({
   }, [status]);
   const reloadButton = async () => {
     return await callWhichApi().then(() => {
-      callAlert("Đã tải lại thành công")
-    })
-  }
+      callAlert("Đã tải lại thành công");
+    });
+  };
   const reloadStatus = async (e: any, newValue: number) => {
     changeStatus(e, newValue);
     return await callWhichApi();
   };
+  if (!profile?.id) {
+    router.push("/login");
+    return <>Mời bạn đăng nhập</>;
+  }
   if (!listOrder || !Array.isArray(listOrder) || listOrder?.length == 0)
-    return <>Không có đơn hàng nào</>;
+    return (
+      <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
+          <Typography>Bạn hiện không có đơn hàng nào</Typography>
+          <Button
+            startIcon={<RxReload />}
+            variant="outlined"
+            onClick={reloadButton}
+          >
+            Tải lại
+          </Button>
+        </Grid>
+      </Grid>
+    );
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} display={"flex"} justifyContent={"space-between"} alignItems={"center"}>
+      <Grid
+        item
+        xs={12}
+        display={"flex"}
+        justifyContent={"space-between"}
+        alignItems={"center"}
+      >
         <Typography>Bạn hiện có {listOrder?.length} đơn hàng</Typography>
         <Button
           startIcon={<RxReload />}

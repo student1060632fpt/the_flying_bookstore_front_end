@@ -23,7 +23,7 @@ import { ICategory } from "@/types/category";
 const FilterComponent = () => {
   const listCategory = useGenreStore((state) => state.listGenre);
   const genreParam = useStoreSearch((state) => state.categoryParam);
-  const { updateCategoryParam, clearStorage } = useStoreSearch();
+  const { updateCategoryAndPageParam, clearStorage } = useStoreSearch();
   const router = useRouter();
   const onChooseCategory = (val: any) => {
     if (!listCategory || !val) return;
@@ -32,7 +32,7 @@ const FilterComponent = () => {
       (item) => item.id == val?.target?.value
     );
     if(!category) return;
-    updateCategoryParam(category);
+    updateCategoryAndPageParam(category);
     router.push(`/search`);
   };
   const handleDeleteFilter = () => {

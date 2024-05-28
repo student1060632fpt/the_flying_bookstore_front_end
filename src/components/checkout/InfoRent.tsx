@@ -64,8 +64,6 @@ const InfoRent = ({ isProfile }: { isProfile?: boolean }) => {
               field: { onChange, value, ref },
               formState: { errors },
             }) => {
-              console.log(errors, "errors?.birthDate?.message");
-
               return (
                 <>
                   <DatePicker

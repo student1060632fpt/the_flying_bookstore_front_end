@@ -16,27 +16,27 @@ let config = {
 export default function Page() {
   const [listBook, setListBook] = useState<PageResponse<IListing>>();
   const { categoryParam, pageNumber, titleParam } = useStoreSearch();
-  async function makeRequest() {
-    const paramsAxios = {
-      size: 20,
-      page: pageNumber-1,
-      title: titleParam,
-      genre: categoryParam?.nameVn,
-    };
-    console.log({ paramsAxios });
-
-    try {
-      const response: AxiosResponse<PageResponse<IListing>> =
-        await axios.request({ ...config, params: paramsAxios });
-      if (response?.data) {
-        setListBook(response?.data);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
+  
   useEffect(() => {
+    async function makeRequest() {
+      const paramsAxios = {
+        size: 20,
+        page: pageNumber-1,
+        title: titleParam,
+        genre: categoryParam?.nameVn,
+      };
+      console.log({ paramsAxios });
+  
+      try {
+        const response: AxiosResponse<PageResponse<IListing>> =
+          await axios.request({ ...config, params: paramsAxios });
+        if (response?.data) {
+          setListBook(response?.data);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
     makeRequest();
   }, [categoryParam, pageNumber, titleParam]);
 

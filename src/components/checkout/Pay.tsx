@@ -60,10 +60,10 @@ const Pay = ({
               Tỉnh/TP: TP.Hồ Chí Minh
             </p>
             <h4 className="text-xl my-5 font-semibold">
-              Bước 2: Tin nhắn chuyển khoản theo cú pháp: 
+              Bước 2: Tin nhắn chuyển khoản theo cú pháp:
             </h4>
             <p className="text-md text-gray-600 mt-3">
-            &lt;Tên khách hàng&gt;_&lt;Tổng tiền&gt;_Thanh toán cọc sách
+              &lt;Tên khách hàng&gt;_&lt;Tổng tiền&gt;_Thanh toán cọc sách
             </p>
             <h4 className="text-xl my-5 font-semibold">
               Bước 3: Chờ quản trị xác nhận
@@ -73,9 +73,14 @@ const Pay = ({
       case 2:
         return (
           <>
-            <p className="my-5">
-              Nhấn nút Tạo đơn hàng để đến trang thanh toán VNPay
+            <p className="mt-5">
+              Nhấn nút Tạo đơn hàng để đến trang thanh toán VNPay. Người dùng
+              thanh toán bằng 4 hình thức VNPay cung cấp:
             </p>
+            <p>1. Quét mã QR</p>
+            <p>2. Thẻ nội địa hoặc Tài khoản ngân hàng</p>
+            <p>3. Thẻ thanh toán quốc tế</p>
+            <p>4. Ví điện tử VNPay</p>
           </>
         );
       default:

@@ -51,7 +51,6 @@ const FormSignin = ({
         <InputLabel htmlFor="standard-adornment-password">Mật khẩu</InputLabel>
         <Input
           {...register("password", { require: "Mật khẩu là trường bắt buộc" })}
-          required
           error={errors.password}
           id="standard-adornment-password"
           type={showPassword ? "text" : "password"}

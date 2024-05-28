@@ -56,22 +56,18 @@ const MenuProfile = () => {
           <ListItemText>Quản lý đơn hàng của khách</ListItemText>
         </MenuItem>
       </Link>
-      <Link href="/manager-post">
         <MenuItem sx={{ py: 1.5, px: 2 }}>
           <ListItemIcon>
             <CiViewList size={22} />
           </ListItemIcon>
           <ListItemText>Quản lý bài đăng</ListItemText>
         </MenuItem>
-      </Link>
-      <Link href="/manager-post/add-post">
         <MenuItem sx={{ py: 1.5, px: 2 }}>
           <ListItemIcon>
             <CiCirclePlus size={22} />
           </ListItemIcon>
           <ListItemText>Thêm bài đăng</ListItemText>
         </MenuItem>
-      </Link>
     </MenuList>
   );
 };

@@ -87,7 +87,6 @@ export default function Navbar() {
     if (
       urlMain == "my-order" ||
       urlMain == "customer-order" ||
-      urlMain == "manager-post" ||
       urlMain == "order" ||
       urlMain == "checkout" ||
       urlMain == "profile"
@@ -220,11 +219,9 @@ export default function Navbar() {
             </Badge>
           </IconButton>
         </Link>
-        <Link href="/manager-post">
           <IconButton size="large" aria-label="show 4 new mails">
             <CiViewList color={theme.palette.primary.main} />
           </IconButton>
-        </Link>
 
         <Button
           aria-label="account of current user"

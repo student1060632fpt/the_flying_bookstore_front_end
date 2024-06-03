@@ -1,47 +1,88 @@
 "use client";
-import { Button, Typography } from "@mui/material";
-import CreateBook from "@/components/createPost/CreateBook";
-import CreateDocument, {
-  TFieldDocumentValue,
-} from "@/components/createPost/CreateDocument";
-import CreatePost, {
-  TFieldPostValue,
-} from "@/components/createPost/CreatePost";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
-type TFieldValue = TFieldDocumentValue & TFieldPostValue;
-export interface IPostState {
-  bookId: number | string | undefined;
-  copyId: string | undefined;
-  postId: string | undefined;
-}
-const AddPost = () => {
-  const [post, setPost] = useState<IPostState>({
-    bookId: undefined,
-    copyId: undefined,
-    postId: undefined,
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import axios from "axios";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import NoData from "@/components/order/NoData";
+import {
+  IRowsPost2,
+  columnsPost,
+  convertDataToIRow,
+} from "@/components/managerPost/column";
+import DeletePostModal from "@/components/managerPost/DeletePostModal";
+import { useAuthStore } from "@/hooks/user";
+
+const ManagerPost = () => {
+  const [modalDelete, setModalDelete] = useState<{
+    open: boolean;
+    data: IRowsPost2 | null;
+  }>({
+    open: false,
+    data: null,
   });
-  const updateBookId = (bookId: IPostState["bookId"]): void =>
-    setPost((state) => ({ ...state, bookId }));
-  const updateDocumentId = (copyId: IPostState["copyId"]): void =>
-    setPost((state) => ({ ...state, copyId }));
-  const methods = useForm<TFieldValue>();
-  const onSubmit: SubmitHandler<TFieldValue> = (data) => console.log(data);
+  const {profile} = useAuthStore()
+  const [listPost, setListPost] = useState<IRowsPost2[]>([]);
+  const handleClickOpen = (data: IRowsPost2) => {
+    setModalDelete({ open: true, data });
+  };
+
+  const handleClose = () => {
+    setModalDelete((state) => ({ ...state, open: false }));
+  };
+  const getListPost = async (): Promise<void> => {
+    try {
+      const response = await axios.request({
+        url: "http://localhost:8082/api/listing/search/byOwnerId/" + profile?.id,
+      });
+      console.log(JSON.stringify(response.data));
+      const convertData = convertDataToIRow(response?.data?.content);
+      setListPost(convertData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getListPost();
+  }, []);
 
   return (
     <>
-      <Typography variant="h4" sx={{ mb: 2 }}>
-        Đăng bài mới
-      </Typography>
-
-      <CreateBook updateBookId={updateBookId} />
-      <CreateDocument
-        bookId={post.bookId}
-        updateDocumentId={updateDocumentId}
-      />
-      <CreatePost copyId={post.copyId}/>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        sx={{ mb: 2 }}
+      >
+        <Typography variant="h4" gutterBottom>
+          Quản lý bài đăng của tôi
+        </Typography>
+        <Link href="/manager-post/add-post">
+          <Button variant="contained">Thêm bài đăng</Button>
+        </Link>
+      </Stack>
+      <Box sx={{ width: "100%", height: listPost[0]!! ? "auto" : "500px" }}>
+        <DataGrid
+          rows={listPost}
+          columns={columnsPost(handleClickOpen)}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 5,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          
+          disableRowSelectionOnClick
+          slots={{ toolbar: GridToolbar, noRowsOverlay: NoData }}
+          slotProps={{ toolbar: { showQuickFilter: true } }}
+          sx={{ py: 1, px: 2 }}
+        />
+      </Box>
+      <DeletePostModal handleClose={handleClose} modalDelete={modalDelete} getListPost={getListPost} />
     </>
   );
 };
 
-export default AddPost;
+export default ManagerPost;

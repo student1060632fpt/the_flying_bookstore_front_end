@@ -10,6 +10,18 @@ Mật khẩu OTP	123456
 ```
 xem thêm thông tin thẻ test tại
 [vnpay](https://sandbox.vnpayment.vn/apis/vnpay-demo/#th%C3%B4ng-tin-th%E1%BA%BB-test)
+
+## Build
+/(manager)/customer-order/page: /customer-order
+        /(manager)/manager-post/add-post/page: /manager-post/add-post
+        /(manager)/manager-post/page: /manager-post
+        /(manager)/profile/page: /profile
+        /(policy)/private-policy/page: /private-policy
+        /_not-found/page: /_not-found
+        /cart/page: /cart
+        /page: /
+        /search/page: /search
+
 ## Getting Started
 
 First, run the development server:
@@ -29,6 +41,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+
 
 ## Learn More
 

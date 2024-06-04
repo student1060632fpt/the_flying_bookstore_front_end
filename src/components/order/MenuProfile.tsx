@@ -32,46 +32,46 @@ const MenuProfile = () => {
         <ListItemText sx={{ ml: 2 }}>Chào {profile?.firstName}</ListItemText>
       </MenuItem>
       <Divider />
-      <Link href="/profile">
-        <MenuItem sx={{ py: 1.5, px: 2 }}>
-          <ListItemIcon>
-            <CiUser size={22} />
-          </ListItemIcon>
+      <MenuItem sx={{ py: 1.5, px: 2 }}>
+        <ListItemIcon>
+          <CiUser size={22} />
+        </ListItemIcon>
+        <Link href="/profile">
           <ListItemText>Cài đặt tài khoản</ListItemText>
-        </MenuItem>
-      </Link>
-      <Link href="/my-order/0">
-        <MenuItem sx={{ py: 1.5, px: 2 }}>
-          <ListItemIcon>
-            <CiBag1 size={22} />
-          </ListItemIcon>
+        </Link>
+      </MenuItem>
+      <MenuItem sx={{ py: 1.5, px: 2 }}>
+        <ListItemIcon>
+          <CiBag1 size={22} />
+        </ListItemIcon>
+        <Link href="/my-order/0">
           <ListItemText>Quản lý đơn hàng của tôi</ListItemText>
-        </MenuItem>
-      </Link>
-      <Link href="/customer-order">
-        <MenuItem sx={{ py: 1.5, px: 2 }}>
-          <ListItemIcon>
-            <PiBriefcaseLight size={22} />
-          </ListItemIcon>
+        </Link>
+      </MenuItem>
+      <MenuItem sx={{ py: 1.5, px: 2 }}>
+        <ListItemIcon>
+          <PiBriefcaseLight size={22} />
+        </ListItemIcon>
+        <Link href="/customer-order">
           <ListItemText>Quản lý đơn hàng của khách</ListItemText>
-        </MenuItem>
-      </Link>
-      <Link href="/manager-post">
-        <MenuItem sx={{ py: 1.5, px: 2 }}>
-          <ListItemIcon>
-            <CiViewList size={22} />
-          </ListItemIcon>
+        </Link>
+      </MenuItem>
+      <MenuItem sx={{ py: 1.5, px: 2 }}>
+        <ListItemIcon>
+          <CiViewList size={22} />
+        </ListItemIcon>
+        <Link href="/manager-post">
           <ListItemText>Quản lý bài đăng</ListItemText>
-        </MenuItem>
-      </Link>
-      <Link href="/manager-post/add-post">
-        <MenuItem sx={{ py: 1.5, px: 2 }}>
-          <ListItemIcon>
-            <CiCirclePlus size={22} />
-          </ListItemIcon>
+        </Link>
+      </MenuItem>
+      <MenuItem sx={{ py: 1.5, px: 2 }}>
+        <ListItemIcon>
+          <CiCirclePlus size={22} />
+        </ListItemIcon>
+        <Link href="/manager-post/add-post">
           <ListItemText>Thêm bài đăng</ListItemText>
-        </MenuItem>
-      </Link>
+        </Link>
+      </MenuItem>
     </MenuList>
   );
 };

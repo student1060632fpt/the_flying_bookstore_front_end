@@ -5,7 +5,7 @@ import { useAuthStore } from "../../hooks/user";
 import { IOrder } from "../../types/order";
 import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
-import { useParams, useRouter } from "next/navigation";
+import { useRouter } from "next/router";
 import { useStoreAlert } from "../../hooks/alert";
 import { RxReload } from "react-icons/rx";
 

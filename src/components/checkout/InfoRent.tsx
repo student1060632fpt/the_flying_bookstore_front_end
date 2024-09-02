@@ -33,7 +33,7 @@ const InfoRent = () => {
 
       return () => clearTimeout(timeout);
     }
-    return () => {};
+    return () => { };
   }, [cleared]);
   return (
     <>
@@ -64,17 +64,16 @@ const InfoRent = () => {
               field: { onChange, value, ref },
               formState: { errors },
             }) => {
-              console.log({errors});
-              
+              const errorMessage = errors?.birthDate?.message ? String(errors?.birthDate?.message) : "";
               return (
                 <>
                   <DatePicker
-                    sx={{ width: "100%",borderColor:"red" }}
+                    sx={{ width: "100%", borderColor: "red" }}
                     label="Ngày sinh"
                     inputRef={ref}
                     format="DD/MM/YYYY"
                     disableFuture
-                    
+
                     slotProps={{
                       field: {
                         clearable: true,
@@ -85,7 +84,7 @@ const InfoRent = () => {
                     onAccept={onChange}
                     value={value}
                   />
-                  <FormHelperText required={errors?.birthDate?.type == "required"} style={{color: "#d32f2f"}}>{errors?.birthDate?.message}</FormHelperText>
+                  <FormHelperText required={errors?.birthDate?.type == "required"} style={{ color: "#d32f2f" }}>{errorMessage}</FormHelperText>
                 </>
               );
             }}

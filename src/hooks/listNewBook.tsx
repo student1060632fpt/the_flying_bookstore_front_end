@@ -1,4 +1,3 @@
-import { ICategory } from "@/components/home/Category/BookCategory";
 import { IListing } from "@/types/book";
 import { PageResponse } from "@/types/page";
 import axios, { AxiosResponse } from "axios";

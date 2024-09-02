@@ -10,6 +10,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/hooks/user";
+import { AxiosError } from "axios";
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
 }
@@ -60,11 +61,21 @@ const SignIn = () => {
       }
     } catch (error) {
       // Handle any network or server errors
-      const errorTitle = error?.response?.data?.title;
-      if (errorTitle) {
-        console.log({ errorTitle });
-        setAlert((state) => ({ ...state,message: errorTitle, open: true,severity:"error" }));
+      if(!error){
+        return;
       }
+      const thisError: AxiosError<{ title: string }, any> = error as AxiosError<{ title: string }, any>;
+      const errorTitle = thisError.response?.data?.title || "";
+      if (!errorTitle) 
+        return;
+      
+
+      setAlert((state) => ({
+          ...state,
+          message: errorTitle,
+          severity: "error",
+          open: true,
+        }));
     }
   };
   const handleClose = () => setAlert((state) => ({ ...state, open: false }));
@@ -98,7 +109,7 @@ const SignIn = () => {
         </div>
       </div>
       <div className="auth__right">
-        <Image src={Background} alt="background" fill className="img" />
+        <Image src={Background} alt="background" fill className="img" unoptimized />
       </div>
       <Snackbar
         anchorOrigin={{ vertical: "bottom", horizontal: "right" }}

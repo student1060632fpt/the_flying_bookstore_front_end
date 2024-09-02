@@ -75,15 +75,21 @@ const Login = () => {
       }
     } catch (error) {
       // Handle any network or server errors{}
-      const errorTitle = error?.response?.data?.title;
-      if (errorTitle) {
-        setAlert((state) => ({
+      if(!error){
+        return;
+      }
+      const thisError: AxiosError<{ title: string }, any> = error as AxiosError<{ title: string }, any>;
+      const errorTitle = thisError.response?.data?.title || "";
+      if (!errorTitle) 
+        return;
+      
+      setAlert((state) => ({
           ...state,
           message: errorTitle,
           severity: "error",
           open: true,
         }));
-      }
+      
     }
   };
   const handleClose = () => setAlert((state) => ({ ...state, open: false }));

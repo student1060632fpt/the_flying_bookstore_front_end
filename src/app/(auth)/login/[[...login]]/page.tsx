@@ -1,12 +1,6 @@
 import Image from "next/image";
 import Background from "./../../../../assets/images/background.jpg";
-import FormLogin from "@/components/auth/FormLogin";
 import "./../Login.scss";
-
-export type FormLogin = {
-  loginName: string;
-  password: string;
-};
 
 const Login = () => {
 

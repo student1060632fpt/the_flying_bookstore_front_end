@@ -8,7 +8,6 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import Typography from "@mui/material/Typography";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
 import {
@@ -20,8 +19,7 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import { listBookDummie } from "./dummy";
-import { useFormContext } from "react-hook-form";
+import { useStoreBook } from "@/hooks/choosenBook";
 let config = {
   method: "get",
   maxBodyLength: Infinity,
@@ -36,7 +34,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1),
   },
 }));
-type Book = {
+export type Book = {
   id: number;
   isbn: string;
   title: string;
@@ -60,6 +58,15 @@ export default function ModalSearchBook({
   const [listBook, setListBook] = useState<Array<Book>>([]);
   const getBookTitle = (book: Book) => book.title;
   const getBookKey = (book: Book) => book.id;
+  const { updateBook, bookChoosen } = useStoreBook();
+  useEffect(() => {
+    if (bookChoosen) {
+      setIsNew(false);
+    } else {
+      setIsNew(true);
+    }
+  }, [bookChoosen]);
+
   useEffect(() => {
     axios
       .request(config)
@@ -74,30 +81,31 @@ export default function ModalSearchBook({
   const handleClose = () => {
     setOpen(false);
   };
-  
-  const { register } = useFormContext() // retrieve all hook methods
-  const { onChange: onChangeBookId, onBlur, name, ref } = register('book'); 
+
+  const onChangeAutoComplete = (
+    event: React.ChangeEvent<{}>,
+    newValue: Book | null
+  ) => {
+    updateBook(newValue);
+    setValue(newValue);
+  };
   const renderSearchBook = () => {
     if (isNew) return <></>;
     return (
       <Autocomplete
+        open={true}
         value={value}
-        onChange={(event: React.ChangeEvent<{}>, newValue: Book | null) => {
-          setValue(newValue);
-          if (newValue !== null) {
-            onChangeBookId(newValue as any);
-          }
-        }}
+        onChange={onChangeAutoComplete}
+        onSelect={() => setIsNew(false)}
         disablePortal
         id="combo-box-demo"
-        options={listBookDummie}
+        options={listBook}
         getOptionLabel={getBookTitle}
         getOptionKey={getBookKey}
         fullWidth
         renderInput={(params) => (
           <TextField {...params} label="Chọn sách" variant="standard" />
         )}
-
       />
     );
   };
@@ -125,27 +133,28 @@ export default function ModalSearchBook({
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <div>{`value: ${value !== null ? `'${value?.id}' ${value?.title}` : "null"}`}</div>
-
           <FormControl>
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
               name="row-radio-buttons-group"
-              defaultValue="already"
             >
               <FormControlLabel
-                defaultChecked
+                checked={!isNew}
                 value="already"
                 control={<Radio />}
                 label="Chọn sách hiện có"
                 onClick={() => setIsNew(false)}
               />
               <FormControlLabel
+                checked={isNew}
                 value="isNew"
                 control={<Radio />}
                 label="Thêm sách mới"
-                onClick={() => setIsNew(true)}
+                onClick={() => {
+                  updateBook(null);
+                  setIsNew(true);
+                }}
               />
             </RadioGroup>
           </FormControl>

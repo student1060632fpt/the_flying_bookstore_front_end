@@ -1,11 +1,13 @@
+"use client";
 import { top100Films } from "@/app/(manager)/manager-post/add-post/top100film";
 import { AccordionDetails, Autocomplete, Grid, TextField } from "@mui/material";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useFormContext } from "react-hook-form";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionSummary } from "./AccordionCustom";
 import axios from "axios";
-import { useEffect } from "react";
-export type TFieldValue = {
+import { useEffect, useState } from "react";
+import ModalSearchBook from "./ModalSearchBook";
+export type TBookValue = {
   title: string;
   author: string;
   publisher: string;
@@ -15,33 +17,17 @@ export type TFieldValue = {
   datePublish: string;
   language: string;
 };
-let config = {
-  method: "get",
-  maxBodyLength: Infinity,
-  url: "http://localhost:8082/api/book",
-  headers: {},
-};
+
 const CreateBook = () => {
-  useEffect(() => {
-    axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const [open, setOpen] = useState(true);
 
   const {
     register,
-    handleSubmit,
     formState: { errors },
-  } = useForm<TFieldValue>();
-  const onSubmit: SubmitHandler<TFieldValue> = (data) => console.log(data);
+  } = useFormContext<TBookValue>();
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <>
       <Accordion defaultExpanded>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -54,15 +40,19 @@ const CreateBook = () => {
         <AccordionDetails>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={[{ label: "Thêm mới sách" }, ...top100Films]}
+              <TextField
                 fullWidth
-                renderInput={(params) => (
-                  <TextField {...params} label="Chọn sách" variant="standard" />
-                )}
+                required
+                label="Tìm sách"
+                variant="standard"
+                {...register("title", {
+                  required: "Cần phải điền trường này",
+                })}
+                error={!!errors?.title}
+                helperText={errors.title && errors.title?.message}
+                onClick={() => setOpen(true)}
               />
+             
             </Grid>
             <Grid item xs={6}>
               <TextField
@@ -137,7 +127,8 @@ const CreateBook = () => {
           </Grid>
         </AccordionDetails>
       </Accordion>
-    </form>
+      <ModalSearchBook open={open} setOpen={setOpen} />
+    </>
   );
 };
 

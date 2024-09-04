@@ -285,21 +285,9 @@ export default function Navbar() {
                   <CiBellOn color={theme.palette.primary.main} />
                 </Badge>
               </IconButton>
-              <Button
-                aria-label="account of current user"
-                aria-controls={menuId}
-                aria-haspopup="true"
-                onClick={handleProfileMenuOpen}
-                color="inherit"
-              >
-                <Image
-                  src={AvatarImage}
-                  alt="Name"
-                  width={40}
-                  height={40}
-                  className="rounded"
-                />
-              </Button>
+              <IconButton size="large">
+                
+              </IconButton>
             </Box>
           )}
 

@@ -33,7 +33,6 @@ const BookExistOrNot = () => {
     reset,
   } = useFormContext<TBookValue>();
   const bookChoosen = useStoreBook((state) => state.bookChoosen);
-  console.log({ bookChoosen });
   useEffect(() => {
     reset();
     

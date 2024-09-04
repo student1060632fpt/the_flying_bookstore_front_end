@@ -1,13 +1,10 @@
 import { top100Films } from "@/app/(manager)/manager-post/add-post/top100film";
-import {
-  AccordionDetails,
-  Autocomplete,
-  Grid,
-  TextField,
-} from "@mui/material";
+import { AccordionDetails, Autocomplete, Grid, TextField } from "@mui/material";
 import { SubmitHandler, useForm } from "react-hook-form";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Accordion, AccordionSummary } from "./AccordionCustom";
+import axios from "axios";
+import { useEffect } from "react";
 export type TFieldValue = {
   title: string;
   author: string;
@@ -18,8 +15,24 @@ export type TFieldValue = {
   datePublish: string;
   language: string;
 };
-
+let config = {
+  method: "get",
+  maxBodyLength: Infinity,
+  url: "http://localhost:8082/api/book",
+  headers: {},
+};
 const CreateBook = () => {
+  useEffect(() => {
+    axios
+      .request(config)
+      .then((response) => {
+        console.log(JSON.stringify(response.data));
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   const {
     register,
     handleSubmit,

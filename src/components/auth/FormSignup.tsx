@@ -14,7 +14,7 @@ import {
 import React, { MouseEvent, useState } from "react";
 import FormHelperText from "@mui/material/FormHelperText";
 
-const FormSignin = ({
+const FormSignUp = ({
 
   register,
   errors,
@@ -109,4 +109,4 @@ const FormSignin = ({
   );
 };
 
-export default FormSignin;
+export default FormSignUp;

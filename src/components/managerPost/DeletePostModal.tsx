@@ -10,8 +10,8 @@ import {
 import { TransitionProps } from "@mui/material/transitions";
 import React from "react";
 import { IRowsPost2 } from "./column";
-import axios from "axios";
 import { useStoreAlert } from "../../hooks/alert";
+import { DeletePostService } from "@/api/deletePostService";
 
 const DeletePostModal = ({
   modalDelete,
@@ -27,21 +27,15 @@ const DeletePostModal = ({
 }) => {
   const { callAlert } = useStoreAlert();
   const onDelete = async () => {
-    let config = {
-      method: "delete",
-      url: `http://localhost:8082/api/listing/${modalDelete.data?.id}`,
-    };
-    return await axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        callAlert(`Xóa bài đăng #${modalDelete.data?.id} thành công`);
-        handleClose();
-        getListPost()
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const data = await DeletePostService(modalDelete.data?.id);
+    if (data) {
+      console.log(JSON.stringify(data));
+      callAlert(`Xóa bài đăng #${modalDelete.data?.id} thành công`);
+      handleClose();
+      getListPost();
+    } else {
+      console.log(data?.error);
+    }
   };
   return (
     <Dialog

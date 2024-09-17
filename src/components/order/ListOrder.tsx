@@ -8,6 +8,7 @@ import { getAllOrder } from "../../api/order";
 import { useRouter } from "next/router";
 import { useStoreAlert } from "../../hooks/alert";
 import { RxReload } from "react-icons/rx";
+import { getOrderWithStatusService } from "../../api/order";
 
 export default function ListOrder({
   status,
@@ -32,23 +33,15 @@ export default function ListOrder({
     });
   };
   const getOrderWithStatus = async (status: number) => {
-    return await axios
-      .request({
-        url: `http://localhost:8082/api/leaseOrder/search/${
-          isCustomer ? `lessor` : `lessee`
-        }/status/${profile?.id}`,
-        params: {
-          status,
-        },
-      })
-      .then((response) => {
-        if (response.data) {
-          setListOrder(response.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await getOrderWithStatusService(status, isCustomer);
+    if(response){
+      if (response.data) {
+        setListOrder(response.data);
+      }
+    }
+    else{
+      console.log('Error fetching data:', response?.error);
+    };
   };
   const callWhichApi = async () => {
     switch (status) {

@@ -2,29 +2,21 @@
 import BookInfo from "@/components/detail/BookInfo";
 import DocumentInfo from "@/components/detail/DocumentInfo";
 import RentBook from "@/components/detail/RentBook";
-import NewComingList from "@/components/home/NewComing/NewComingList";
 import PromoteSection from "@/components/home/PromoteSection";
 import { IListing } from "@/types/book";
-import axios, { AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
-interface IParams {
-  params: { detail: Array<string> };
-}
+import { getBookDetailService } from "@/api/bookListService";
+import { IParams } from "@/types/params";
 
 export default function Page({ params }: IParams) {
-const [listing, setListing] = useState<IListing>()
+  const [listing, setListing] = useState<IListing>();
 
-  async function makeRequest() {
-    const detailId = params?.detail[0] ? params?.detail[0] : null;
-    try {
-      const response: AxiosResponse<IListing> = await axios.request({
-        url: `http://localhost:8082/api/listing/detailListing/${detailId}`,
-      });
-      setListing(response.data);
-    } catch (error) {
-      console.log(error);
-    }
+  const  makeRequest = async () => {
+    const response = await getBookDetailService(params.detail[0]);
+    setListing(response);
   }
+
+
   useEffect(() => {
     makeRequest();
   }, []);

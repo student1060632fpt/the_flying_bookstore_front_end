@@ -14,12 +14,10 @@ import { useStoreCart } from "@/hooks/cart";
 import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import AlertSignOut from "../nav/AlertSignOut";
-import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
 import { useStoreOrder } from "../../hooks/order";
 import { getProfile, onSubmitProfile } from "../../api/profile";
 import { useStoreAlert } from "../../hooks/alert";
-
+import { onSubmitOrderService } from "@/api/checkoutService";
 
 const vnpay = new VNPay({
   tmnCode: "8P19JVPK",
@@ -83,35 +81,22 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
       paymentMethod: convertPaymentType(payType),
     };
 
-    try {
-      const response = await axios.request({
-        method: "post",
-        maxBodyLength: Infinity,
-        url: "http://localhost:8082/api/leaseOrder",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        data: JSON.stringify(convertValue),
-      });
-      if (response?.data) {
-        callAlert("Tạo đơn hàng thành công");
-        updateOrder(response?.data?.id);
-        handleNext();
-        if (payType == 2) {
-          const urlString = vnpay.buildPaymentUrl({
-            vnp_Amount: cart?.total || 0,
-            vnp_IpAddr: "1.1.1.1",
-            vnp_TxnRef: dayjs().valueOf().toPrecision(),
-            vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.total}`,
-            vnp_OrderType: "other",
-            vnp_ReturnUrl: `http://localhost:3000/checkout`,
-          });
-          router.push(urlString);
-        }
+    const response = await onSubmitOrderService(convertValue);
+    if (response) {
+      callAlert("Tạo đơn hàng thành công");
+      updateOrder(response?.id);
+      handleNext();
+      if (payType == 2) {
+        const urlString = vnpay.buildPaymentUrl({
+          vnp_Amount: cart?.total || 0,
+          vnp_IpAddr: "1.1.1.1",
+          vnp_TxnRef: dayjs().valueOf().toPrecision(),
+          vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.total}`,
+          vnp_OrderType: "other",
+          vnp_ReturnUrl: `http://localhost:3000/checkout`,
+        });
+        router.push(urlString);
       }
-    } catch (error) {
-      callErrorAlert("Lỗi");
     }
   };
   const beforeOnSubmitProfile = async (data:IFormCheckout) => {

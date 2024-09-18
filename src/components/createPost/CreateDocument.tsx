@@ -26,6 +26,7 @@ import { Accordion, AccordionSummary } from "./AccordionCustom";
 import { IPostState } from "../../app/(manager)/manager-post/add-post/page";
 import { useAuthStore } from "../../hooks/user";
 import { useStoreAlert } from "../../hooks/alert";
+import { onSubmitService, uploadFileService } from "@/api/create/createDocumentService";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -72,27 +73,22 @@ const CreateDocument = ({
     const formData = new FormData();
     formData.append("image", file);
     console.log({ formData });
-
-    axios
-      .post("https://api.imgbb.com/1/upload", formData, {
-        params: { key: "06112f8ddf44fb385b1d95d402e3e3a9" },
-        onUploadProgress: (progressEvent: AxiosProgressEvent) => {
-          const percentCompleted = progressEvent?.total
-            ? Math.round((progressEvent.loaded * 100) / progressEvent.total)
-            : 100;
-          setUploadProgress(percentCompleted);
-        },
-      })
-      .then((response) => {
-        if (response?.data?.data?.display_url) {
-          console.log(response?.data?.data?.display_url);
-          setImgUrl(response?.data?.data?.display_url);
+    const uploadFile = async () => {
+        const response = await uploadFileService(formData, setUploadProgress);
+        if(response) {
+          if (response?.data?.display_url) {
+            console.log(response?.data?.display_url);
+            setImgUrl(response?.data?.display_url);
+          }
         }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+        else {
+          console.log(response?.error);
+        }
+    }
+
+    uploadFile();
   };
+
   const onSubmit: SubmitHandler<TFieldDocumentValue> = async (value) => {
     let data = ({
       bookId,
@@ -106,27 +102,15 @@ const CreateDocument = ({
     });
     console.log({data});
 
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:8082/api/copy",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data,
-    };
-
-    return await axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        updateDocumentId(response.data.id)
-        callAlert(`Tạo tài liệu #${response.data.id} thành công` )
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+    const response = await onSubmitService(data);
+    if(response) {
+      console.log(JSON.stringify(response.data));
+      updateDocumentId(response.data.id)
+      callAlert(`Tạo tài liệu #${response.data.id} thành công` )      
+    }
+    else console.log(response.error);
+  }
+      
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Accordion sx={{ my: 2 }} defaultExpanded>

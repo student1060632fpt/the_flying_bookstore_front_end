@@ -18,7 +18,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useUrl } from "nextjs-current-url";
 import React, { useEffect, useState } from "react";
 import AlertSignOut from "../../../components/nav/AlertSignOut";
-import { IAlert } from "../../(auth)/sign-up/[[...sign-up]]/page";
+import { IAlert } from "../../../types/alert";
 import { useStoreStep } from "../../../hooks/step";
 
 const steps = ["Điền thông tin", "Xuất đơn hàng", "Lấy hàng"];

@@ -4,13 +4,14 @@ import { IUser } from "../types/user";
 import { IFormCheckout } from "../types/form";
 import dayjs from "dayjs";
 
+const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
 export const getProfile = async (
   token: string | null,
   setToken: (arg: string, profile: IUser) => void
 ): Promise<void> => {
   try {
     const response = await axios.request({
-      url: "http://localhost:8082/api/user/myInfo",
+      url: `http://${port}/api/user/myInfo`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -39,7 +40,7 @@ export const onSubmitProfile = async (data: IFormCheckout, profile: IUser | null
   let config = {
     method: "put",
     maxBodyLength: Infinity,
-    url: `http://localhost:8082/api/user/${profile?.id}`,
+    url: `http://${port}/api/user/${profile?.id}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

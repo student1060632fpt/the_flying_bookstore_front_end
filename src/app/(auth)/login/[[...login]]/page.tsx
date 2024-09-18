@@ -7,23 +7,18 @@ import FormLogin from "@/components/auth/FormLogin";
 import "./../Login.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios, { AxiosError } from "axios";
-import { useStoreSearch } from "@/hooks/search";
 import { useAuthStore } from "@/hooks/user";
+import { IUserLogin } from "@/types/user";
+import { IAlert } from "@/types/alert";
+
+import { getProfileService, handleFormSubmitService } from "@/api/auth/loginService";
+
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
 }
-type IAlert = {
-  severity: any;
-  open: boolean;
-  message: string;
-};
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    loginName: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({} as IUserLogin);
   const [alert, setAlert] = useState<IAlert>({
     open: false,
     message: "",
@@ -33,46 +28,25 @@ const Login = () => {
   const router = useRouter();
   const { setToken } = useAuthStore();
   const getProfile = async (token: string) => {
-    try {
-      const response = await axios.request({
-        url: "http://localhost:8082/api/user/myInfo",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      if (response?.data) {
-        setToken(token, response?.data);
-        setAlert((state) => ({
-          ...state,
-          message: "Đăng nhập thành công",
-          open: true,
-          severity: "success",
-        }));
-        router.push("/");
-      }
-    } catch (error) {
-      console.log(error);
+    const data = await getProfileService(token);
+    if (data) {
+      setToken(token, data);
+      setAlert((state) => ({
+        ...state,
+        message: "Đăng nhập thành công",
+        open: true,
+        severity: "success",
+      }));
+      router.push("/");
     }
   };
   const handleFormSubmit = async () => {
-    try {
-      const response = await axios.request({
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        data: formData,
-        url: "http://localhost:8082/api/user/login",
-      });
-
-      if (response.data) {
-        // Registration successful, handle the response accordingly
-        await getProfile(response.data.token);
-      } else {
-        throw new Error("Registration failed");
-      }
-    } catch (error) {
-      console.log({ error });
+    const data = await handleFormSubmitService(formData);
+    if (data) {
+    // Registration successful, handle the response accordingly
+      await getProfile(data.token);
+    } else {3
+      throw new Error("Registration failed");
     }
   };
   const handleClose = () => setAlert((state) => ({ ...state, open: false }));

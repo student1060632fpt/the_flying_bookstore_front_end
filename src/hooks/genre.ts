@@ -3,6 +3,7 @@ import axios from "axios";
 import { url } from "inspector";
 import { StateCreator, create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { genreSliceService } from "@/api/genreService";
 
 type IGenreStore = {
   listGenre: Array<ICategory> | null;
@@ -14,23 +15,14 @@ const genreSlice: StateCreator<IGenreStore, [["zustand/persist", unknown]]> = (
   listGenre: null,
   fetch: async () => {
     try {
-      const response = await axios.request({
-        headers: {
-          "Content-Type": "application/json",
-        },
-        url: "http://localhost:8082/api/genre",
-      });
-
-      if (response?.data) {
-        set({ listGenre: response.data });
-      } else {
-        throw new Error("Get Genre failed");
-      }
+      const data = await genreSliceService();
+      set({ listGenre: data });
     } catch (error) {
       throw new Error("Get Genre failed");
     }
   },
 });
+
 
 export const useGenreStore = create<IGenreStore>()(
   persist(genreSlice, {

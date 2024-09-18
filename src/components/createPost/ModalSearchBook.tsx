@@ -9,7 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import axios from "axios";
+import { getAllBooksService } from "@/api/create/createBookService";
 import {
   Autocomplete,
   FormControl,
@@ -21,12 +21,6 @@ import {
 } from "@mui/material";
 import { useStoreBook } from "@/hooks/choosenBook";
 import { IBook } from "@/types/book";
-let config = {
-  method: "get",
-  maxBodyLength: Infinity,
-  url: "http://localhost:8082/api/book",
-  headers: {},
-};
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
     padding: theme.spacing(2),
@@ -58,14 +52,16 @@ export default function ModalSearchBook({
   }, [bookChoosen]);
 
   useEffect(() => {
-    axios
-      .request(config)
-      .then((response) => {
+    const getAllBook = async () => {    
+      const response = await getAllBooksService(); 
+      if (response) {        
         if (response?.data) setListBook(response?.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+      }
+      else {
+          console.error("Error fetching data:", response.error);
+      }
+    };
+    getAllBook();
   }, []);
 
   const handleClose = () => {

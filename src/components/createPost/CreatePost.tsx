@@ -15,6 +15,7 @@ import { useAuthStore } from "../../hooks/user";
 import { IPostState } from "../../app/(manager)/manager-post/add-post/page";
 import { useStoreAlert } from "../../hooks/alert";
 import { useRouter } from "next/navigation";
+import { onSubmitService } from "../../api/create/createPostService";
 export type TFieldPostValue = {
   address: string;
   leaseRate: string; // must be number
@@ -42,28 +43,15 @@ const CreatePost = ({ copyId }: { copyId: IPostState["copyId"] }) => {
       penaltyRate: parseFloat(penaltyRate),
       description,
     };
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:8082/api/listing",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      data,
+    const response = await onSubmitService(data);
+    if (response) {
+      console.log(JSON.stringify(response.data));
+      callAlert(`Tạo sách #${response.data.id} thành công`)
+      router.push(`/detail/${response.data.id}`) //TODO test in this
+    }
+    else {
+      console.log(response?.error);
     };
-
-    return await axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
-        callAlert(`Tạo sách #${response.data.id} thành công`)
-        router.push(`/detail/${response.data.id}`) //TODO test in this
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
   return (
     <FormProvider {...methods}>

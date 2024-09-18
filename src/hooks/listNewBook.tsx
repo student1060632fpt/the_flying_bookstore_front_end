@@ -3,6 +3,7 @@ import { PageResponse } from "@/types/page";
 import axios, { AxiosResponse } from "axios";
 import { StateCreator, create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
+import { getAllBookService } from "@/api/bookListService";
 
 type IListBookStore = {
   listNewBook: PageResponse<IListing> | null;
@@ -14,13 +15,9 @@ const bookSlice: StateCreator<IListBookStore, [["zustand/persist", unknown]]> = 
   listNewBook: null,
   fetch: async () => {
     try {
-      const response:  AxiosResponse<PageResponse<IListing>>  = await axios.request( {
-        url:"http://localhost:8082/api/listing/search",
-        method: "GET",
-      });
-
-      if (response?.data) {
-        set({ listNewBook: response?.data});
+      const data = await getAllBookService();
+      if (data) {
+        set({ listNewBook: data});
       } else {
         throw new Error("Get Book failed");
       }

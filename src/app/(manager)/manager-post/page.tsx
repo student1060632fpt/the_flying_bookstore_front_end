@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import axios from "axios";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import NoData from "@/components/order/NoData";
@@ -12,6 +11,7 @@ import {
 } from "@/components/managerPost/column";
 import DeletePostModal from "@/components/managerPost/DeletePostModal";
 import { useAuthStore } from "@/hooks/user";
+import { getListPostService } from "@/api/managerPostService";
 
 const ManagerPost = () => {
   const [modalDelete, setModalDelete] = useState<{
@@ -31,16 +31,10 @@ const ManagerPost = () => {
     setModalDelete((state) => ({ ...state, open: false }));
   };
   const getListPost = async (): Promise<void> => {
-    try {
-      const response = await axios.request({
-        url: "http://localhost:8082/api/listing/search/byOwnerId/" + profile?.id,
-      });
-      console.log(JSON.stringify(response.data));
-      const convertData = convertDataToIRow(response?.data?.content);
-      setListPost(convertData);
-    } catch (error) {
-      console.log(error);
-    }
+    const response = await getListPostService();
+    console.log(JSON.stringify(response));
+    const convertData = convertDataToIRow(response?.content);
+    setListPost(convertData);
   };
   useEffect(() => {
     getListPost();

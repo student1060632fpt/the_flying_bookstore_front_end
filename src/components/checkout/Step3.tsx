@@ -5,7 +5,7 @@ import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
 import { useStoreOrder } from "../../hooks/order";
 import { IOrder } from "../../types/order";
-import axios from "axios";
+import { getDetailOrderService } from "@/api/checkoutService";
 
 const Step3 = () => {
   const { order: orderId } = useStoreOrder();
@@ -13,17 +13,11 @@ const Step3 = () => {
 
   useEffect(() => {
     const getDetailOrder = async () => {
-      axios
-        .request({ url: "http://localhost:8082/api/leaseOrder/" + orderId })
-        .then((response) => {
-          if (response.data) {
-            console.log("response.data", response.data);
-            setOrderDetail(response.data);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      const response = await getDetailOrderService(orderId);
+      if(response) {
+        console.log("response.data", response);
+        setOrderDetail(response);
+      }
     };
     getDetailOrder();
   }, [orderId]);

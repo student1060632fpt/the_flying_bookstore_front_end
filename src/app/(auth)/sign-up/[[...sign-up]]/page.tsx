@@ -32,12 +32,15 @@ const SignIn = () => {
   const { message, open, severity } = alert;
 
   const onSubmit = async (data: IUser) => {
-    const response = await onSubmitService(data);
-    if (response.ok) {
-      setAlert((state) => ({ ...state,message: "Đăng ký thành công", open: true,severity:"success" }));
-      // Registration successful, handle the response accordingly
-      router.push("/login");
-    } else {
+    try {
+      const response = await onSubmitService(data);
+      if (!!response) {
+        setAlert((state) => ({ ...state, message: "Đăng ký thành công", open: true, severity: "success" }));
+        // Registration successful, handle the response accordingly
+        // router.push("/login"); TODO: after demo
+        router.push("/");
+      }
+    } catch (error) {
       throw new Error("Registration failed");
     }
   };

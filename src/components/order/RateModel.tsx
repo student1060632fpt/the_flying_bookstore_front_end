@@ -14,6 +14,7 @@ import { IRateModal } from "./OrderFooter";
 import { useAuthStore } from "../../hooks/user";
 import axios from "axios";
 import { useStoreAlert } from "../../hooks/alert";
+import { SubmitReviewService } from "../../api/ratingService";
 
 const RateModel = ({
   rateModal,
@@ -42,27 +43,12 @@ const RateModel = ({
     };
     console.log(formData);
 
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:8082/api/review",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data: formData,
-    };
-
-    return await axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response.data));
+    const response = await SubmitReviewService(formData);
+    if (response) {      
+        console.log(JSON.stringify(response));
         handleClose()
         callAlert("Đánh giá thành công")
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    }
   };
 
   return (

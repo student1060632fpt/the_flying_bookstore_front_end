@@ -19,6 +19,7 @@ import FindBookAutocomplete from "./FindBookAutocomplete";
 import { InputListing } from "./InputListing";
 import GenreAutocomplete from "./GenreAutocomplete";
 import { useStoreAlert } from "../../hooks/alert";
+import { onSubmitService, getAllBooksService } from "@/api/create/createBookService";
 
 const addBookDefault: IBook = {
   title: "Thêm mới sách",
@@ -73,45 +74,31 @@ const CreateBook = ({
       size,
       pageCount,
     });
-
-    let config = {
-      method: "post",
-      maxBodyLength: Infinity,
-      url: "http://localhost:8082/api/book",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data,
-    };
-
-    return await axios
-      .request(config)
-      .then((response) => {
-        console.log(JSON.stringify(response?.data));
-        updateBookId(response?.data?.id);
-        callAlert("Tạo sách thành công");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const response = await onSubmitService(data);
+    if (response?.ok) {
+      console.log(JSON.stringify(response));
+      updateBookId(response?.id);
+      callAlert("Tạo sách thành công");
+    }
   };
-
   useEffect(() => {
     let active = true;
 
     if (!loading) {
       return undefined;
     }
-    axios
-      .request({ url: "http://localhost:8082/api/book" })
-      .then((response) => {
+    const getAllBook = async () => {    
+      const response = await getAllBooksService();
+      if (response) {        
         if (active) {
-          setOptions([addBookDefault, ...response?.data]);
+          setOptions([addBookDefault, ...response]);
         }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      }
+      else {
+        console.log('Error fetching data:', response?.error);
+      }
+    }
+    getAllBook();
     return () => {
       active = false;
     };

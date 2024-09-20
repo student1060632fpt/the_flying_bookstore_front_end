@@ -3,27 +3,26 @@ import Image from "next/image";
 import Background from "@/assets/images/bg-signin_animation.gif";
 import { Alert, Button, Slide, SlideProps, Snackbar } from "@mui/material";
 import Link from "next/link";
-import FormLogin from "@/components/auth/FormLogin";
 import "./../../login/Login.scss";
-import FormSignin from "@/components/auth/FormSignin";
+import FormSignUp from "@/components/auth/FormSignup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "@/hooks/user";
+import { IAlert } from "@/types/alert";
+
+import { onSubmitService } from "@/api/auth/registerService";
+import { IUser } from "@/types/user";
+
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
 }
-export type IAlert = {
-  severity: any;
-  open: boolean;
-  message: string;
-};
+
 const SignIn = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm();
+  } = useForm<IUser>();
   const router = useRouter();
   const [alert, setAlert] = useState<IAlert>({
     open: false,
@@ -31,37 +30,18 @@ const SignIn = () => {
     severity: "success",
   });
   const { message, open, severity } = alert;
-  const onSubmit = async (data: any) => {
-    try {
-      const response = await fetch("http://localhost:8082/api/user/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          username: data.username,
-          password: data.password,
-          email: "",
-          firstName: "",
-          lastName: "",
-          phoneNumber: "",
-          birthDate: "",
-        }),
-        redirect: "follow",
-        mode: "cors",
-      });
 
-      if (response.ok) {
-        setAlert((state) => ({ ...state,message: "Đăng ký thành công", open: true,severity:"success" }));
+  const onSubmit = async (data: IUser) => {
+    try {
+      const response = await onSubmitService(data);
+      if (!!response) {
+        setAlert((state) => ({ ...state, message: "Đăng ký thành công", open: true, severity: "success" }));
         // Registration successful, handle the response accordingly
-        router.push("/login");
-      } else {
-        throw new Error("Registration failed");
+        router.push("/login");// TODO: after demo
+        // router.push("/");
       }
     } catch (error) {
-      // Handle any network or server errors
-      console.log({ error });
-
+      throw new Error("Registration failed");
     }
   };
   const handleClose = () => setAlert((state) => ({ ...state, open: false }));
@@ -72,7 +52,7 @@ const SignIn = () => {
         <h2 className="">Đăng ký</h2>
         <div className="auth__form ">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <FormSignin errors={errors} register={register} />
+            <FormSignUp errors={errors} register={register} />
 
             <Button
               variant="contained"

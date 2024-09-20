@@ -11,3 +11,8 @@ export type IUser = {
   password: string | null;
   
 };
+
+export type IUserLogin = {
+  username: string;
+  password: string;
+}

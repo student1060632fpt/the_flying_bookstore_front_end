@@ -1,9 +1,10 @@
 import { redirect } from 'next/navigation'
 
+const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
 const signIn = async (data: any) => {
   
   try {
-    const response = await fetch("http://localhost:8082/api/user/login", {
+    const response = await fetch(`http://${port}/api/user/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

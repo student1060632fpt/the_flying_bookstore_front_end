@@ -7,7 +7,7 @@ import { useStoreCart } from "@/hooks/cart";
 import { formatCurrency } from "@/utils/helps";
 
 const CartTotal = () => {
-  const cart = useStoreCart(state=>state.cart)
+  const cart = useStoreCart(state=>state.cart.rent)
   return (
     <div className="total">
       <div className="total__row">

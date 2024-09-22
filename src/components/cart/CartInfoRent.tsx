@@ -8,13 +8,14 @@ import { formatPhoneNumber } from "../../utils/helps";
 
 
 const CartInfoRent = () => {
-  const cart = useStoreCart(state=>state.cart)
+  const cart = useStoreCart(state=>state.cart.rent)
+  const book = cart?.book;
   return (
     <div className="total">
       <div className="total__row">
         <GrUserManager className="total__icon" />
         <p className="total__title">Người cho thuê</p>
-        <p className="total__description">{cart?.book.user.lastName} {cart?.book.user.firstName}</p>
+        <p className="total__description">{book?.user.lastName} {book?.user.firstName}</p>
       </div>
 
       <div className="total__row">
@@ -27,7 +28,7 @@ const CartInfoRent = () => {
         <RiMapPin2Line className="total__icon" />
         <p className="total__title">Địa chỉ</p>
         <p className="total__description">
-          {cart?.book.address}
+          {book?.address}
         </p>
       </div>
 
@@ -35,7 +36,7 @@ const CartInfoRent = () => {
         <PiPhone className="total__icon" />
         <p className="total__title">Số điện thoại</p>
         <p className="total__description">
-          {formatPhoneNumber(cart?.book.user.phoneNumber)}
+          {formatPhoneNumber(book?.user.phoneNumber)}
         </p>
       </div>
     </div>

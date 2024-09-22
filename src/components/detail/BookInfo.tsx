@@ -1,5 +1,4 @@
 import Image from "next/image";
-import BookImage from "./../../assets/images/motthoangtarucroonhangian011.jpg";
 import { Button, IconButton, Rating } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { TfiComments } from "react-icons/tfi";

@@ -17,7 +17,9 @@ export type IListing = {
   bookOwned?: number;
   bookLeasing?: number;
   user: IUser;
-  
+  price: number;
+  allow_rent: boolean;
+  allow_purchase: boolean;
 };
 
 export interface ICopy {

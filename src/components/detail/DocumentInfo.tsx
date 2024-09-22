@@ -7,6 +7,7 @@ import { useState } from "react";
 import DocumentDetail from "./DocumentDetail";
 import RateBook from "./RateBook";
 import { IListing } from "@/types/book";
+import { a11yProps } from "../../utils/helps";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -33,12 +34,7 @@ function CustomTabPanel(props: TabPanelProps) {
     </div>
   );
 }
-function a11yProps(index: number) {
-  return {
-    id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
-  };
-}
+
 export interface IPropsBook {
   book: IListing | undefined
 }

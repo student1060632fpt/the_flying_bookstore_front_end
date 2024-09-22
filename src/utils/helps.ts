@@ -1,4 +1,4 @@
-import { IReview } from "@/types/book";
+import { IListing, IReview } from "@/types/book";
 
 const chunkArray = (array: Array<any>, chunkSize: number) => {
   const chunks = [];
@@ -13,7 +13,7 @@ const chunkArray = (array: Array<any>, chunkSize: number) => {
 };
 
 const formatCurrency = (amount: number | undefined) => {
-  if (!amount) return 0;
+  if (!amount) return 0 + "đ";
   // Chuyển số tiền thành chuỗi và thêm dấu chấm phẩy giữa các hàng nghìn
   const formattedAmount = amount
     .toString()
@@ -44,11 +44,24 @@ function formatPhoneNumber(phoneNumber: string | undefined) {
   // Định dạng số điện thoại thành (0x) xxx-xxx-xxx hoặc (0x) xxxx-xxx-xxx
   return phoneNumber.replace(/(\d{1})(\d{3})(\d{3})(\d{3})/, "$1$2 $3 $4");
 }
-
+const calPercentPromotion = (book: IListing | undefined): number => {
+  if (!book) return 0;
+  book.price=8;
+  book.depositFee=10;
+  return book.price * 100 / book.depositFee;
+}
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`,
+  };
+}
 export {
+  a11yProps,
   chunkArray,
   formatCurrency,
   arrayToString,
   countAvarageReview,
   formatPhoneNumber,
+  calPercentPromotion
 };

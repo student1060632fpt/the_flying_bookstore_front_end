@@ -12,7 +12,7 @@ import { formatCurrency } from "@/utils/helps";
 import { Controller, useForm } from "react-hook-form";
 import dayjs, { Dayjs } from "dayjs";
 import { viVN } from "@mui/x-date-pickers/locales";
-import { ICart, IFormValueDayRent } from "@/types/cart";
+import { ICart, ICartRent, IFormValueDayRent } from "@/types/cart";
 import { useStoreCart } from "@/hooks/cart";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "../../hooks/user";
@@ -27,7 +27,7 @@ const RentDay = ({ book }: IPropsBook) => {
   });
   const { profile } = useAuthStore();
   const router = useRouter();
-  const addToCart = useStoreCart((state) => state.addCart);
+  const addToCart = useStoreCart((state) => state.addCartRent);
   const renderDurationRent = () => {
     const firstDayEnd = watch("dateEnd");
     if (!firstDayEnd) return 0;
@@ -49,7 +49,7 @@ const RentDay = ({ book }: IPropsBook) => {
   };
   const onSubmit = (data: IFormValueDayRent) => {
     if (!book) return;
-    const submitCart: ICart = {
+    const submitCart: ICartRent = {
       dayRent: data,
       book,
       total: renderCountTotal(),

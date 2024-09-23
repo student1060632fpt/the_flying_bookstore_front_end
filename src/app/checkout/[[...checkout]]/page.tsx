@@ -53,8 +53,8 @@ const Checkout = () => {
             </Step>
           );
         })}
-      </Stepper> */}
-      {chooseStep()}
+      </Stepper> 
+      {chooseStep()}*/}
       <AlertSignOut alert={alert} setAlert={setAlert} />
     </>
   );

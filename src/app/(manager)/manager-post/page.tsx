@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
@@ -31,15 +31,15 @@ const ManagerPost = () => {
     setModalDelete((state) => ({ ...state, open: false }));
   };
 
-  useEffect(() => {
-    const getListPost = async (): Promise<void> => {
-      const response = await getListPostService(profile);
-      console.log(JSON.stringify(response));
-      const convertData = convertDataToIRow(response?.content);
-      setListPost(convertData);
-    };
-    getListPost();
+  const getListPost = useCallback(async (): Promise<void> => {
+    const response = await getListPostService(profile);
+    console.log(JSON.stringify(response));
+    const convertData = convertDataToIRow(response?.content);
+    setListPost(convertData);
   }, [profile]);
+  useEffect(() => {
+    getListPost();
+  }, [getListPost]);
 
   return (
     <>

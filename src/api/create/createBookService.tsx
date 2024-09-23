@@ -2,7 +2,7 @@ import axios from "axios";
 
 const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
 
-const onSubmitService = async (data: string) => {
+const onCreateBook = async (data: string) => {
   try {
     const response = await axios.request({
       method: "POST",
@@ -28,4 +28,4 @@ const getAllBooksService = async () => {
     console.log(error);
   };
 }
-export { onSubmitService, getAllBooksService }
+export { onCreateBook, getAllBooksService }

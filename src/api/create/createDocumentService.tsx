@@ -3,7 +3,7 @@ import axios, { AxiosProgressEvent } from "axios";
 const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
 const CLOUD_KEY = process.env.CLOUD_KEY;
 
-const onSubmitService = async (data: any) => {
+const onCreateCopy = async (data: any) => {
     try{
         const respone = await axios.request({
             method: "POST",
@@ -37,4 +37,4 @@ const uploadFileService = async (formData: FormData, setUploadProgress: any) => 
         console.error(error);
     };
 }
-export { onSubmitService, uploadFileService }
+export { onCreateCopy, uploadFileService }

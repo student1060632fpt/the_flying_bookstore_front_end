@@ -46,9 +46,7 @@ function formatPhoneNumber(phoneNumber: string | undefined) {
 }
 const calPercentPromotion = (book: IListing | undefined): number => {
   if (!book) return 0;
-  book.price=8;
-  book.depositFee=10;
-  return book.price * 100 / book.depositFee;
+  return Math.round(100-book.price * 100 / book.depositFee);
 }
 function a11yProps(index: number) {
   return {

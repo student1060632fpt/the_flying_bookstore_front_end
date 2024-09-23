@@ -6,14 +6,15 @@ import { CiShoppingCart } from "react-icons/ci";
 import { useStoreOrder } from "../../hooks/order";
 import { IOrder } from "../../types/order";
 import { getDetailOrderService } from "@/api/checkoutService";
+import { useAuthStore } from "../../hooks/user";
 
 const Step3 = () => {
   const { order: orderId } = useStoreOrder();
   const [orderDetail, setOrderDetail] = useState<IOrder>();
-
+  const {  token } = useAuthStore();
   useEffect(() => {
     const getDetailOrder = async () => {
-      const response = await getDetailOrderService(orderId);
+      const response = await getDetailOrderService(orderId,token);
       if(response) {
         console.log("response.data", response);
         setOrderDetail(response);

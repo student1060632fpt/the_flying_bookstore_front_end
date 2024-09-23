@@ -1,12 +1,7 @@
 import axios from "axios";
-import { useAuthStore } from "@/hooks/user";
-import { useStoreAlert } from "@/hooks/alert";
+import { port } from "../utils/env";
 
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
-
-const { token } = useAuthStore();
-const { callErrorAlert } = useStoreAlert();
-const onSubmitOrderService = async (convertValue: any) => {
+const onSubmitOrderService = async (convertValue: any, callErrorAlert: (message: string) => void, token: string | null) => {
   try {
     const response = await axios.request({
       method: "post",
@@ -19,19 +14,24 @@ const onSubmitOrderService = async (convertValue: any) => {
       data: JSON.stringify(convertValue),
     });
     return response.data;
-    
+
   } catch (error) {
     callErrorAlert("Lỗi");
   }
 }
-const getDetailOrderService = async (orderId: number | null) => {
+
+const getDetailOrderService = async (orderId: number | null, token: string | null) => {
   try {
-    const response = await axios.request({ 
-      url: `http://${port}/api/leaseOrder/` + orderId 
+    const response = await axios.request({
+      url: `http://${port}/api/leaseOrder/` + orderId,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     return response.data;
-  } catch(error) {
-      console.log(error);
-    };
+  } catch (error) {
+    console.log(error);
+  };
 };
+
 export { onSubmitOrderService, getDetailOrderService }

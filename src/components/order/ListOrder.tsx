@@ -33,7 +33,7 @@ export default function ListOrder({
     });
   };
   const getOrderWithStatus = async (status: number) => {
-    const response = await getOrderWithStatusService(status, isCustomer);
+    const response = await getOrderWithStatusService(status, profile, isCustomer);
     if(response){
       if (response.data) {
         setListOrder(response.data);

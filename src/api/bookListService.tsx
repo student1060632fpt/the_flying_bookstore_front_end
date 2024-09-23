@@ -95,15 +95,15 @@ const bookDummy:IListing = {
     id: 0,
     username: "",
     email: "",
-    phoneNumber: "",
-    firstName: "",
-    lastName: "",
+    phoneNumber: "0905907362",
+    firstName: "Hòa",
+    lastName: "Nguyễn",
     birthDate: "",
     avatarUrl: null,
-    address: "",
+    address: "171/11 Trương Phước Phan, Bình Hưng Hòa, Bình Tân, TP.HCM",
     password: null
   },
-  price: 300000,
+  price: 200000,
   allow_rent: false,
   allow_purchase: false
 }

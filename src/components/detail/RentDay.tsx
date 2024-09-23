@@ -19,6 +19,8 @@ import { useAuthStore } from "../../hooks/user";
 
 const tomorrow = dayjs().add(1, "day");
 const RentDay = ({ book }: IPropsBook) => {
+  console.log({book});
+  
   const { handleSubmit, control, watch } = useForm<IFormValueDayRent>({
     defaultValues: {
       dateStart: dayjs(),

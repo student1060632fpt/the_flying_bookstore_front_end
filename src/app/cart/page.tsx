@@ -12,7 +12,7 @@ import CartItemRent from "../../components/cart/CartItemRent";
 import CartItemBuy from "../../components/cart/CartItemBuy";
 
 const Cart = () => {
-  const [tabNum, setTabNum] = useState(1);
+  const [tabNum, setTabNum] = useState<number>(1);
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabNum(newValue);
   };
@@ -46,7 +46,7 @@ const Cart = () => {
               <CartItemRent />
             </div>
             <div className="mt-10 w-2/3 lg:w-3/4 md:w-full mx-auto">
-              <CartInfo />
+              <CartInfo tabNum={tabNum}/>
             </div>
           </>
         )}
@@ -58,7 +58,7 @@ const Cart = () => {
               <CartItemBuy />
             </div>
             <div className="mt-10 w-2/3 lg:w-3/4 md:w-full mx-auto">
-              <CartInfo />
+              <CartInfo tabNum={tabNum}/>
             </div>
           </>
         )}

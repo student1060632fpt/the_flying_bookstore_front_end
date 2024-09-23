@@ -1,24 +1,28 @@
 "use client";
 import { Button } from "@mui/material";
 import { CiShoppingCart } from "react-icons/ci";
-import CartTotal from "./CartTotal";
-import CartInfoRent from "./CartInfoRent";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/hooks/user";
 import AlertSignOut from "../nav/AlertSignOut";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useStoreStep } from "../../hooks/step";
 import { ICommonAlert } from "../../types/common";
+import { useStoreCart } from "../../hooks/cart";
+import "./Cart.scss"
+import { IListing } from "../../types/book";
+import { getBookDetailService } from "../../api/bookListService";
+import InfoCheckout from "./InfoCheckout";
 
-const CartInfo = () => {
+const CartInfo = ({ tabNum }: { tabNum: number }) => {
   const router = useRouter();
   const { isLogin } = useAuthStore();
-  const {resetStep} = useStoreStep()
+  const { resetStep } = useStoreStep()
   const [alert, setAlert] = useState<ICommonAlert>({
     open: false,
     message: "Bạn cần đăng nhập trước",
     severity: "error",
   });
+
   const onClickNavigate = () => {
     if (isLogin) {
       resetStep()
@@ -28,12 +32,12 @@ const CartInfo = () => {
     }
   };
 
+
   return (
     <div className="border py-8 px-8 rounded-lg">
       <h3 className="text-xl font-semibold">Thông tin đặt hàng</h3>
       <div className="columns-2 gap-10 my-4">
-        <CartInfoRent />
-        <CartTotal />
+        <InfoCheckout tabNum={tabNum} />
       </div>
       <div className="flex justify-center">
         <Button
@@ -44,7 +48,7 @@ const CartInfo = () => {
           startIcon={<CiShoppingCart />}
           onClick={onClickNavigate}
         >
-          Đặt thuê hàng
+          Đặt {tabNum == 1 ? `mua` : `thuê`} hàng
         </Button>
       </div>
       <AlertSignOut alert={alert} setAlert={setAlert} />

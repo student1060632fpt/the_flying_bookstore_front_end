@@ -19,7 +19,6 @@ const CartItemBuy = () => {
         return;
       try {
         const newBook = await getBookDetailService(bookId.toString());
-        console.log({ newBook });
         if (newBook) {
           setBook(newBook);
         }

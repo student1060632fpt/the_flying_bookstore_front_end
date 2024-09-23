@@ -2,8 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/hooks/user";
 import { useRouter } from "next/navigation";
 import { IUser } from "@/types/user";
-
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
+import { port } from "../utils/env";
 
 const onSubmitService = async (data: IUser) => {
   try {

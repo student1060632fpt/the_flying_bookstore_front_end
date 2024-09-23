@@ -2,8 +2,7 @@ import axios from "axios";
 import { IOrderStatus } from "../types/order";
 import { useAuthStore } from "@/hooks/user";
 import { IUser } from "../types/user";
-
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
+import { port } from "../utils/env";
 
 export const getDetailOrder = async (orderId: number | null) => {
   if (!orderId) return;

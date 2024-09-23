@@ -1,6 +1,6 @@
 import axios, { AxiosProgressEvent } from "axios";
+import { port } from "../utils/env";
 
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
 const CLOUD_KEY = process.env.CLOUD_KEY;
 
 const onCreateCopy = async (data: any) => {

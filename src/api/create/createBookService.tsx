@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
+import { port } from "../utils/env";
 
 const onCreateBook = async (data: string) => {
   try {

@@ -10,13 +10,13 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import AlertSignOut from "../../../components/nav/AlertSignOut";
-import { IAlert } from "../../../types/alert";
 import { useStoreStep } from "../../../hooks/step";
+import { ICommonAlert } from "../../../types/common";
 
 const steps = ["Điền thông tin", "Xuất đơn hàng", "Lấy hàng"];
 
 const Checkout = () => {
-  const [alert, setAlert] = useState<IAlert>({
+  const [alert, setAlert] = useState<ICommonAlert>({
     open: false,
     message: "Tạo đơn hàng thành công",
     severity: "success",

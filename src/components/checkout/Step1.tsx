@@ -7,7 +7,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useAuthStore } from "@/hooks/user";
 import { IFormCheckout } from "@/types/form";
 import dayjs from "dayjs";
-import { VNPay } from "vnpay";
+// import { VNPay } from "vnpay";
 import { useStoreCart } from "@/hooks/cart";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -16,11 +16,11 @@ import { getProfile, onSubmitProfile } from "../../api/profile";
 import { useStoreAlert } from "../../hooks/alert";
 import { onSubmitOrderService } from "@/api/checkoutService";
 
-const vnpay = new VNPay({
-  tmnCode: process.env.TMN_CODE || "",
-  secureSecret: process.env.SECURE_SECRET || "",
-  vnpayHost: process.env.VNPAY_HOST || "",
-});
+// const vnpay = new VNPay({
+//   tmnCode: process.env.TMN_CODE || "",
+//   secureSecret: process.env.SECURE_SECRET || "",
+//   vnpayHost: process.env.VNPAY_HOST || "",
+// });
 
 const convertPaymentType = (paymentType: number) => {
   switch (paymentType) {
@@ -84,15 +84,15 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
       updateOrder(response?.id);
       handleNext();
       if (payType == 2) {
-        const urlString = vnpay.buildPaymentUrl({
-          vnp_Amount: cart?.rent?.total || 0,
-          vnp_IpAddr: "1.1.1.1",
-          vnp_TxnRef: dayjs().valueOf().toPrecision(),
-          vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.rent?.total}`,
-          vnp_OrderType: "other",
-          vnp_ReturnUrl: `http://localhost:3000/checkout`,
-        });
-        router.push(urlString);
+        // const urlString = vnpay.buildPaymentUrl({
+        //   vnp_Amount: cart?.rent?.total || 0,
+        //   vnp_IpAddr: "1.1.1.1",
+        //   vnp_TxnRef: dayjs().valueOf().toPrecision(),
+        //   vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.rent?.total}`,
+        //   vnp_OrderType: "other",
+        //   vnp_ReturnUrl: `http://localhost:3000/checkout`,
+        // });
+        // router.push(urlString);
       }
     }
   };

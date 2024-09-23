@@ -8,10 +8,10 @@ import FormSignUp from "@/components/auth/FormSignup";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { IAlert } from "@/types/alert";
 
 import { onSubmitService } from "@/api/auth/registerService";
 import { IUser } from "@/types/user";
+import { ICommonAlert } from "../../../../types/common";
 
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
@@ -24,7 +24,7 @@ const SignIn = () => {
     handleSubmit,
   } = useForm<IUser>();
   const router = useRouter();
-  const [alert, setAlert] = useState<IAlert>({
+  const [alert, setAlert] = useState<ICommonAlert>({
     open: false,
     message: "",
     severity: "success",

@@ -9,9 +9,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/hooks/user";
 import { IUserLogin } from "@/types/user";
-import { IAlert } from "@/types/alert";
 
 import { getProfileService, handleFormSubmitService } from "@/api/auth/loginService";
+import { ICommonAlert } from "../../../../types/common";
 
 function SlideTransition(props: SlideProps) {
   return <Slide {...props} direction="up" />;
@@ -19,7 +19,7 @@ function SlideTransition(props: SlideProps) {
 
 const Login = () => {
   const [formData, setFormData] = useState({} as IUserLogin);
-  const [alert, setAlert] = useState<IAlert>({
+  const [alert, setAlert] = useState<ICommonAlert>({
     open: false,
     message: "",
     severity: "success",

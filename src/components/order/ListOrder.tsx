@@ -1,3 +1,4 @@
+"use client";
 import { Button, Grid, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
@@ -5,10 +6,10 @@ import { useAuthStore } from "../../hooks/user";
 import { IOrder } from "../../types/order";
 import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
-import { useRouter } from "next/router";
 import { useStoreAlert } from "../../hooks/alert";
 import { RxReload } from "react-icons/rx";
 import { getOrderWithStatusService } from "../../api/order";
+import { useRouter } from "next/navigation";
 
 export default function ListOrder({
   status,
@@ -71,6 +72,15 @@ export default function ListOrder({
     changeStatus(e, newValue);
     return await callWhichApi();
   };
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true); // This ensures code runs only on the client side
+  }, []);
+
+  if (!isMounted) {
+    return null; // Avoid rendering the component on the server side
+  }
   if (!profile?.id) {
     router.push("/login");
     return <>Mời bạn đăng nhập</>;

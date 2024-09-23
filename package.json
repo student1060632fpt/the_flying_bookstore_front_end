@@ -34,7 +34,6 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8",
     "swr": "^2.2.5",
-    "vnpay": "^1.1.0",
     "zustand": "https://pkg.csb.dev/pmndrs/zustand/commit/992cedd4/zustand"
   },
   "devDependencies": {

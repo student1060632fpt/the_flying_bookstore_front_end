@@ -37,8 +37,7 @@ const SignIn = () => {
       if (!!response) {
         setAlert((state) => ({ ...state, message: "Đăng ký thành công", open: true, severity: "success" }));
         // Registration successful, handle the response accordingly
-        router.push("/login");// TODO: after demo
-        // router.push("/");
+        router.push("/");
       }
     } catch (error) {
       throw new Error("Registration failed");

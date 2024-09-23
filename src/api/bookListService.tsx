@@ -9,11 +9,11 @@ const getBookDetailService = async (detailId: string) => {
     const response: AxiosResponse<IListing> = await axios.request({
       url: `http://${port}/api/listing/detailListing/${detailId}`,
     });
-    // return response.data;
+    return response.data;
   } catch (error) {
     console.log(error);
+    return null;
   }
-  return bookDummy; //TODO delete it when have api
 }
 const getManyBookService = async (paramsAxios: any) => {
   try {

@@ -19,15 +19,11 @@ const RentBook = ({ book }: IPropsBook) => {
   const router = useRouter();
   const addToCart = useStoreCart((state) => state.addCartBuy);
   const handleAddToCartBuy = ()=>{
-    // if (!book?.id) return; TODO open it
-    // const submitCart: ICartBuy = {
-    //   bookId: book.id,
-    // };
-    const bookId = book? book.id : 6;
-    if (!bookId) return;
+    if (!book?.id) return; 
     const submitCart: ICartBuy = {
-      bookId: bookId,
+      bookId: book.id,
     };
+   
     addToCart(submitCart);
     router.push("/cart");
   }

@@ -11,29 +11,12 @@ Mật khẩu OTP	123456
 xem thêm thông tin thẻ test tại
 [vnpay](https://sandbox.vnpayment.vn/apis/vnpay-demo/#th%C3%B4ng-tin-th%E1%BA%BB-test)
 
-## Build
-/(manager)/customer-order/page: /customer-order
-        /(manager)/manager-post/add-post/page: /manager-post/add-post
-        /(manager)/manager-post/page: /manager-post
-        /(manager)/profile/page: /profile
-        /(policy)/private-policy/page: /private-policy
-        /_not-found/page: /_not-found
-        /cart/page: /cart
-        /page: /
-        /search/page: /search
-
 ## Getting Started
 
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

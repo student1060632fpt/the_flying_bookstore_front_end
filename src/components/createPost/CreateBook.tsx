@@ -19,7 +19,7 @@ import FindBookAutocomplete from "./FindBookAutocomplete";
 import { InputListing } from "./InputListing";
 import GenreAutocomplete from "./GenreAutocomplete";
 import { useStoreAlert } from "../../hooks/alert";
-import { onSubmitService, getAllBooksService } from "@/api/create/createBookService";
+import { onCreateBook, getAllBooksService } from "@/api/create/createBookService";
 
 const addBookDefault: IBook = {
   title: "Thêm mới sách",
@@ -74,7 +74,7 @@ const CreateBook = ({
       size,
       pageCount,
     });
-    const response = await onSubmitService(data);
+    const response = await onCreateBook(data);
     if (response?.ok) {
       console.log(JSON.stringify(response));
       updateBookId(response?.id);

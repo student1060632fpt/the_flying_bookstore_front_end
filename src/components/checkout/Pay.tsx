@@ -4,18 +4,10 @@ import { PiHandshakeLight } from "react-icons/pi";
 import "./Step.scss";
 import MomoLogo from "./../../assets/images/vnpay.png";
 import Image from "next/image";
-import { Dispatch, SetStateAction, useState } from "react";
-import { VNPay } from "vnpay";
-import { Button } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
 import { useStoreCart } from "@/hooks/cart";
-import dayjs from "dayjs";
-import { useAuthStore } from "@/hooks/user";
-import { redirect } from "next/navigation";
-import Link from "next/link";
 import { formatCurrency } from "@/utils/helps";
 import QRcode from "@/assets/images/qr_checkout.png";
-import { useFormContext } from "react-hook-form";
-import { useRouter } from "next/navigation";
 
 const Pay = ({
   payType,
@@ -32,7 +24,7 @@ const Pay = ({
         return (
           <>
             <p className="my-5">
-              Bạn sẽ đưa {formatCurrency(cart?.total)} cho công ty Flying
+              Bạn sẽ đưa {formatCurrency(cart?.rent?.total)} cho công ty Flying
               Bookstore tại địa chỉ 171/11 Trương Phước Phan, quận Bình Tân,
               tp.HCM
             </p>

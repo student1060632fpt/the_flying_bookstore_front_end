@@ -3,8 +3,7 @@ import { useAuthStore } from "../hooks/user";
 import { IUser } from "../types/user";
 import { IFormCheckout } from "../types/form";
 import dayjs from "dayjs";
-
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
+import { port } from "../utils/env";
 export const getProfile = async (
   token: string | null,
   setToken: (arg: string, profile: IUser) => void

@@ -24,6 +24,7 @@
     "dayjs": "^1.11.10",
     "next": "^14.1.0",
     "nextjs-current-url": "^1.0.3",
+    "node-polyfill-webpack-plugin": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.1",
@@ -33,7 +34,6 @@
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.8",
     "swr": "^2.2.5",
-    "vnpay": "^1.1.0",
     "zustand": "https://pkg.csb.dev/pmndrs/zustand/commit/992cedd4/zustand"
   },
   "devDependencies": {
@@ -42,6 +42,7 @@
     "@types/react-dom": "^18",
     "@types/react-slick": "^0.23.13",
     "autoprefixer": "^10.0.1",
+    "encoding": "^0.1.13",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.35",

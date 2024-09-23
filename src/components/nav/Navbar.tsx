@@ -22,12 +22,12 @@ import Link from "next/link";
 import SearchBar from "./SearchBar";
 import { useStoreCart } from "@/hooks/cart";
 import { useAuthStore } from "@/hooks/user";
-import { IAlert } from "@/app/(auth)/sign-up/[[...sign-up]]/page";
 import AlertSignOut from "./AlertSignOut";
 import { getAllOrder } from "../../api/order";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useStoreOrder } from "../../hooks/order";
+import { ICommonAlert } from "../../types/common";
 
 export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -40,7 +40,7 @@ export default function Navbar() {
   const { removeOrder } = useStoreOrder();
   const pathname = usePathname();
   const router = useRouter();
-  const [alert, setAlert] = React.useState<IAlert>({
+  const [alert, setAlert] = React.useState<ICommonAlert>({
     open: false,
     message: "",
     severity: "success",
@@ -243,7 +243,7 @@ export default function Navbar() {
         </Button>
       </Box>
     );
-  }, [isLogin, cart]);
+  }, [cart, isLogin, openMenu, profile?.avatarUrl, theme.palette.primary.main]);
   return (
     <div>
       <AppBar position="static" sx={{ bgcolor: "background.paper" }}>

@@ -1,14 +1,15 @@
+"use client";
 import { Button, Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../../hooks/user";
 import { IOrder } from "../../types/order";
 import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
-import { useRouter } from "next/router";
 import { useStoreAlert } from "../../hooks/alert";
 import { RxReload } from "react-icons/rx";
 import { getOrderWithStatusService } from "../../api/order";
+import { useRouter } from "next/navigation";
 
 export default function ListOrder({
   status,
@@ -23,7 +24,7 @@ export default function ListOrder({
   const { profile } = useAuthStore();
   const [listOrder, setListOrder] = useState<Array<IOrder>>();
   const { callAlert } = useStoreAlert();
-  const callApiGetAllOrder = async () => {
+  const callApiGetAllOrder = useCallback(async () => {
     if (!profile?.id) {
       callAlert("Mời bạn đăng nhập lại!");
       return;
@@ -31,9 +32,9 @@ export default function ListOrder({
     return await getAllOrder(profile?.id, isCustomer).then((response) => {
       setListOrder(response);
     });
-  };
-  const getOrderWithStatus = async (status: number) => {
-    const response = await getOrderWithStatusService(status, isCustomer);
+  }, [profile?.id, isCustomer, callAlert]);
+  const getOrderWithStatus = useCallback(async (status: number) => {
+    const response = await getOrderWithStatusService(status, profile, isCustomer);
     if(response){
       if (response.data) {
         setListOrder(response.data);
@@ -42,8 +43,8 @@ export default function ListOrder({
     else{
       console.log('Error fetching data:', response?.error);
     };
-  };
-  const callWhichApi = async () => {
+  }, [profile, isCustomer]);
+  const callWhichApi = useCallback(async () => {
     switch (status) {
       case 1:
       case 2:
@@ -56,11 +57,12 @@ export default function ListOrder({
       default:
         return callAlert("Cần thêm status mới");
     }
-  };
+  }, [status, getOrderWithStatus, callApiGetAllOrder, callAlert]);
+
 
   useEffect(() => {
     callWhichApi();
-  }, [status]);
+  }, [callWhichApi]);
   const reloadButton = async () => {
     return await callWhichApi().then(() => {
       callAlert("Đã tải lại thành công");
@@ -70,6 +72,15 @@ export default function ListOrder({
     changeStatus(e, newValue);
     return await callWhichApi();
   };
+  const [isMounted, setIsMounted] = useState(false);
+  
+  useEffect(() => {
+    setIsMounted(true); // This ensures code runs only on the client side
+  }, []);
+
+  if (!isMounted) {
+    return null; // Avoid rendering the component on the server side
+  }
   if (!profile?.id) {
     router.push("/login");
     return <>Mời bạn đăng nhập</>;

@@ -26,7 +26,7 @@ import { Accordion, AccordionSummary } from "./AccordionCustom";
 import { IPostState } from "../../app/(manager)/manager-post/add-post/page";
 import { useAuthStore } from "../../hooks/user";
 import { useStoreAlert } from "../../hooks/alert";
-import { onSubmitService, uploadFileService } from "@/api/create/createDocumentService";
+import { onCreateCopy, uploadFileService } from "@/api/create/createDocumentService";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -60,7 +60,7 @@ const CreateDocument = ({
   const [uploadProgress, setUploadProgress] = useState(0);
   const [imgUrl, setImgUrl] = useState<string>();
   const { profile } = useAuthStore();
-  const {callAlert} = useStoreAlert()
+  const { callAlert } = useStoreAlert()
   const handleFileUpload = (event: any) => {
     if (uploadProgress == 100 || imgUrl !== "") {
       setImgUrl("");
@@ -74,16 +74,16 @@ const CreateDocument = ({
     formData.append("image", file);
     console.log({ formData });
     const uploadFile = async () => {
-        const response = await uploadFileService(formData, setUploadProgress);
-        if(response) {
-          if (response?.data?.display_url) {
-            console.log(response?.data?.display_url);
-            setImgUrl(response?.data?.display_url);
-          }
+      const response = await uploadFileService(formData, setUploadProgress);
+      if (response) {
+        if (response?.data?.display_url) {
+          console.log(response?.data?.display_url);
+          setImgUrl(response?.data?.display_url);
         }
-        else {
-          console.log(response?.error);
-        }
+      }
+      else {
+        console.log(response?.error);
+      }
     }
 
     uploadFile();
@@ -100,17 +100,17 @@ const CreateDocument = ({
       deletedDate: "",
       copyStatus: "UNLISTED",
     });
-    console.log({data});
+    console.log({ data });
 
-    const response = await onSubmitService(data);
-    if(response) {
+    const response = await onCreateCopy(data);
+    if (response) {
       console.log(JSON.stringify(response.data));
       updateDocumentId(response.data.id)
-      callAlert(`Tạo tài liệu #${response.data.id} thành công` )      
+      callAlert(`Tạo tài liệu #${response.data.id} thành công`)
     }
     else console.log(response.error);
   }
-      
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Accordion sx={{ my: 2 }} defaultExpanded>

@@ -6,22 +6,21 @@ import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import Order from "./Order";
 import { useStoreOrder } from "../../hooks/order";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import axios from "axios";
 import { IOrder, IOrderStatus } from "../../types/order";
 import { renderPayment } from "./PaymentStatus";
 import { useUrl } from "nextjs-current-url";
 import { parseUrlParams } from "./parseUrlParams";
-import { IAlert } from "../../app/(auth)/sign-up/[[...sign-up]]/page";
 import { IParamsVNpay } from "../../types/checkout";
 import { getDetailOrder, updateStatusOrder } from "../../api/order";
 import { useAuthStore } from "../../hooks/user";
+import { ICommonAlert } from "../../types/common";
 
 const Step2 = ({
   handleNext,
   setAlert,
 }: {
   handleNext: () => void;
-  setAlert: Dispatch<SetStateAction<IAlert>>;
+  setAlert: Dispatch<SetStateAction<ICommonAlert>>;
 }) => {
   const { order: orderId } = useStoreOrder();
   const [orderDetail, setOrderDetail] = useState<IOrder>();
@@ -64,17 +63,17 @@ const Step2 = ({
       }
     };
     getStatusOrder();
-  }, [currentUrl]);
+  }, [currentUrl, orderId, setAlert, token]);
 
-  const getOrderApi = async () => {
-    try {
-      const response = await getDetailOrder(orderId);
-      if (response?.data) {
-        setOrderDetail(response.data);
-      }
-    } catch (error) {}
-  };
   useEffect(() => {
+    const getOrderApi = async () => {
+      try {
+        const response = await getDetailOrder(orderId);
+        if (response?.data) {
+          setOrderDetail(response.data);
+        }
+      } catch (error) {}
+    };
     getOrderApi();
   }, [orderId]);
 

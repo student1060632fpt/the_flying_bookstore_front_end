@@ -2,8 +2,7 @@ import axios from "axios";
 import { AxiosResponse } from "axios";
 import { IListing } from "@/types/book";
 import { PageResponse } from "@/types/page";
-
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
+import { port } from "../utils/env";
 
 const getManyBookService = async (paramsAxios: any) => { 
   try {

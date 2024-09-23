@@ -1,9 +1,8 @@
 import axios from "axios";
 import { IOrderStatus } from "../types/order";
 import { useAuthStore } from "@/hooks/user";
-
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
-const { profile } = useAuthStore();
+import { IUser } from "../types/user";
+import { port } from "../utils/env";
 
 export const getDetailOrder = async (orderId: number | null) => {
   if (!orderId) return;
@@ -18,9 +17,8 @@ export const getDetailOrder = async (orderId: number | null) => {
 export const getAllOrder = async (userId: number, isCustomer?: boolean) => {
   return await axios
     .request({
-      url: `http://${port}/api/leaseOrder/search/${
-        isCustomer ? `lessor` : `lessee`
-      }/${userId}`,
+      url: `http://${port}/api/leaseOrder/search/${isCustomer ? `lessor` : `lessee`
+        }/${userId}`,
     })
     .then((response) => {
       const resultListOrder = response.data;
@@ -33,7 +31,7 @@ export const getAllOrder = async (userId: number, isCustomer?: boolean) => {
     });
 };
 
-export const updateStatusOrder = async (status: IOrderStatus, id: number,token:string) => {
+export const updateStatusOrder = async (status: IOrderStatus, id: number, token: string) => {
   return await axios
     .request({
       url: `http://${port}/api/leaseOrder/edit/status`,
@@ -42,25 +40,24 @@ export const updateStatusOrder = async (status: IOrderStatus, id: number,token:s
         Authorization: `Bearer ${token}`,
       },
     })
-    .then((response) => {})
+    .then((response) => { })
     .catch((error) => {
       console.log(error);
     });
 };
 
-export const getOrderWithStatusService = async (status: number, isCustomer?: boolean) => {
+export const getOrderWithStatusService = async (status: number, profile: IUser | null, isCustomer?: boolean) => {
   try {
     const response = await axios.request({
-      url: `http://${port}/api/leaseOrder/search/${
-      isCustomer ? `lessor` : `lessee`
-      }/status/${profile?.id}`,
+      url: `http://${port}/api/leaseOrder/search/${isCustomer ? `lessor` : `lessee`
+        }/status/${profile?.id}`,
       params: {
-      status,
+        status,
       },
     });
     return response.data;
   }
-  catch(error) {
+  catch (error) {
     console.log(error);
   };
 };

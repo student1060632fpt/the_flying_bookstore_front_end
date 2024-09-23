@@ -1,10 +1,8 @@
 import axios from "axios";
-import { useAuthStore } from "@/hooks/user";
+import { IUser } from "../types/user";
+import { port } from "../utils/env";
 
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
-const {profile} = useAuthStore()
-
-const getListPostService = async () => {
+const getListPostService = async (profile: IUser | null) => {
     try {
         const response = await axios.request({
             url: `http://${port}/api/listing/search/byOwnerId/` + profile?.id,

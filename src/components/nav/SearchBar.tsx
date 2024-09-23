@@ -45,7 +45,7 @@ const SearchBar = () => {
     if (titleParam == null) {
       reset();
     }
-  }, [titleParam]);
+  }, [reset, titleParam]);
 
   return (
     <>

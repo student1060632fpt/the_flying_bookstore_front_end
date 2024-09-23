@@ -8,7 +8,6 @@ import { PageResponse } from "@/types/page";
 import { useGenreStore } from "@/hooks/genre";
 import { IListing } from "@/types/book";
 import { useStoreSearch } from "@/hooks/search";
-import { IAlert } from "../../app/(auth)/sign-up/[[...sign-up]]/page";
 const filterOption = ["Mới nhất", "Bán chạy", "Giá tăng dần", "Giá giảm dần"];
 const HeaderListBook = ({
   bookData,

@@ -6,12 +6,19 @@ export type IFormValueDayRent = {
   dateEnd: Dayjs | null;
 };
 
-type ICartCount =  {
+type ICartCount = {
   total: number,
   totalRent: number,
   duration: number
 }
-export type ICart =   ICartCount & {
+export type ICartRent = ICartCount & {
   dayRent: IFormValueDayRent;
   book: IListing
 };
+export type ICartBuy = {
+  bookId: IListing["id"]
+}
+export type ICart = {
+  rent: ICartRent | null,
+  buy: ICartBuy | null
+}

@@ -11,15 +11,15 @@ import { IParams } from "@/types/params";
 export default function Page({ params }: IParams) {
   const [listing, setListing] = useState<IListing>();
 
-  const  makeRequest = async () => {
-    const response = await getBookDetailService(params.detail[0]);
-    setListing(response);
-  }
-
-
   useEffect(() => {
+    const  makeRequest = async () => {
+      const response = await getBookDetailService(params.detail[0]);
+      if (response) {
+        setListing(response);
+      }
+    }
     makeRequest();
-  }, []);
+  }, [params.detail]);
 
   return (
     <div className="container mx-auto mt-10 mb-20">

@@ -1,6 +1,6 @@
 import axios from "axios";
+import { port } from "../utils/env";
 
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
 const DeletePostService = async ( modalDeleteId: number | undefined) => {
     return await axios.request({
         method: "DELETE",

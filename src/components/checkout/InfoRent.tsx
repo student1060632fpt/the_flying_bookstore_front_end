@@ -82,14 +82,14 @@ const InfoRent = ({ isProfile }: { isProfile?: boolean }) => {
                     onAccept={onChange}
                     value={value}
                   />
-                  {Object.keys(errors).length === 0 ?? (
+                  {Object.keys(errors).length !== 0 ? (
                     <FormHelperText
-                      required={errors?.birthDate?.type == "required"}
+                      required={errors?.birthDate?.type === "required"}
                       style={{ color: "#d32f2f" }}
                     >
                       {String(errors?.birthDate?.message)}
                     </FormHelperText>
-                  )}
+                  ):(<></>)}
                 </>
               );
             }}

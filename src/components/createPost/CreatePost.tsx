@@ -15,7 +15,7 @@ import { useAuthStore } from "../../hooks/user";
 import { IPostState } from "../../app/(manager)/manager-post/add-post/page";
 import { useStoreAlert } from "../../hooks/alert";
 import { useRouter } from "next/navigation";
-import { onSubmitService } from "../../api/create/createPostService";
+import { onCreateListing } from "../../api/create/createPostService";
 export type TFieldPostValue = {
   address: string;
   leaseRate: string; // must be number
@@ -43,7 +43,7 @@ const CreatePost = ({ copyId }: { copyId: IPostState["copyId"] }) => {
       penaltyRate: parseFloat(penaltyRate),
       description,
     };
-    const response = await onSubmitService(data);
+    const response = await onCreateListing(data,token);
     if (response) {
       console.log(JSON.stringify(response.data));
       callAlert(`Tạo sách #${response.data.id} thành công`)

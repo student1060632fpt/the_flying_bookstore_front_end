@@ -12,7 +12,7 @@ export default function Home() {
   useEffect(() => {
     fetchGenre();
     fetchListBook();
-  }, [])
+  }, [fetchGenre, fetchListBook])
   
   return (
     <div className="">

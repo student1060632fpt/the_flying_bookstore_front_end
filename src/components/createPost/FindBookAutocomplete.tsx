@@ -24,7 +24,7 @@ const FindBookAutocomplete = ({
     if (!open) {
       setOptions([]);
     }
-  }, [open]);
+  }, [open, setOptions]);
   return (
     <Controller
 

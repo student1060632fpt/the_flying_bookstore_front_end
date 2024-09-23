@@ -16,12 +16,11 @@ const Step3 = () => {
     const getDetailOrder = async () => {
       const response = await getDetailOrderService(orderId,token);
       if(response) {
-        console.log("response.data", response);
         setOrderDetail(response);
       }
     };
     getDetailOrder();
-  }, [orderId]);
+  }, [orderId, token]);
 
   return (
     <>

@@ -59,7 +59,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
       birthDate: profile?.birthDate ? dayjs(profile.birthDate) : null,
     };
     reset(defaultValues);
-  }, [profile]);
+  }, [profile?.address, profile.birthDate, profile?.email, profile?.firstName, profile?.lastName, profile?.phoneNumber, reset]);
 
   useEffect(() => {
     getProfile(token, setToken);

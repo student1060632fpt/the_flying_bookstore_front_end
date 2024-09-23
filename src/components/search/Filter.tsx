@@ -25,7 +25,7 @@ const FilterComponent = () => {
   const genreParam = useStoreSearch((state) => state.categoryParam);
   const { updateCategoryAndPageParam, clearStorage } = useStoreSearch();
   const router = useRouter();
-  const onChooseCategory = (val: any) => {
+  const onChooseCategory = useCallback((val: any) => {
     if (!listCategory || !val) return;
     if (!val?.target) return;
     const category: ICategory | undefined = listCategory.find(
@@ -34,7 +34,7 @@ const FilterComponent = () => {
     if(!category) return;
     updateCategoryAndPageParam(category);
     router.push(`/search`);
-  };
+  }, [listCategory, updateCategoryAndPageParam, router]);
   const handleDeleteFilter = () => {
     clearStorage();
     router.push(`/search`);
@@ -61,7 +61,7 @@ const FilterComponent = () => {
         </RadioGroup>
       </FormGroup>
     );
-  }, [genreParam]);
+  }, [genreParam?.id, listCategory, onChooseCategory]);
   return (
     <>
       <h3 className="text-3xl font-semibold mb-8 text-primary">Lọc theo</h3>

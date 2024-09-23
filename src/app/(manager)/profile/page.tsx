@@ -25,7 +25,7 @@ const UserProfilePage = () => {
       birthDate: profile?.birthDate ? dayjs(profile.birthDate) : null,
     };
     reset(defaultValues);
-  }, [profile]);
+  }, [profile?.address, profile?.birthDate, profile?.email, profile?.firstName, profile?.lastName, profile?.phoneNumber, reset]);
   const beforeOnSubmitProfile = async (data: IFormCheckout) => {
     return await onSubmitProfile(data, profile, token).then((res) => {
       callAlert("Xác nhận thông tin thành công");

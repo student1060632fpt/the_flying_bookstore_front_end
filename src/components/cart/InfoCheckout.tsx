@@ -32,7 +32,7 @@ const InfoCheckout = ({ tabNum }: { tabNum: number }) => {
       }
     }
     callApiGetBookDetail();
-  }, [])
+  }, [cart.buy?.bookId, tabNum])
   const listUserInfo: Array<CartInfoItemProps> = [
     {
       title: `Người ${tabNum == 1 ? `bán` : `cho thuê`}`,

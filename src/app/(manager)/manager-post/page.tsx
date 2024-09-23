@@ -30,15 +30,16 @@ const ManagerPost = () => {
   const handleClose = () => {
     setModalDelete((state) => ({ ...state, open: false }));
   };
-  const getListPost = async (): Promise<void> => {
-    const response = await getListPostService(profile);
-    console.log(JSON.stringify(response));
-    const convertData = convertDataToIRow(response?.content);
-    setListPost(convertData);
-  };
+
   useEffect(() => {
+    const getListPost = async (): Promise<void> => {
+      const response = await getListPostService(profile);
+      console.log(JSON.stringify(response));
+      const convertData = convertDataToIRow(response?.content);
+      setListPost(convertData);
+    };
     getListPost();
-  }, []);
+  }, [profile]);
 
   return (
     <>

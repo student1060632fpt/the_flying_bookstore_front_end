@@ -1,11 +1,9 @@
 import axios from "axios";
-import { useAuthStore } from "../../hooks/user";
+import { port } from "../../utils/env";
 
-const { token } = useAuthStore();
-const port = process.env.NEXT_PUBLIC_API_URL || "localhost:8082";
 
-const onSubmitService = async ( data: any) => {
-    try{
+const onCreateListing = async (data: any, token: string | null) => {
+    try {
         const respone = await axios.request({
             method: "POST",
             maxBodyLength: Infinity,
@@ -16,10 +14,10 @@ const onSubmitService = async ( data: any) => {
             },
             data,
         });
-        return respone.data;        
+        return respone.data;
     }
-    catch(error){
+    catch (error) {
         console.log(error);
     };
 };
-export { onSubmitService }
+export { onCreateListing }

@@ -11,13 +11,12 @@ import { IParams } from "@/types/params";
 export default function Page({ params }: IParams) {
   const [listing, setListing] = useState<IListing>();
 
-
-
-
   useEffect(() => {
     const  makeRequest = async () => {
       const response = await getBookDetailService(params.detail[0]);
-      setListing(response);
+      if (response) {
+        setListing(response);
+      }
     }
     makeRequest();
   }, [params.detail]);

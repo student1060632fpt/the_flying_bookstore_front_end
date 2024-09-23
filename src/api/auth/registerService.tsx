@@ -1,8 +1,6 @@
 import axios from "axios";
-import { useAuthStore } from "@/hooks/user";
-import { useRouter } from "next/navigation";
 import { IUser } from "@/types/user";
-import { port } from "../utils/env";
+import { port } from "../../utils/env";
 
 const onSubmitService = async (data: IUser) => {
   try {

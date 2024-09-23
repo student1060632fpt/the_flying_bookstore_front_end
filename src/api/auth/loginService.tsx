@@ -1,6 +1,6 @@
 import axios from "axios";
 import { IUserLogin } from "@/types/user";
-import { port } from "../utils/env";
+import { port } from "../../utils/env";
 
 const getProfileService = async (token: string) => {
   try {

@@ -83,7 +83,7 @@ const RentBook = ({ book }: IPropsBook) => {
           startIcon={<CiShoppingCart />}
           onClick={handleAddToCartBuy}
         >
-          Đặt thuê ngay
+          Mua ngay
         </Button>
       </AccordionDetails>
     </Accordion>);

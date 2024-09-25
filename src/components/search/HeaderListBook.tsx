@@ -8,7 +8,23 @@ import { PageResponse } from "@/types/page";
 import { useGenreStore } from "@/hooks/genre";
 import { IListing } from "@/types/book";
 import { useStoreSearch } from "@/hooks/search";
-const filterOption = ["Mới nhất", "Bán chạy", "Giá tăng dần", "Giá giảm dần"];
+interface FilterOption {
+  allowRent: number;
+  allowPurchase: number;
+}
+const filterOption: { [key: string]: FilterOption } = {
+  "Sách mua và thuê": {
+    allowRent: 1,
+    allowPurchase: 1
+  }, "Chỉ sách thuê": {
+    allowRent: 1,
+    allowPurchase: 0
+  }, "Chỉ sách mua": {
+    allowRent: 0,
+    allowPurchase: 1
+  }
+}
+const listfilterOption = ["Sách mua và thuê", "Chỉ sách thuê", "Chỉ sách mua"];
 const HeaderListBook = ({
   bookData,
 }: {
@@ -19,7 +35,10 @@ const HeaderListBook = ({
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const listCategory = useGenreStore((state) => state.listGenre);
   const open = Boolean(anchorEl);
-
+  const {updateBookType} = useStoreSearch(state=>state);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -29,6 +48,26 @@ const HeaderListBook = ({
   ) => {
     setSelectedIndex(index);
     setAnchorEl(null);
+    let allowRent: 1 | 0 = 1, allowPurchase: 1 | 0 = 1;
+    switch (index) {
+      case 0:
+        allowRent = 1;
+        allowPurchase = 1;
+        break;
+      case 1:
+        allowRent = 1;
+        allowPurchase = 0;
+        break;
+      case 2:
+        allowRent = 0;
+        allowPurchase = 1;
+        break;
+      default:
+        allowRent = 1;
+        allowPurchase = 1;
+        break;
+    }
+    updateBookType(allowRent,allowPurchase);
   };
   const renterTitle = () => {
     let returnTitle = `Tất cả sách`;
@@ -55,6 +94,10 @@ const HeaderListBook = ({
       </>
     );
   };
+  const listFilterOption = Object.keys(filterOption).filter(key => {
+    const option = filterOption[key];
+    return option.allowRent || option.allowPurchase;
+  });
   return (
     <div>
       {renterTitle()}
@@ -62,6 +105,19 @@ const HeaderListBook = ({
         <p className="font-semibold my-2">
           Hiển thị {bookData?.totalElements || 0} cuốn sách hiện có
         </p>
+        <Button
+          id="basic-filter"
+          aria-controls={open ? "basic-filter-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? "true" : undefined}
+          onClick={handleClick}
+          startIcon={<FilterListIcon />}
+          sx={{
+            textTransform: "none",
+          }}
+        >
+          {listfilterOption[selectedIndex]}
+        </Button>
       </div>
       <Menu
         id="basic-filter-menu"
@@ -72,7 +128,7 @@ const HeaderListBook = ({
           "aria-labelledby": "basic-button",
         }}
       >
-        {filterOption.map((option, index) => (
+        {listfilterOption.map((option, index) => (
           <MenuItem
             key={option}
             selected={index === selectedIndex}

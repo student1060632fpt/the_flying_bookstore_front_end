@@ -12,6 +12,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Typography,
   styled,
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -27,6 +28,7 @@ import { IPostState } from "../../app/(manager)/manager-post/add-post/page";
 import { useAuthStore } from "../../hooks/user";
 import { useStoreAlert } from "../../hooks/alert";
 import { onCreateCopy, uploadFileService } from "@/api/create/createDocumentService";
+import Link from "next/link";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -123,12 +125,12 @@ const CreateDocument = ({
         </AccordionSummary>
         <AccordionDetails>
           <Grid container spacing={2}>
-            <Grid item xs={12}>
+            <Grid item xs={8}>
               <TextField
                 fullWidth
                 required
                 type="number"
-                label="Phần trăm hư hại"
+                label="Phần trăm hư hại (%)"
                 variant="standard"
                 {...register("damagePercent", {
                   required: "Cần phải điền trường này",
@@ -138,6 +140,12 @@ const CreateDocument = ({
                   errors.damagePercent && errors.damagePercent?.message
                 }
               />
+            </Grid>
+            <Grid item xs={4} sx={{
+              alignContent: "flex-end",
+              height: "full-height"
+            }}>
+              <Typography variant="body1" gutterBottom>Đọc về phần trăm hư hại sách <Link href={`/book-condition-guide`}><span className="text-primary font-semibold"> tại đây</span></Link></Typography>
             </Grid>
             <Grid item xs={12}>
               <Button

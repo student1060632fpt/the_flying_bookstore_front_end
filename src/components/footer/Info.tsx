@@ -57,6 +57,11 @@ const Info = () => {
                 Chính sách bảo mật
               </div>
             </Link>
+            <Link href={`/book-condition-guide`}>
+              <div className="item-contact text-primary ">
+                Hướng dẫn về tình trạng sách
+              </div>
+            </Link>
           </div>
         </div>
         <div>

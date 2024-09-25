@@ -40,7 +40,7 @@ const CreateBook = ({
 }) => {
   const [options, setOptions] = useState<readonly IBook[]>([addBookDefault]);
   const [open, setOpen] = useState(false);
-  const { callAlert } = useStoreAlert();
+  const { callAlert , callErrorAlert} = useStoreAlert();
   const methods = useForm<IBook>();
   const { handleSubmit, getValues } = methods;
   const id = getValues("id");
@@ -75,9 +75,10 @@ const CreateBook = ({
       pageCount,
     });
     const response = await onCreateBook(data);
-    if (response?.ok) {
-      console.log(JSON.stringify(response));
-      updateBookId(response?.id);
+    if(typeof response == 'string'){
+      callErrorAlert(response);
+    } else if (response?.data) {
+      updateBookId(response?.data?.id);
       callAlert("Tạo sách thành công");
     }
   };
@@ -87,9 +88,9 @@ const CreateBook = ({
     if (!loading) {
       return undefined;
     }
-    const getAllBook = async () => {    
+    const getAllBook = async () => {
       const response = await getAllBooksService();
-      if (response) {        
+      if (response) {
         if (active) {
           setOptions([addBookDefault, ...response]);
         }

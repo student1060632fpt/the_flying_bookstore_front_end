@@ -31,12 +31,12 @@ const Checkout = () => {
 
   const chooseStep = () => {
     switch (step) {
-      case 0:
-        return <Step1 handleNext={handleNext}/>;
-      case 1:
-        return <Step2 handleNext={handleNext} setAlert={setAlert} />;
-      case 2:
-        return <Step3 />;
+      // case 0:
+      //   return <Step1 handleNext={handleNext}/>;
+      // case 1:
+      //   return <Step2 handleNext={handleNext} setAlert={setAlert} />;
+      // case 2:
+      //   return <Step3 />;
       default:
         return <></>;
     }
@@ -44,7 +44,7 @@ const Checkout = () => {
 
   return (
     <>
-      {/* <Stepper activeStep={step}>
+      <Stepper activeStep={step}>
         {steps.map((label, index) => {
           const stepProps: { completed?: boolean } = {};
           return (
@@ -54,7 +54,7 @@ const Checkout = () => {
           );
         })}
       </Stepper> 
-      {chooseStep()}*/}
+      {chooseStep()}
       <AlertSignOut alert={alert} setAlert={setAlert} />
     </>
   );

@@ -1,9 +1,9 @@
 // src/theme.ts
 'use client';
 import { createTheme } from '@mui/material/styles';
-import { Open_Sans } from 'next/font/google';
+import { Montserrat } from 'next/font/google';
 import { viVN } from '@mui/x-data-grid/locales';
-const mainFont = Open_Sans({
+const mainFont = Montserrat({
   weight: ['300', '400', '500', '700'],
   subsets: ['latin','vietnamese'],
   display: 'swap',

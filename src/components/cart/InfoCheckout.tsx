@@ -10,29 +10,31 @@ import dayjs from 'dayjs'
 import { formatCurrency, formatPhoneNumber } from '../../utils/helps'
 import { useStoreCart } from '../../hooks/cart'
 import { getBookDetailService } from '../../api/bookListService'
+import { useStoreAlert } from '../../hooks/alert'
 
 const InfoCheckout = ({ tabNum }: { tabNum: number }) => {
-  const cart = useStoreCart(state => state.cart)
-  const [book, setBook] = useState<IListing | undefined>(cart?.rent?.book);
+  const cart = useStoreCart(state => state.cart);
+  const {  callErrorAlert} = useStoreAlert();
+  const [book, setBook] = useState<IListing>();
   useEffect(() => {
     const callApiGetBookDetail = async () => {
-      if (tabNum == 0) {
-        return;
-      }
-      const bookId = cart.buy?.bookId;
+      const bookId = tabNum === 1 ? cart.buy?.bookId : cart.rent?.bookId;
       if (!bookId)
         return;
       try {
         const newBook = await getBookDetailService(bookId.toString());
-        if (newBook) {
+        if (typeof newBook !== "string") {
+          console.log({newBook})
           setBook(newBook);
+        } else {
+          callErrorAlert(newBook);
         }
       } catch (error) {
         console.log({ error });
       }
     }
     callApiGetBookDetail();
-  }, [cart.buy?.bookId, tabNum])
+  }, [callErrorAlert, cart.buy?.bookId, cart.rent?.bookId, tabNum])
   const listUserInfo: Array<CartInfoItemProps> = [
     {
       title: `Người ${tabNum == 1 ? `bán` : `cho thuê`}`,
@@ -56,7 +58,7 @@ const InfoCheckout = ({ tabNum }: { tabNum: number }) => {
       description: formatPhoneNumber(book?.user.phoneNumber),
       children: <PiPhone className="total__icon" />
     },
-    ...(tabNum == 0 ? [
+    ...(tabNum === 0 ? [
       {
         title: 'Số ngày thuê',
         description: cart?.rent?.duration,
@@ -69,7 +71,7 @@ const InfoCheckout = ({ tabNum }: { tabNum: number }) => {
       },
       {
         title: 'Tiền cọc',
-        description: formatCurrency(cart?.rent?.book.depositFee),
+        description: formatCurrency(book?.depositFee),
         children: <GiMoneyStack className="total__icon" />
       },
       {
@@ -77,13 +79,11 @@ const InfoCheckout = ({ tabNum }: { tabNum: number }) => {
         description: formatCurrency(cart?.rent?.total),
         children: <TbSum className="total__icon" />
       },
-    ] : []),
-    {
+    ] : [{
       title: 'Giá mua',
       description: formatCurrency(book?.price),
       children: <TbSum className="total__icon" />
-    },
-
+    }]),
   ]
   return (
     <div className="total">

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { IUser } from "@/types/user";
 import { port } from "../../utils/env";
+import { handleError } from "../handleError";
 
 const onSubmitService = async (data: IUser) => {
   try {
@@ -21,9 +22,8 @@ const onSubmitService = async (data: IUser) => {
       },
     });
     return response.data;
-  } catch (error) {
-    // Handle any network or server errors
-    console.log({ error });
+  } catch (error: unknown) {
+    return handleError(error);
   }
 };
 export { onSubmitService }

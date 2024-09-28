@@ -1,10 +1,10 @@
 import Image from 'next/image'
 import React from 'react'
-import BookImg from "./../../assets/images/loading-book.gif";
+import BookImg from "./../../assets/images/loading-meo.gif";
 import { IListing } from '../../types/book';
 import Link from 'next/link';
 
-const BookDetailInfo = ({book}:{book?: IListing}) => {
+const BookDetailInfo = ({book}:{book?: IListing,}) => {
   return (
     <><div className="basis-2/12 relative w-32 h-48">
       <Image fill src={book?.copy.imageLink || BookImg} alt="d" className="object-contain rounded-lg" unoptimized />

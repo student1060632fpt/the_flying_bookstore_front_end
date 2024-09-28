@@ -15,6 +15,9 @@ import { useStoreOrder } from "../../hooks/order";
 import { getProfile, onSubmitProfile } from "../../api/profile";
 import { useStoreAlert } from "../../hooks/alert";
 import { onSubmitOrderService } from "@/api/checkoutService";
+import InfoCheckout from "../cart/InfoCheckout";
+import CartItem from "../cart/CartItem";
+import { useStoreStep } from "../../hooks/step";
 
 // const vnpay = new VNPay({
 //   tmnCode: process.env.TMN_CODE || "",
@@ -35,6 +38,7 @@ const convertPaymentType = (paymentType: number) => {
   }
 };
 const Step1 = ({ handleNext }: { handleNext: () => void }) => {
+  const { tabNum } = useStoreStep();
   const { callAlert, callErrorAlert } = useStoreAlert();
   const { profile, token, setToken } = useAuthStore();
   const { updateOrder } = useStoreOrder();
@@ -70,7 +74,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
 
     const convertValue = {
       status: "ORDERED_PAYMENT_PENDING",
-      listingId: cart?.rent?.book?.id,
+      listingId: cart?.rent?.bookId,
       lesseeId: profile?.id,
       lesseeAddress: data.address,
       fromDate: dayjs(cart?.rent?.dayRent.dateStart).format("YYYY-MM-DD"),
@@ -110,14 +114,14 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
         <div className="step mt-8 grid grid-cols-2">
           {/* thông tin đặt thuê */}
           <div className="card ">
-            <h3 className="">Thông tin đặt thuê</h3>
+            <h3 className="">Thông tin đặt {tabNum == 1 ? "thuê" : "mua"}</h3>
             <InfoRent />
             <h3 className="mt-10">Thông tin đặt hàng</h3>
-            {/* <CartInfoRent /> */}
+            <InfoCheckout tabNum={tabNum} />
           </div>
           <div className="card">
-            <h3 className="">Thông tin thanh toán</h3>
-            {/* <CartTotal /> */}
+            <h3 className="">Thông tin sản phẩm</h3>
+            <CartItem tabNum={tabNum} isCheckout={true} />
             <h3 className="mt-10">Thanh toán</h3>
             <Pay payType={payType} setPayType={setPayType} />
           </div>

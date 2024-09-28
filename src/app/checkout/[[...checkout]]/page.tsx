@@ -9,18 +9,12 @@ import {
   Stepper,
 } from "@mui/material";
 import React, { useState } from "react";
-import AlertSignOut from "../../../components/nav/AlertSignOut";
 import { useStoreStep } from "../../../hooks/step";
-import { ICommonAlert } from "../../../types/common";
 
 const steps = ["Điền thông tin", "Xuất đơn hàng", "Lấy hàng"];
 
 const Checkout = () => {
-  const [alert, setAlert] = useState<ICommonAlert>({
-    open: false,
-    message: "Tạo đơn hàng thành công",
-    severity: "success",
-  });
+
   const { changeStep, step } = useStoreStep();
   const { removeCartRent } = useStoreCart();
 
@@ -31,12 +25,12 @@ const Checkout = () => {
 
   const chooseStep = () => {
     switch (step) {
-      // case 0:
-      //   return <Step1 handleNext={handleNext}/>;
-      // case 1:
-      //   return <Step2 handleNext={handleNext} setAlert={setAlert} />;
-      // case 2:
-      //   return <Step3 />;
+      case 0:
+        return <Step1 handleNext={handleNext}/>;
+      case 1:
+        return <Step2 handleNext={handleNext}/>;
+      case 2:
+        return <Step3 />;
       default:
         return <></>;
     }
@@ -55,7 +49,6 @@ const Checkout = () => {
         })}
       </Stepper> 
       {chooseStep()}
-      <AlertSignOut alert={alert} setAlert={setAlert} />
     </>
   );
 };

@@ -11,11 +11,7 @@ import { useRouter } from "next/navigation";
 
 import { onSubmitService } from "@/api/auth/registerService";
 import { IUser } from "@/types/user";
-import { ICommonAlert } from "../../../../types/common";
-
-function SlideTransition(props: SlideProps) {
-  return <Slide {...props} direction="up" />;
-}
+import { useStoreAlert } from "../../../../hooks/alert";
 
 const SignIn = () => {
   const {
@@ -24,26 +20,24 @@ const SignIn = () => {
     handleSubmit,
   } = useForm<IUser>();
   const router = useRouter();
-  const [alert, setAlert] = useState<ICommonAlert>({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-  const { message, open, severity } = alert;
+  const { callAlert, callErrorAlert } = useStoreAlert();
 
   const onSubmit = async (data: IUser) => {
     try {
       const response = await onSubmitService(data);
-      if (!!response) {
-        setAlert((state) => ({ ...state, message: "Đăng ký thành công", open: true, severity: "success" }));
+      if (typeof response !== 'string' && !!response) {
+        callAlert("Đăng ký thành công");
         // Registration successful, handle the response accordingly
-        router.push("/");
+        router.push("/login");
+      } else {
+        // Trường hợp không có token trong response
+        callErrorAlert(response);
       }
-    } catch (error) {
-      throw new Error("Registration failed");
+    } catch (error: unknown) {
+      console.error("Lỗi không xác định:", error);
+      callErrorAlert("Đã xảy ra lỗi không xác định. Vui lòng thử lại.");
     }
   };
-  const handleClose = () => setAlert((state) => ({ ...state, open: false }));
 
   return (
     <div className="auth">
@@ -76,23 +70,7 @@ const SignIn = () => {
       <div className="auth__right">
         <Image src={Background} unoptimized alt="background" fill className="img" />
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={open}
-        onClose={handleClose}
-        autoHideDuration={7000}
-        key={"vertical + horizontal"}
-        TransitionComponent={SlideTransition}
-      >
-        <Alert
-          onClose={handleClose}
-          severity={severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
+
     </div>
   );
 };

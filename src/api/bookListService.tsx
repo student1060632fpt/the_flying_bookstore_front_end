@@ -2,6 +2,7 @@ import axios, { AxiosResponse } from "axios";
 import { IListing } from "@/types/book";
 import { PageResponse } from "@/types/page";
 import { port } from "../utils/env";
+import { handleError } from "./handleError";
 
 
 const getBookDetailService = async (detailId: string) => {
@@ -10,9 +11,8 @@ const getBookDetailService = async (detailId: string) => {
       url: `http://${port}/api/listing/detailListing/${detailId}`,
     });
     return response.data;
-  } catch (error) {
-    console.log(error);
-    return null;
+  } catch (error: unknown) {
+    return handleError(error);
   }
 }
 const getManyBookService = async (paramsAxios: any) => {

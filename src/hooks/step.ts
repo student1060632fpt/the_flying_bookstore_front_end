@@ -3,17 +3,19 @@ import { createJSONStorage, persist } from "zustand/middleware";
 
 interface IStoreStep {
   step: number;
+  tabNum: number;
   changeStep: (newStep: number) => void;
-  resetStep:()=>void;
+  resetStep: (tabNum: number) => void;
 }
 const stepSlice: StateCreator<IStoreStep, [["zustand/persist", unknown]]> = (
   set
 ) => ({
   step: 0,
+  tabNum: 0,
   changeStep: (newStep) => {
     set(() => ({ step: newStep }));
   },
-  resetStep:() => set(() => ({ step: 0 }))
+  resetStep: (tabNum) => set(() => ({ step: 0, tabNum }))
 });
 export const useStoreStep = create<IStoreStep>()(
   persist(stepSlice, {

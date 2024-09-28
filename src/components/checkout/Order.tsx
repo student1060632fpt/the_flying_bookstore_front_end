@@ -1,5 +1,5 @@
 import { Divider } from "@mui/material";
-import React, {  } from "react";
+import React, { } from "react";
 import BookItem from "./BookItem";
 import { BsFileText } from "react-icons/bs";
 import { PiCalendarCheck } from "react-icons/pi";
@@ -13,10 +13,10 @@ import { renderPayment, renderStatus } from "./PaymentStatus";
 
 
 
-const Order = ({orderDetail}:{orderDetail:IOrder}) => {
-  const {leaseOrder = null} = orderDetail
-  if(!leaseOrder) return <>Không có đơn hàng</>
-  
+const Order = ({ orderDetail }: { orderDetail: IOrder }) => {
+  const { leaseOrder = null } = orderDetail
+  if (!leaseOrder) return <>Không có đơn hàng</>
+
   return (
     <>
       <Divider>Bài đăng</Divider>

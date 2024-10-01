@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Background from "@/assets/images/background.jpg";
-import { Alert, Button, Slide, SlideProps, Snackbar } from "@mui/material";
+import { Button, Slide, SlideProps } from "@mui/material";
 import Link from "next/link";
 import FormLogin from "@/components/auth/FormLogin";
 import "./../Login.scss";
@@ -11,45 +11,41 @@ import { useAuthStore } from "@/hooks/user";
 import { IUserLogin } from "@/types/user";
 
 import { getProfileService, handleFormSubmitService } from "@/api/auth/loginService";
-import { ICommonAlert } from "../../../../types/common";
+import { useStoreAlert } from "../../../../hooks/alert";
 
-function SlideTransition(props: SlideProps) {
-  return <Slide {...props} direction="up" />;
-}
 
 const Login = () => {
   const [formData, setFormData] = useState({} as IUserLogin);
-  const [alert, setAlert] = useState<ICommonAlert>({
-    open: false,
-    message: "",
-    severity: "success",
-  });
-  const { message, open, severity } = alert;
+  const { callAlert , callErrorAlert} = useStoreAlert();
   const router = useRouter();
   const { setToken } = useAuthStore();
   const getProfile = async (token: string) => {
     const data = await getProfileService(token);
     if (data) {
       setToken(token, data);
-      setAlert((state) => ({
-        ...state,
-        message: "Đăng nhập thành công",
-        open: true,
-        severity: "success",
-      }));
+      callAlert("Đăng nhập thành công");
       router.push("/");
     }
   };
   const handleFormSubmit = async () => {
-    const data = await handleFormSubmitService(formData);
-    if (data) {
-    // Registration successful, handle the response accordingly
-      await getProfile(data.token);
-    } else {3
-      throw new Error("Registration failed");
+    try {
+      // Gọi service để xử lý form submit
+      const data = await handleFormSubmitService(formData);
+  
+      // Kiểm tra nếu service trả về dữ liệu hợp lệ
+      if (typeof data !== 'string' && data.token) {
+        // Đăng ký thành công, tiếp tục xử lý với token
+        await getProfile(data.token);
+        callAlert("Đăng nhập thành công");
+      } else {
+        // Trường hợp không có token trong response
+        callErrorAlert(data);
+      }
+    } catch (error: unknown) {
+      console.error("Lỗi không xác định:", error);
+      callErrorAlert("Đã xảy ra lỗi không xác định. Vui lòng thử lại.");
     }
   };
-  const handleClose = () => setAlert((state) => ({ ...state, open: false }));
 
   return (
     <div className="auth">
@@ -78,23 +74,7 @@ const Login = () => {
       <div className="auth__right">
         <Image src={Background} alt="background" fill className="img" />
       </div>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        open={open}
-        onClose={handleClose}
-        autoHideDuration={7000}
-        key={"vertical + horizontal"}
-        TransitionComponent={SlideTransition}
-      >
-        <Alert
-          onClose={handleClose}
-          severity={severity}
-          variant="filled"
-          sx={{ width: "100%" }}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
+     
     </div>
   );
 };

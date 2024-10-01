@@ -40,45 +40,62 @@ const CreateBook = ({
 }) => {
   const [options, setOptions] = useState<readonly IBook[]>([addBookDefault]);
   const [open, setOpen] = useState(false);
-  const { callAlert } = useStoreAlert();
+  const { callAlert , callErrorAlert} = useStoreAlert();
   const methods = useForm<IBook>();
   const { handleSubmit, getValues } = methods;
   const id = getValues("id");
 
   const loading = open && options.length === 0;
   const onSubmit: SubmitHandler<IBook> = async (value) => {
-    if (value?.id !== -1 && value?.id !== 0) {
-      updateBookId(value?.id);
-      return callAlert("Chọn sách thành công");
-    }
-    const {
-      authors,
-      genre,
-      isbn,
-      languageCode,
-      pageCount,
-      publishedDate,
-      publisher,
-      size,
-      title,
-    } = value;
-
-    let data = JSON.stringify({
-      isbn,
-      title,
-      authors: [authors],
-      publisher,
-      languageCode,
-      genre: genre.map((item) => (typeof item === 'string' ? item : item.name)),
-      publishedDate,
-      size,
-      pageCount,
-    });
-    const response = await onCreateBook(data);
-    if (response?.ok) {
-      console.log(JSON.stringify(response));
-      updateBookId(response?.id);
-      callAlert("Tạo sách thành công");
+    try {
+      // Kiểm tra nếu sách đã tồn tại (ID hợp lệ)
+      if (value?.id && value.id > 0) {
+        updateBookId(value.id);
+        return callAlert("Chọn sách thành công");
+      }
+  
+      // Destructuring các giá trị từ form
+      const {
+        authors,
+        genre,
+        isbn,
+        languageCode,
+        pageCount,
+        publishedDate,
+        publisher,
+        size,
+        title,
+      } = value;
+  
+      // Chuẩn bị dữ liệu để tạo sách
+      const data = JSON.stringify({
+        isbn,
+        title,
+        authors: [authors],
+        publisher,
+        languageCode,
+        genre: genre.map((item) => (typeof item === 'string' ? item : item.name)),
+        publishedDate,
+        size,
+        pageCount,
+      });
+  
+      // Gọi hàm onCreateBook để tạo sách
+      const response = await onCreateBook(data);
+  
+      // Kiểm tra kết quả trả về từ onCreateBook
+      if (typeof response === 'string') {
+        // Nếu có lỗi, gọi hàm callErrorAlert
+        callErrorAlert(response);
+      } else if (response?.data) {
+        // Nếu thành công, cập nhật ID sách và hiển thị thông báo
+        updateBookId(response.data.id);
+        callAlert("Tạo sách thành công");
+      } 
+    } catch (error) {
+      // Xử lý lỗi không mong đợi trong quá trình xử lý
+      console.error("Unexpected error during book submission:", error);
+      callErrorAlert("Đã xảy ra lỗi trong quá trình gửi sách. Vui lòng thử lại.");
     }
   };
   useEffect(() => {
@@ -87,9 +104,9 @@ const CreateBook = ({
     if (!loading) {
       return undefined;
     }
-    const getAllBook = async () => {    
+    const getAllBook = async () => {
       const response = await getAllBooksService();
-      if (response) {        
+      if (response) {
         if (active) {
           setOptions([addBookDefault, ...response]);
         }

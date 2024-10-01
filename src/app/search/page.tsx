@@ -9,12 +9,13 @@ import { PageResponse } from "@/types/page";
 
 import { useEffect, useState } from "react";
 import { getManyBookService } from "@/api/bookListService";
+import { useStoreAlert } from "../../hooks/alert";
 
 // `app/dashboard/page.tsx` is the UI for the `/dashboard` URL
 export default function Page() {
   const [listBook, setListBook] = useState<PageResponse<IListing>>();
   const { categoryParam, pageNumber, titleParam, allowRent, allowPurchase } = useStoreSearch();
-
+  const {callErrorAlert} = useStoreAlert()
   useEffect(() => {
     const makeRequest = async () => {
       const paramsAxios = {
@@ -27,12 +28,14 @@ export default function Page() {
       };
       console.log({ paramsAxios });
       const response = await getManyBookService(paramsAxios);
-      if (response) {
+      if (typeof response != "string") {
         setListBook(response);
+      } else {
+        callErrorAlert(response)
       }
     }
     makeRequest();
-  }, [allowPurchase, allowRent, categoryParam, pageNumber, titleParam]);
+  }, [allowPurchase, allowRent, callErrorAlert, categoryParam, pageNumber, titleParam]);
 
   return (
     <div className="container mx-auto mt-10 mb-20 flex gap-7 flex-row">

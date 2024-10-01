@@ -50,10 +50,10 @@ const RentDay = ({ book }: IPropsBook) => {
     return book?.depositFee;
   };
   const onSubmit = (data: IFormValueDayRent) => {
-    if (!book) return;
+    if (!book || !book?.id) return;
     const submitCart: ICartRent = {
       dayRent: data,
-      book,
+      bookId: book.id,
       total: renderCountTotal(),
       totalRent: renderTotalRent(),
       duration: renderDurationRent(),

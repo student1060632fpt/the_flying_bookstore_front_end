@@ -11,14 +11,15 @@ type ICartCount = {
   totalRent: number,
   duration: number
 }
-export type ICartRent = ICartCount & {
-  dayRent: IFormValueDayRent;
-  book: IListing
-};
-export type ICartBuy = {
+
+export type ICartBook = {
   bookId: IListing["id"]
 }
+export type ICartRent = ICartCount & ICartBook & {
+  dayRent: IFormValueDayRent;
+};
+
 export type ICart = {
   rent: ICartRent | null,
-  buy: ICartBuy | null
+  buy: ICartBook | null
 }

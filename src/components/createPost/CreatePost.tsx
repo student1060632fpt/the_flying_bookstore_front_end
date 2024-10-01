@@ -45,7 +45,6 @@ const CreatePost = ({ copyId }: { copyId: IPostState["copyId"] }) => {
     };
     const response = await onCreateListing(data,token);
     if (response) {
-      console.log(JSON.stringify(response.data));
       callAlert(`Tạo sách #${response.data.id} thành công`)
       router.push(`/detail/${response.data.id}`) //TODO test in this
     }

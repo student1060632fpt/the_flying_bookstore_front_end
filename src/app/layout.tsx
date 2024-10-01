@@ -35,6 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests"></meta>
       <link rel="icon" href="/favicon.ico" sizes="any" />
       <body className={main_font.className}>
         <AppRouterCacheProvider options={{ key: "css" }}>

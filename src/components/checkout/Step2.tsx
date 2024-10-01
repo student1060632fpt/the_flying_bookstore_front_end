@@ -13,20 +13,18 @@ import { parseUrlParams } from "./parseUrlParams";
 import { IParamsVNpay } from "../../types/checkout";
 import { getDetailOrder, updateStatusOrder } from "../../api/order";
 import { useAuthStore } from "../../hooks/user";
-import { ICommonAlert } from "../../types/common";
+import { useStoreAlert } from "../../hooks/alert";
 
 const Step2 = ({
   handleNext,
-  setAlert,
 }: {
   handleNext: () => void;
-  setAlert: Dispatch<SetStateAction<ICommonAlert>>;
 }) => {
   const { order: orderId } = useStoreOrder();
   const [orderDetail, setOrderDetail] = useState<IOrder>();
   const { href: currentUrl } = useUrl() ?? {};
-  const {token} = useAuthStore()
-
+  const { token } = useAuthStore()
+  const { callAlert } = useStoreAlert(state => state);
   const getOrder = async () => {
     if (!orderId || !token) return;
     return await updateStatusOrder(
@@ -34,11 +32,7 @@ const Step2 = ({
       orderId,
       token
     ).then(() => {
-      setAlert({
-        open: true,
-        message: "Cập nhập đơn hàng thành công",
-        severity: "success",
-      });
+      callAlert("Cập nhập đơn hàng thành công")
       handleNext();
     });
   };
@@ -48,12 +42,8 @@ const Step2 = ({
       const params: IParamsVNpay = parseUrlParams(currentUrl);
       if (params.vnp_TransactionStatus == "00" && orderId) {
         // gọi api thay đổi trạng thái đơn hàng ở đây
-        return await updateStatusOrder("PAYMENT_SUCCESS",orderId,token).then(async () => {
-          setAlert({
-            open: true,
-            message: "Thanh toán thành công",
-            severity: "success",
-          });
+        return await updateStatusOrder("PAYMENT_SUCCESS", orderId, token).then(async () => {
+          callAlert("Thanh toán thành công");
           return await getDetailOrder(orderId).then((response) => {
             if (response?.data) {
               setOrderDetail(response.data);
@@ -63,7 +53,7 @@ const Step2 = ({
       }
     };
     getStatusOrder();
-  }, [currentUrl, orderId, setAlert, token]);
+  }, [callAlert, currentUrl, orderId, token]);
 
   useEffect(() => {
     const getOrderApi = async () => {
@@ -72,7 +62,7 @@ const Step2 = ({
         if (response?.data) {
           setOrderDetail(response.data);
         }
-      } catch (error) {}
+      } catch (error) { }
     };
     getOrderApi();
   }, [orderId]);

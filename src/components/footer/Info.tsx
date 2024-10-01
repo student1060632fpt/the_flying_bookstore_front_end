@@ -8,6 +8,7 @@ import { LuMapPin } from "react-icons/lu";
 import { FiPhoneCall } from "react-icons/fi";
 import { IoMailOutline } from "react-icons/io5";
 import "./Footer.scss";
+import Link from "next/link";
 const Info = () => {
   return (
     <div className="border-t">
@@ -33,7 +34,7 @@ const Info = () => {
         </div>
         <div>
           <h4 className="font-semibold text-xl mb-3">Liên hệ</h4>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-2 ml-3">
             <div className="item-contact">
               <LuMapPin className="icon" />
               <span>
@@ -48,6 +49,19 @@ const Info = () => {
               <IoMailOutline className="icon" />
               <span>support@flying.bookstore</span>
             </div>
+          </div>
+          <h4 className="font-semibold text-xl my-3">Chính sách</h4>
+          <div className="flex flex-col gap-2 ml-3">
+            <Link href={`/private-policy`}>
+              <div className="item-contact text-primary ">
+                Chính sách bảo mật
+              </div>
+            </Link>
+            <Link href={`/book-condition-guide`}>
+              <div className="item-contact text-primary ">
+                Hướng dẫn về tình trạng sách
+              </div>
+            </Link>
           </div>
         </div>
         <div>

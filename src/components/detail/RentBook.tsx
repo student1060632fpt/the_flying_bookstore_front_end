@@ -11,7 +11,7 @@ import { IPropsBook } from "./DocumentInfo";
 import { calPercentPromotion, formatCurrency } from "@/utils/helps";
 import { CiShoppingCart } from "react-icons/ci";
 import { Chip } from "@mui/material";
-import { ICart, ICartBuy } from "../../types/cart";
+import { ICart, ICartBook } from "../../types/cart";
 import { useStoreCart } from "../../hooks/cart";
 import { useRouter } from "next/navigation";
 
@@ -20,7 +20,7 @@ const RentBook = ({ book }: IPropsBook) => {
   const addToCart = useStoreCart((state) => state.addCartBuy);
   const handleAddToCartBuy = ()=>{
     if (!book?.id) return; 
-    const submitCart: ICartBuy = {
+    const submitCart: ICartBook = {
       bookId: book.id,
     };
    

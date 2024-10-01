@@ -8,11 +8,10 @@ import EmptyImg from "@/assets/images/empty_cart_animation_loop.gif";
 import { useState } from "react";
 import { a11yProps } from "../../utils/helps";
 import CustomTabPanel from "../../components/order/CustomTabPanel";
-import CartItemRent from "../../components/cart/CartItemRent";
-import CartItemBuy from "../../components/cart/CartItemBuy";
+import CartItem from "../../components/cart/CartItem";
 
 const Cart = () => {
-  const [tabNum, setTabNum] = useState<number>(1);
+  const [tabNum, setTabNum] = useState<number>(1); //1 mua 0 thuê
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabNum(newValue);
   };
@@ -28,6 +27,16 @@ const Cart = () => {
     </div>);
   }
   const cart = useStoreCart((state) => state.cart);
+  const renderInsideTab = ()=>{
+    return ( <>
+      <div className="w-2/3 lg:w-3/4 md:w-full mx-auto flex flex-col gap-5 mt-10">
+        <CartItem tabNum={tabNum} />
+      </div>
+      <div className="mt-10 w-2/3 lg:w-3/4 md:w-full mx-auto">
+        <CartInfo tabNum={tabNum} />
+      </div>
+    </>)
+  }
   return (
     <div className="container mx-auto my-10">
       <h2 className="text-2xl font-semibold text-primary text-center">
@@ -40,28 +49,10 @@ const Cart = () => {
         </Tabs>
       </Box>
       <CustomTabPanel value={tabNum} index={0}>
-        {!cart.rent ? renderEmptyCard() : (
-          <>
-            <div className="w-2/3 lg:w-3/4 md:w-full mx-auto flex flex-col gap-5 mt-10">
-              <CartItemRent />
-            </div>
-            <div className="mt-10 w-2/3 lg:w-3/4 md:w-full mx-auto">
-              <CartInfo tabNum={tabNum}/>
-            </div>
-          </>
-        )}
+        {!cart.rent?.bookId ? renderEmptyCard() : renderInsideTab()}
       </CustomTabPanel>
       <CustomTabPanel value={tabNum} index={1}>
-         {!cart.buy ? renderEmptyCard() : (
-          <>
-            <div className="w-2/3 lg:w-3/4 md:w-full mx-auto flex flex-col gap-5 mt-10">
-              <CartItemBuy />
-            </div>
-            <div className="mt-10 w-2/3 lg:w-3/4 md:w-full mx-auto">
-              <CartInfo tabNum={tabNum}/>
-            </div>
-          </>
-        )}
+        {!cart.buy?.bookId ? renderEmptyCard() : renderInsideTab()}
       </CustomTabPanel>
 
     </div>

@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import React, { MouseEvent, useState } from "react";
 import FormHelperText from "@mui/material/FormHelperText";
+import Link from "next/link";
 
 const FormSignUp = ({
 
@@ -99,10 +100,11 @@ const FormSignUp = ({
           }
         />
       </FormControl>
+      <div>Đọc <Link href={`/private-policy`}><span className="text-primary font-semibold">Điều khoản bảo mật</span></Link> </div>
       <FormControl>
         <FormControlLabel
           control={<Checkbox defaultChecked />}
-          label="Tôi đồng ý với điều khoản bảo mật"
+          label="Tôi đồng ý với Điều khoản bảo mật"
         />
       </FormControl>
     </>

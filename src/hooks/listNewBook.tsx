@@ -16,7 +16,7 @@ const bookSlice: StateCreator<IListBookStore, [["zustand/persist", unknown]]> = 
   fetch: async () => {
     try {
       const data = await getAllBookService();
-      if (data) {
+      if (typeof data != "string") {
         set({ listNewBook: data});
       } else {
         throw new Error("Get Book failed");

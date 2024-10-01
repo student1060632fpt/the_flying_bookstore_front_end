@@ -1,7 +1,8 @@
 import axios from "axios";
 import { port } from "../utils/env";
+import { handleError } from "./handleError";
 
-const onSubmitOrderService = async (convertValue: any, callErrorAlert: (message: string) => void, token: string | null) => {
+const onSubmitOrderService = async (convertValue: any,  token: string | null) => {
   try {
     const response = await axios.request({
       method: "post",
@@ -14,9 +15,8 @@ const onSubmitOrderService = async (convertValue: any, callErrorAlert: (message:
       data: JSON.stringify(convertValue),
     });
     return response.data;
-
-  } catch (error) {
-    callErrorAlert("Lỗi");
+  } catch (error:unknown) {
+    handleError(error);
   }
 }
 

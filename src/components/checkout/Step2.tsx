@@ -13,7 +13,6 @@ import { parseUrlParams } from "./parseUrlParams";
 import { IParamsVNpay } from "../../types/checkout";
 import { getDetailOrder, updateStatusOrder } from "../../api/order";
 import { useAuthStore } from "../../hooks/user";
-import { ICommonAlert } from "../../types/common";
 import { useStoreAlert } from "../../hooks/alert";
 
 const Step2 = ({

@@ -25,7 +25,7 @@ const getManyBookService = async (paramsAxios: any) => {
       });
     return response.data;
   } catch (error) {
-    console.log(error);
+    return handleError(error);
   }
 }
 const getAllBookService = async () => {
@@ -40,7 +40,7 @@ const getAllBookService = async () => {
     });
     return response.data;
   } catch (error) {
-    throw new Error("Get Book failed");
+    return handleError(error);
   }
 }
 export { getBookDetailService, getAllBookService, getManyBookService }

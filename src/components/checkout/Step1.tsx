@@ -82,21 +82,13 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
       paymentMethod: convertPaymentType(payType),
     };
 
-    const response = await onSubmitOrderService(convertValue, callErrorAlert, token);
+    const response = await onSubmitOrderService(convertValue, token);
     if (response) {
       callAlert("Tạo đơn hàng thành công");
       updateOrder(response?.id);
       handleNext();
       if (payType == 2) {
-        // const urlString = vnpay.buildPaymentUrl({
-        //   vnp_Amount: cart?.rent?.total || 0,
-        //   vnp_IpAddr: "1.1.1.1",
-        //   vnp_TxnRef: dayjs().valueOf().toPrecision(),
-        //   vnp_OrderInfo: `Cho userid ${profile?.id} thue sach voi so tien ${cart?.rent?.total}`,
-        //   vnp_OrderType: "other",
-        //   vnp_ReturnUrl: `http://localhost:3000/checkout`,
-        // });
-        // router.push(urlString);
+        // TODO: VNPay
       }
     }
   };
@@ -114,7 +106,7 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
         <div className="step mt-8 grid grid-cols-2">
           {/* thông tin đặt thuê */}
           <div className="card ">
-            <h3 className="">Thông tin đặt {tabNum == 1 ? "thuê" : "mua"}</h3>
+            <h3 className="">Thông tin đặt {tabNum == 1 ? "mua" : "thuê" }</h3>
             <InfoRent />
             <h3 className="mt-10">Thông tin đặt hàng</h3>
             <InfoCheckout tabNum={tabNum} />

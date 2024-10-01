@@ -28,7 +28,8 @@ const SignIn = () => {
       if (typeof response !== 'string' && !!response) {
         callAlert("Đăng ký thành công");
         // Registration successful, handle the response accordingly
-        router.push("/login");
+        router.push("/");
+        // router.push("/login"); TODO: after demo
       } else {
         // Trường hợp không có token trong response
         callErrorAlert(response);

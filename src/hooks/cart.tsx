@@ -1,11 +1,11 @@
-import { ICart, ICartBuy, ICartRent } from "@/types/cart";
+import { ICart, ICartBook, ICartRent } from "@/types/cart";
 import { StateCreator, create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 interface IUseStoreCart {
   cart: ICart;
   addCartRent: (newCart: ICartRent) => void;
-  addCartBuy: (newCart: ICartBuy) => void;
+  addCartBuy: (newCart: ICartBook) => void;
   removeCartRent: () => void;
   removeCartBuy: () => void;
 }

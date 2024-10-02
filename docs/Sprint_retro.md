@@ -22,15 +22,7 @@
 
 
 **Đặng Xuân Huy (Scrum Master)**:  
-“Đồng ý. Mình sẽ ưu tiên giải pháp này trong sprint tiếp theo để tránh chậm trễ. Còn vấn đề gì khác cần cải thiện không?”
-
-
-**Nguyễn Lê Xuân Hòa (Product Owner)**:  
-“Mình nghĩ cần cập nhật Sprint Goal rõ ràng trước buổi Scrum Planning, điều này sẽ giúp cả nhóm có định hướng tốt hơn từ đầu.”
-
-
-**Đặng Xuân Huy (Scrum Master)**:  
-“Tốt. Vậy mình sẽ cải thiện việc lập Sprint Goal trước khi họp và đảm bảo xử lý vấn đề VNPay trong sprint tiếp theo. Cảm ơn mọi người đã tham gia!”
+“Tốt. Vậy mình sẽ đảm bảo xử lý vấn đề VNPay trong sprint tiếp theo. Cảm ơn mọi người đã tham gia!”
  
 ---
 **Kết thúc buổi họp**

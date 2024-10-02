@@ -79,10 +79,11 @@ Bây giờ mình sẽ bắt đầu phân chia task cho từng user story đã đ
    - **Tổng thời gian**: **12 giờ**  
 
 
+(mở link Sprint-Goal  Sprint 2: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/24/Sprint-Goal-sprint-2)
+
 Dựa trên các thông tin trên, chúng ta có thể xác định **Sprint Goal** là: “Hoàn thành việc phát triển các trang và API cần thiết cho người dùng để đăng nhập, tìm kiếm tài liệu, và xem thông tin chi tiết của tài liệu trong thời gian quy định.”
 Đồng thời mình đã biên soạn sẵn Definition of Done và Definition of Ready cho từng user-story rồi
 
-(mở link Sprint-Goal  Sprint 2: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/24/Sprint-Goal-sprint-2)
 
 **Mai Thành Đạt (Scrum Master)**:  
 “Nếu mọi người đồng ý với Sprint Goal này, chúng ta có thể bắt đầu phân công công việc cụ thể cho từng task. Mọi người có ý kiến gì không?”
@@ -126,7 +127,7 @@ Bây giờ, mình muốn hỏi ý kiến của **Tín** về việc mọi ngư�
 “Phúc có thể nhận phần **Là khách, tôi có thể tìm kiếm tài liệu**. Theo ước lượng, việc này sẽ tốn khoảng 12 giờ. Phúc tự tin sẽ hoàn thành được 100% trong khoảng thời gian đó.”
 
 ---
-(mở lại cái bảng: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/22/Th%E1%BB%91ng-k%C3%AA-th%E1%BB%9Di-gian-r%E1%BA%A3nh-trong-tu%E1%BA%A7n-t%E1%BB%9Bi và bảng https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/15/Story-Point)
+(mở lại cái bảng: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/22/Th%E1%BB%91ng-k%C3%AA-th%E1%BB%9Di-gian-r%E1%BA%A3nh-trong-tu%E1%BA%A7n-t%E1%BB%9Bi và bảng https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_backlogs/backlog/The-Flying-Bookstore%20Team/Stories?showParents=false&System.IterationPath=The-Flying-Bookstore%5CSprint%202%20-%20t%C4%83ng%20t%E1%BB%91c)
 
 **Mai Thành Đạt (Scrum Master)**:  
 “Rất tốt! Vậy hiện tại chúng ta có ba người cam kết tham gia Sprint này. Để tính toán hiệu suất (performance), chúng ta cần xem xét tổng story points mà mỗi người nhận:
@@ -142,7 +143,7 @@ Với 3 người, khối lượng công việc khoảng 19 story points sẽ ph�
 ---
 
 **Mai Thành Đạt (Scrum Master)**:  
-“Rất tốt! Với có ba người cam kết tham gia Sprint này, mỗi người có thể dành được bao nhiêu tiếng để họp?
+“Rất tốt! Với ba người cam kết tham gia Sprint này, mỗi người có thể dành được bao nhiêu tiếng để họp?
 
 **Tôn Trọng Tín (Tech Lead)**:  tất cả đều đồng ý dành 1 tiếng mỗi tuần để họp
 

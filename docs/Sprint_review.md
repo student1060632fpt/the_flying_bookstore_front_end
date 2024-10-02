@@ -1,7 +1,7 @@
 ### Kịch bản Sprint Review với Hòa - PO, Huy - SM, và Tín - Dev - chỉ review trong 5 phút
 
 ---
-
+(mở: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_backlogs/backlog/The-Flying-Bookstore%20Team/Stories?showParents=false&System.IterationPath=The-Flying-Bookstore%5CSprint%201%20-%20b%E1%BA%AFt%20%C4%91%E1%BA%A7u)
 #### **Bắt đầu buổi Sprint Review**
 
 **Đặng Xuân Huy (Scrum Master)**:  
@@ -78,7 +78,8 @@
 
 **Tôn Trọng Tín (Dev Team - Tech Lead)**:  
 Sau đây là danh sách testcase đã pass hết toàn bộ do QC biên soạn, và các bạn dev team mình đã kịp thời fix hết trước khi demo
-(show file test case hết sprint 1 luôn)
+
+(show file test case hết sprint 1 luôn https://docs.google.com/spreadsheets/d/1VR-nOO08XeAH5Xxs2nQNvAU6mwMxeF5_UADuhDezJYs/edit?gid=986244033#gid=986244033)
 
 ---
 

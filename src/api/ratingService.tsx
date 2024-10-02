@@ -4,7 +4,7 @@ const SubmitReviewService = async ( formData: any) => {
     let config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: `http://${port}/api/review`,
+        url: `${port}/api/review`,
         headers: {
             "Content-Type": "application/json",
         },

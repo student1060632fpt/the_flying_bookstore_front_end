@@ -8,7 +8,7 @@ const onCreateCopy = async (data: any) => {
         const respone = await axios.request({
             method: "POST",
             maxBodyLength: Infinity,
-            url: `http://${port}/api/copy`,
+            url: `${port}/api/copy`,
             headers: {
             "Content-Type": "application/json",
             },

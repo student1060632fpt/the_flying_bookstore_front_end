@@ -2,9 +2,15 @@ import axios from "axios";
 import { port } from "../utils/env";
 
 const genreSliceService = async () => {
+    console.log({ port });
+
     return await axios.request({
-        url: `http://${port}/api/genre`,
+        url: `${port}/api/genre`, 
+        headers: {
+            "Referrer-Policy": "unsafe-url",
+            "Referer": port,
+        },
     }).then(response => response.data)
-    .catch(error => console.log(error));
+        .catch(error => console.log(error));
 }
 export { genreSliceService }

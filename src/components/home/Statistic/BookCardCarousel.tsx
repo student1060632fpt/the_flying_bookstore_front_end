@@ -8,8 +8,8 @@ import { formatCurrency } from "@/utils/helps";
 import { IListing } from "@/types/book";
 
 const BookCardCarousel = ({ book }: { book: IListing }) => {
+  //TODO: revert this file
   return (
-    <Link href={`/detail/${book?.id}`}>
       <div className="text-center mb-5">
         <Image
           src={book?.copy?.imageLink || BookImg}
@@ -29,7 +29,6 @@ const BookCardCarousel = ({ book }: { book: IListing }) => {
           Thêm vào giỏ hàng
         </Button>
       </div>
-    </Link>
   );
 };
 

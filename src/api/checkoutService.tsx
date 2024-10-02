@@ -7,7 +7,7 @@ const onSubmitOrderService = async (convertValue: any,  token: string | null) =>
     const response = await axios.request({
       method: "post",
       maxBodyLength: Infinity,
-      url: `http://${port}/api/leaseOrder`,
+      url: `${port}/api/leaseOrder`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -23,7 +23,7 @@ const onSubmitOrderService = async (convertValue: any,  token: string | null) =>
 const getDetailOrderService = async (orderId: number | null, token: string | null) => {
   try {
     const response = await axios.request({
-      url: `http://${port}/api/leaseOrder/` + orderId,
+      url: `${port}/api/leaseOrder/` + orderId,
       headers: {
         Authorization: `Bearer ${token}`,
       },

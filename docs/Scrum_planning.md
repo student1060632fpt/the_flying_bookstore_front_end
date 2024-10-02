@@ -16,7 +16,8 @@
    - Xây dựng entity cho user. mất **2 giờ**
    - Xây dựng API đăng ký. mất **1 giờ**
 
-Điều này cho thấy nhóm đã làm việc hiệu quả và quản lý được thời gian khá ok”
+Điều này cho thấy nhóm đã làm việc hiệu quả và quản lý được thời gian khá ok”. Qua đó mình đã tổng hợp lại gantt chart và burndown chart như sau
+(mở file gantt chart đồ ra)
 
 ---
 

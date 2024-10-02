@@ -1,10 +1,10 @@
 
-### Kịch bản Sprint Planning giữa Huy (PO), Hòa (Scrum Master) và Tín (Tech Lead)
+### Kịch bản Sprint Planning giữa Huy (PO), Hòa (Scrum Master) và Tín (Tech Lead) trong 10'
 
 ---
-(chỗ này Hòa mở cái tab Sprints trên azure cho Huy lên bảng nhìn và thống kê lại, hông cần học thuộc văn mẫu vì này đọc trên board rõ lắm ồi)
+(chỗ này Hòa mở cái tab Sprints trên azure cho Huy lên bảng nhìn và thống kê lại, hông cần học thuộc văn mẫu vì này đọc trên board rõ lắm ồi: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_backlogs/backlog/The-Flying-Bookstore%20Team/Stories?showParents=false&System.IterationPath=The-Flying-Bookstore%5CSprint%201%20-%20b%E1%BA%AFt%20%C4%91%E1%BA%A7u)
 
-**Đặng Xuân Huy (Product Owner)**:  
+**Mai Thành Đạt (Scrum Master)**:  
 “Chào mọi người, hôm nay chúng ta sẽ bắt đầu Sprint Planning cho sprint mới. Trước tiên, mình muốn chia sẻ về hiệu suất của nhóm trong sprint vừa qua. 
 
 - **Tín** đã hoàn thành user story 'Là khách, tôi xem danh sách tài liệu được đề xuất' với **story point là 8** và hoàn thành trong tổng cộng **12 giờ**.
@@ -25,7 +25,7 @@
 
 Bây giờ mình sẽ hỏi từng người nhé. Tín, bạn có thể cho biết bạn dự kiến rảnh bao nhiêu giờ và rảnh thời điểm nào trong tuần tới không?”
 
-
+(đọc cái bảng: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/22/Th%E1%BB%91ng-k%C3%AA-th%E1%BB%9Di-gian-r%E1%BA%A3nh-trong-tu%E1%BA%A7n-t%E1%BB%9Bi)
 
 **Tôn Trọng Tín (Tech Lead)**:  
 “Mình dự kiến sẽ có khoảng **6 giờ** cho tuần tới, và mình dự định làm vào chiều thứ 7”
@@ -34,18 +34,13 @@ Bây giờ mình sẽ hỏi từng người nhé. Tín, bạn có thể cho bi�
 
 **Mai Thành Đạt (Scrum Master)**:  
 “Tốt, cảm ơn Tín! Minh, còn Phúc thì sao?”
-
-
-
-**Đặng Phan Minh Phúc (QC)**:  
-“Mình chỉ có khoảng **5 giờ**, và mình dự kiến làm vào tối thứ 3”
-
+... tiếp tục trả lời như trên
 
 
 **Mai Thành Đạt (Scrum Master)**:  
 “Tốt lắm! Vậy tóm tắt lại, thời gian rảnh của từng người như sau:  
 
-đọc cái bảng: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/22/Th%E1%BB%91ng-k%C3%AA-th%E1%BB%9Di-gian-r%E1%BA%A3nh-trong-tu%E1%BA%A7n-t%E1%BB%9Bi
+
 
 Dựa trên thông tin này, chúng ta sẽ lên lịch và phân chia công việc cho sprint tiếp theo.”  
 
@@ -55,7 +50,7 @@ Dựa trên thông tin này, chúng ta sẽ lên lịch và phân chia công vi�
 ### Kịch bản Sprint Planning - Phần 2
 
 ---
-
+(mở https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_backlogs/backlog/The-Flying-Bookstore%20Team/Stories?showParents=false&System.IterationPath=The-Flying-Bookstore%5CSprint%202%20-%20t%C4%83ng%20t%E1%BB%91c)
 
 **Mai Thành Đạt (Scrum Master)**:  
 “Cảm ơn mọi người đã tham gia tích cực. Huy, bạn hãy chia sẻ về Product Backlog ở tuần tới?”
@@ -97,7 +92,7 @@ Bây giờ, mình muốn hỏi ý kiến của **Tín** về việc mọi ngư�
 **Tôn Trọng Tín (Tech Lead)**:  đã rõ
 
 **Đặng Xuân Huy (Product Owner)**:  
-“Cảm ơn Hòa! Mình nghĩ mọi người đã hiểu rõ các user story và tasks được phân chia. Nếu ai có câu hỏi hay ý kiến gì thì hãy chia sẻ nhé!”
+“Cảm ơn Tín! Mình nghĩ mọi người đã hiểu rõ các user story và tasks được phân chia. Nếu ai có câu hỏi hay ý kiến gì thì hãy chia sẻ nhé!”
 
 **Tôn Trọng Tín (Tech Lead)**:  đã rõ
 
@@ -105,6 +100,7 @@ Bây giờ, mình muốn hỏi ý kiến của **Tín** về việc mọi ngư�
 ### Kịch bản Sprint Planning - Phần 3
 
 ---
+(mở https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_backlogs/backlog/The-Flying-Bookstore%20Team/Stories?showParents=false&System.IterationPath=The-Flying-Bookstore%5CSprint%202%20-%20t%C4%83ng%20t%E1%BB%91c)
 
 **Mai Thành Đạt (Scrum Master)**:  
 “Cảm ơn mọi người đã đồng ý với Sprint Goal. Bây giờ, chúng ta sẽ thảo luận về việc phân công công việc. Ai trong số các bạn muốn nhận những task này?”
@@ -115,28 +111,29 @@ Bây giờ, mình muốn hỏi ý kiến của **Tín** về việc mọi ngư�
 
 
 **Mai Thành Đạt (Scrum Master)**:  
-“Rất tốt! Vậy là chúng ta đã có 1 người nhận nhiệm vụ đầu tiên. Còn phần **Là khách, tôi có thể tìm kiếm tài liệu**  ai muốn nhận?”
+“Rất tốt! Vậy là chúng ta đã có 1 người nhận nhiệm vụ đầu tiên. Còn phần **Là khách, tôi có thể xem thông tin chi tiết của tài liệu**  ai muốn nhận?”
 
 
 **Tôn Trọng Tín (Tech Lead)**:  
-“Nhật có thể nhận phần **Là khách, tôi có thể tìm kiếm tài liệu** . Theo ước lượng, việc này sẽ tốn khoảng 11 giờ. Nhật tự tin sẽ hoàn thành được 100% trong khoảng thời gian đó.”
+“Nhật có thể nhận phần **Là khách, tôi có thể xem thông tin chi tiết của tài liệu** . Theo ước lượng, việc này sẽ tốn khoảng 11 giờ. Nhật tự tin sẽ hoàn thành được 100% trong khoảng thời gian đó.”
 
 
 **Mai Thành Đạt (Scrum Master)**:  
-“Rất tốt! Vậy là chúng ta đã có 2 người nhận nhiệm vụ đầu tiên. Còn phần **Là khách, tôi có thể xem thông tin chi tiết của tài liệu** ai muốn nhận?”
+“Rất tốt! Vậy là chúng ta đã có 2 người nhận nhiệm vụ đầu tiên. Còn phần **Là khách, tôi có thể tìm kiếm tài liệu** ai muốn nhận?”
 
 
 **Tôn Trọng Tín (Tech Lead)**:  
-“Phúc có thể nhận phần **Là khách, tôi có thể xem thông tin chi tiết của tài liệu**. Theo ước lượng, việc này sẽ tốn khoảng 12 giờ. Phúc tự tin sẽ hoàn thành được 100% trong khoảng thời gian đó.”
+“Phúc có thể nhận phần **Là khách, tôi có thể tìm kiếm tài liệu**. Theo ước lượng, việc này sẽ tốn khoảng 12 giờ. Phúc tự tin sẽ hoàn thành được 100% trong khoảng thời gian đó.”
 
 ---
+(mở lại cái bảng: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/22/Th%E1%BB%91ng-k%C3%AA-th%E1%BB%9Di-gian-r%E1%BA%A3nh-trong-tu%E1%BA%A7n-t%E1%BB%9Bi và bảng https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_wiki/wikis/The-Flying-Bookstore.wiki/15/Story-Point)
 
 **Mai Thành Đạt (Scrum Master)**:  
-“Rất tốt! Vậy hiện tại chúng ta có ba người cam kết tham gia Sprint này. Để tính toán hiệu suất (performance), chúng ta cần xem xét tổng story points mà mỗi người nhận. Huy và Tín sẽ nhận tổng cộng là:
+“Rất tốt! Vậy hiện tại chúng ta có ba người cam kết tham gia Sprint này. Để tính toán hiệu suất (performance), chúng ta cần xem xét tổng story points mà mỗi người nhận:
 
-- **Là người dùng, tôi đăng nhập**: Tín - đã cam kết 6 giờ - 3 story points  
-- **Là khách, tôi có thể xem thông tin chi tiết của tài liệu**: Nhật - cam kết 12 giờ -  8 Story points
-- **Là khách, tôi có thể tìm kiếm tài liệu**: Phúc - cam kết 10 giờ -  8 story points
+- **Là người dùng, tôi đăng nhập**: Tín - có thể dành 6 giờ, đã cam kết làm 5 giờ - 3 story points  
+- **Là khách, tôi có thể xem thông tin chi tiết của tài liệu**: Nhật - có 12 giờ và cam kết làm 11 giờ -  8 Story points
+- **Là khách, tôi có thể tìm kiếm tài liệu**: Phúc - có 12 giờ và cam kết làm 12 giờ -  8 story points
 
 Tổng cộng: **19 story points** cho ba thành viên.
 
@@ -147,12 +144,12 @@ Với 3 người, khối lượng công việc khoảng 19 story points sẽ ph�
 **Mai Thành Đạt (Scrum Master)**:  
 “Rất tốt! Với có ba người cam kết tham gia Sprint này, mỗi người có thể dành được bao nhiêu tiếng để họp?
 
-**Tôn Trọng Tín (Tech Lead)**:  tất cả đều đồng ý 1 tiếng mỗi tuần để họp
+**Tôn Trọng Tín (Tech Lead)**:  tất cả đều đồng ý dành 1 tiếng mỗi tuần để họp
 
 ---
 
 **Mai Thành Đạt (Scrum Master)**:  
-“Nếu không còn ai muốn nhận thêm, chúng ta sẽ bắt đầu lên lịch cụ thể cho từng task và bắt tay vào làm việc nhé!”
+“Nếu không còn ai muốn nhận thêm, chúng ta sẽ bắt đầu bắt tay vào làm việc nhé!”
 
 --- 
 

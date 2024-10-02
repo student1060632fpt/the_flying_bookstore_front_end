@@ -1,4 +1,4 @@
-### Kịch bản Sprint Review với Hòa - PO, Huy - SM, và Tín - Dev:
+### Kịch bản Sprint Review với Hòa - PO, Huy - SM, và Tín - Dev - chỉ review trong 5 phút
 
 ---
 

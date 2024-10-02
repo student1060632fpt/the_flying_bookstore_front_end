@@ -8,7 +8,7 @@ import { handleError } from "./handleError";
 const getBookDetailService = async (detailId: string) => {
   try {
     const response: AxiosResponse<IListing> = await axios.request({
-      url: `http://${port}/api/listing/detailListing/${detailId}`,
+      url: `${port}/api/listing/detailListing/${detailId}`,
     });
     return response.data;
   } catch (error: unknown) {
@@ -20,7 +20,7 @@ const getManyBookService = async (paramsAxios: any) => {
     const response: AxiosResponse<PageResponse<IListing>> =
       await axios.request({
         maxBodyLength: Infinity,
-        url: `http://${port}/api/listing/search`,
+        url: `${port}/api/listing/search`,
         params: paramsAxios,
       });
     return response.data;
@@ -31,8 +31,12 @@ const getManyBookService = async (paramsAxios: any) => {
 const getAllBookService = async () => {
   try {
     const response: AxiosResponse<PageResponse<IListing>> = await axios.request({
-      url: `http://${port}/api/listing/search`,
+      url: `${port}/api/listing/search`,
       method: "GET",
+      headers:{
+        "Referer": port,
+        "Referrer-Policy": "unsafe-url" 
+      },
       params:{
         allowRent: 1,
         allowPurchase: 1

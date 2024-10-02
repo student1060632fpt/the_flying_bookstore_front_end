@@ -4,7 +4,7 @@ import { port } from "../utils/env";
 const DeletePostService = async ( modalDeleteId: number | undefined) => {
     return await axios.request({
         method: "DELETE",
-        url: `http://${port}/api/listing/${modalDeleteId}`,
+        url: `${port}/api/listing/${modalDeleteId}`,
     })
     .then((response) => {
         return response.data;

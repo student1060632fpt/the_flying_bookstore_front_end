@@ -9,8 +9,10 @@ const onSubmitService = async (data: IUser) => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Referrer-Policy": "unsafe-url" ,
+        "Referer": port,
       },
-      url: `http://${port}/api/user/register`,
+      url: `${port}/api/user/register`,
       data: {
         username: data.username,
         password: data.password,

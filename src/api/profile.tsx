@@ -10,7 +10,7 @@ export const getProfile = async (
 ): Promise<void> => {
   try {
     const response = await axios.request({
-      url: `http://${port}/api/user/myInfo`,
+      url: `${port}/api/user/myInfo`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -39,7 +39,7 @@ export const onSubmitProfile = async (data: IFormCheckout, profile: IUser | null
   let config = {
     method: "put",
     maxBodyLength: Infinity,
-    url: `http://${port}/api/user/${profile?.id}`,
+    url: `${port}/api/user/${profile?.id}`,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,

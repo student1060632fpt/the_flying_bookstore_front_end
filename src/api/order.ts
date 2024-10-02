@@ -7,7 +7,7 @@ import { port } from "../utils/env";
 export const getDetailOrder = async (orderId: number | null) => {
   if (!orderId) return;
   return await axios
-    .request({ url: `http://${port}/api/leaseOrder/` + orderId })
+    .request({ url: `${port}/api/leaseOrder/` + orderId })
     .then((res) => res)
     .catch((error) => {
       console.log(error);
@@ -17,7 +17,7 @@ export const getDetailOrder = async (orderId: number | null) => {
 export const getAllOrder = async (userId: number, isCustomer?: boolean) => {
   return await axios
     .request({
-      url: `http://${port}/api/leaseOrder/search/${isCustomer ? `lessor` : `lessee`
+      url: `${port}/api/leaseOrder/search/${isCustomer ? `lessor` : `lessee`
         }/${userId}`,
     })
     .then((response) => {
@@ -34,7 +34,7 @@ export const getAllOrder = async (userId: number, isCustomer?: boolean) => {
 export const updateStatusOrder = async (status: IOrderStatus, id: number, token: string) => {
   return await axios
     .request({
-      url: `http://${port}/api/leaseOrder/edit/status`,
+      url: `${port}/api/leaseOrder/edit/status`,
       params: { id, status },
       headers: {
         Authorization: `Bearer ${token}`,
@@ -49,7 +49,7 @@ export const updateStatusOrder = async (status: IOrderStatus, id: number, token:
 export const getOrderWithStatusService = async (status: number, profile: IUser | null, isCustomer?: boolean) => {
   try {
     const response = await axios.request({
-      url: `http://${port}/api/leaseOrder/search/${isCustomer ? `lessor` : `lessee`
+      url: `${port}/api/leaseOrder/search/${isCustomer ? `lessor` : `lessee`
         }/status/${profile?.id}`,
       params: {
         status,

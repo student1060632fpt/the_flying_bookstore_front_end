@@ -45,7 +45,7 @@ const PromoteSection = () => {
           Sách mới ra mắt
         </h3>
         <p className="text-sn text-center mb-8">
-          Từ 24/2 đến {dayjs().format("DD/MM").toString()}
+          Từ 24/9 đến {dayjs().format("DD/MM").toString()}
         </p>
         {renderBooks()}
         {/* background  */}

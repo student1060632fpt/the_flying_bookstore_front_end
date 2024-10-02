@@ -11,7 +11,7 @@ const Category = ({category}: {category:ICategory}) => {
   const router = useRouter();
   const onNavigate = () => {
     updateCategoryParam(category);
-    router.push("/search");
+    // router.push("/search"); TODO: revert this
   };
   return (
     <div className=" text-center cursor-pointer" onClick={onNavigate}>

@@ -7,7 +7,7 @@ const onCreateListing = async (data: any, token: string | null) => {
         const respone = await axios.request({
             method: "POST",
             maxBodyLength: Infinity,
-            url: `http://${port}/api/listing`,
+            url: `${port}/api/listing`,
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,

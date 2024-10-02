@@ -10,7 +10,7 @@ const onCreateBook = async (data: string): Promise<AxiosResponse<IBook> | string
     const response = await axios.request({
       method: "POST",
       maxBodyLength: Infinity,
-      url: `http://${port}/api/book`,
+      url: `${port}/api/book`,
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,7 +23,7 @@ const onCreateBook = async (data: string): Promise<AxiosResponse<IBook> | string
 };
 const getAllBooksService = async () => {
   try {
-    const response = await axios.request({ url: `http://${port}/api/book` });
+    const response = await axios.request({ url: `${port}/api/book` });
     return response.data;
   }
   catch (error) {

@@ -6,9 +6,10 @@ import { handleError } from "../handleError";
 const getProfileService = async (token: string) => {
   try {
     const response = await axios.request({
-      url: `http://${port}/api/user/myInfo`,
+      url: `${port}/api/user/myInfo`,
       headers: {
         Authorization: `Bearer ${token}`,
+
       },
     });
     return response.data;
@@ -24,7 +25,7 @@ const handleFormSubmitService = async (formData: IUserLogin) => {
         "Content-Type": "application/json",
       },
       data: formData,
-      url: `http://${port}/api/user/login`,
+      url: `${port}/api/user/login`,
     });
     return response.data;
   } catch (error: unknown) {

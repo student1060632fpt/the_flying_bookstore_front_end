@@ -1,5 +1,5 @@
 ### Kịch bản Sprint Retrospective giữa Hòa, Huy và Tín (2 phút)
-(show file impediment)
+(show file impediment https://docs.google.com/spreadsheets/d/1j3ORgiVq1nAi4r8A0Vb4WIC3Qo-hV_16tyBRWNXEE4A/edit?gid=2043069769#gid=2043069769)
 
 **Đặng Xuân Huy (Scrum Master)**:  
 “Chào mọi người, hôm nay là buổi Sprint Retrospective, chúng ta sẽ cùng nhìn lại sprint vừa rồi để cải tiến quy trình. Câu hỏi đầu tiên là **'Điều gì đã diễn ra tốt?'**. Tín, bạn có thể chia sẻ một chút không?”

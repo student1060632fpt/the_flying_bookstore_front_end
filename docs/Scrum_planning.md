@@ -1,5 +1,5 @@
 
-### Kịch bản Sprint Planning giữa Huy (PO), Hòa (Scrum Master) và Tín (Tech Lead) trong 10'
+### Kịch bản Sprint Planning giữa Huy (PO), Đạt (Scrum Master) và Tín (Tech Lead) trong 10'
 
 ---
 (chỗ này Hòa mở cái tab Sprints trên azure cho Huy lên bảng nhìn và thống kê lại, hông cần học thuộc văn mẫu vì này đọc trên board rõ lắm ồi: https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_backlogs/backlog/The-Flying-Bookstore%20Team/Stories?showParents=false&System.IterationPath=The-Flying-Bookstore%5CSprint%201%20-%20b%E1%BA%AFt%20%C4%91%E1%BA%A7u)

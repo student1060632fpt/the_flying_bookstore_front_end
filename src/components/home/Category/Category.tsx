@@ -14,13 +14,14 @@ const Category = ({category}: {category:ICategory}) => {
     // router.push("/search"); TODO: revert this
   };
   return (
-    <div className=" text-center cursor-pointer" onClick={onNavigate}>
+    <div className=" text-center cursor-pointer" >
       <div className="mx-auto w-8/12">
         <Image
           src={Book}
           alt="Picture of the author"
           className="card-image"
           unoptimized
+          onClick={onNavigate}
         />
       </div>
       <h4 className="text-lg font-semibold py-3">{category.nameVn}</h4>

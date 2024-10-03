@@ -23,7 +23,6 @@ import SearchBar from "./SearchBar";
 import { useStoreCart } from "@/hooks/cart";
 import { useAuthStore } from "@/hooks/user";
 import AlertSignOut from "./AlertSignOut";
-import { getAllOrder } from "../../api/order";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { useStoreOrder } from "../../hooks/order";

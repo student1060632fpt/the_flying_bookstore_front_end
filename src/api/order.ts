@@ -3,6 +3,7 @@ import { IOrderStatus } from "../types/order";
 import { useAuthStore } from "@/hooks/user";
 import { IUser } from "../types/user";
 import { port } from "../utils/env";
+import { handleError } from "./handleError";
 
 export const getDetailOrder = async (orderId: number | null) => {
   if (!orderId) return;
@@ -10,7 +11,7 @@ export const getDetailOrder = async (orderId: number | null) => {
     .request({ url: `${port}/api/leaseOrder/` + orderId })
     .then((res) => res)
     .catch((error) => {
-      console.log(error);
+      handleError(error);
     });
 };
 
@@ -27,7 +28,7 @@ export const getAllOrder = async (userId: number, isCustomer?: boolean) => {
       }
     })
     .catch((error) => {
-      console.log(error);
+      handleError(error)
     });
 };
 
@@ -42,7 +43,7 @@ export const updateStatusOrder = async (status: IOrderStatus, id: number, token:
     })
     .then((response) => { })
     .catch((error) => {
-      console.log(error);
+      handleError(error)
     });
 };
 
@@ -58,6 +59,6 @@ export const getOrderWithStatusService = async (status: number, profile: IUser |
     return response.data;
   }
   catch (error) {
-    console.log(error);
+    handleError(error)
   };
 };

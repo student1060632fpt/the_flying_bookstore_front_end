@@ -79,7 +79,10 @@
 **Tôn Trọng Tín (Dev Team - Tech Lead)**:  
 Sau đây là danh sách testcase đã pass hết toàn bộ do QC biên soạn, và các bạn dev team mình đã kịp thời fix hết trước khi demo
 
-(show file test case hết sprint 1 luôn https://docs.google.com/spreadsheets/d/1VR-nOO08XeAH5Xxs2nQNvAU6mwMxeF5_UADuhDezJYs/edit?gid=986244033#gid=986244033)
+(show file test case hết sprint 1 luôn [https://docs.google.com/spreadsheets/d/1VR-nOO08XeAH5Xxs2nQNvAU6mwMxeF5_UADuhDezJYs/edit?gid=986244033#gid=986244033](https://docs.google.com/spreadsheets/d/174Chb_FEw3MN7m7XqZnmr5SJ_FUmEKoCq5ahsFAG9jE/edit?gid=79411658#gid=79411658))
+và ở trong board sau, chúng ta có 2 bug ở trang đăng kí đã được fix bởi tín 
+
+https://dev.azure.com/ahihi6174/The-Flying-Bookstore/_sprints/taskboard/The-Flying-Bookstore%20Team/The-Flying-Bookstore/Sprint%201%20-%20b%E1%BA%AFt%20%C4%91%E1%BA%A7u
 
 ---
 

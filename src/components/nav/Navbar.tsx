@@ -172,10 +172,16 @@ export default function Navbar() {
       MenuListProps={{ "aria-labelledby": "order-button" }}
     >
       <Link href={"/my-order/0"}>
-        <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của tôi</MenuItem>
+        <MenuItem onClick={handleCloseMenuOrder}>Đơn thuê</MenuItem>
       </Link>
       <Link href={"/customer-order"}>
-        <MenuItem onClick={handleCloseMenuOrder}>Đơn hàng của khách</MenuItem>
+        <MenuItem onClick={handleCloseMenuOrder}>Đơn cho thuê</MenuItem>
+      </Link>
+      <Link href={"/buy-order"}>
+        <MenuItem onClick={handleCloseMenuOrder}>Đơn mua</MenuItem>
+      </Link>
+      <Link href={"/sell-order"}>
+        <MenuItem onClick={handleCloseMenuOrder}>Đơn bán</MenuItem>
       </Link>
     </Menu>
   );

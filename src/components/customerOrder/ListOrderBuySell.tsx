@@ -1,5 +1,4 @@
 "use client";
-import ListOrder from "@/components/order/ListOrder";
 import {
   Box,
   Tab,
@@ -8,17 +7,15 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import CustomTabPanel, { orderProps } from "../order/CustomTabPanel";
-
+import OrderBuySell from "../order/OrderBuySell";
 
 const arrStatus: Array<{ label: string, index: number }> = [
   { label: "Tất cả", index: 0 },
   { label: "Đã đặt hàng", index: 1 },
   { label: "Đã nhận", index: 2 },
-  { label: "Đã quá hạn", index: 3 },
-  { label: "Đã trả sách", index: 4 },
-  { label: "Đã hủy", index: 5 },
+  { label: "Đã hủy", index: 3 },
 ];
-const ListOrderMain = ({ isCustomer = false }: { isCustomer?: boolean }) => {
+const ListOrderBuySell = ({ isCustomer = false }: { isCustomer?: boolean }) => {
   const [value, setValue] = useState(0);
   const handleChange = (_: any, newValue: number) => {
     setValue(newValue);
@@ -26,7 +23,7 @@ const ListOrderMain = ({ isCustomer = false }: { isCustomer?: boolean }) => {
   return (
     <>
       <Typography variant="h4" gutterBottom>
-        Quản lý đơn{isCustomer ? ` cho thuê` : ` thuê`}
+        Quản lý đơn {isCustomer ? ` mua` : ` bán`}
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={value} onChange={handleChange} aria-label="order tab">
@@ -38,11 +35,11 @@ const ListOrderMain = ({ isCustomer = false }: { isCustomer?: boolean }) => {
       {arrStatus.map(({ index }) => {
         return (
           <CustomTabPanel value={value} index={index} key={index}>
-            <ListOrder status={index} changeStatus={handleChange} isCustomer={isCustomer} />
+            <OrderBuySell status={index} changeStatus={handleChange} isCustomer={isCustomer} />
           </CustomTabPanel>
         );
       })}
     </>
   );
 };
-export default ListOrderMain;
+export default ListOrderBuySell;

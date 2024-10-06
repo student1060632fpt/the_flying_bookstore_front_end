@@ -127,14 +127,14 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
           </Link>
           <Box sx={{ flex: "1 1 auto" }} />
 
-          <Button
+           <Button
             size="large"
-            disabled={!isSubmitSuccessful}
+
             variant="contained"
             onClick={onSubmitOrder}
           >
             Tạo đơn hàng
-          </Button>
+          </Button> 
         </Box>
       </form>
     </FormProvider>

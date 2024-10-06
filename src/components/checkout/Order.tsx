@@ -7,7 +7,6 @@ import { LuFlag } from "react-icons/lu";
 import { CgCreditCard } from "react-icons/cg";
 import { IOrder } from "../../types/order";
 import dayjs from "dayjs";
-import OrderTotal from "./OrderTotal";
 import { renderPayment, renderStatus } from "./PaymentStatus";
 import { useStoreStep } from "../../hooks/step";
 import { GrUserManager } from "react-icons/gr";

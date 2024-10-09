@@ -44,28 +44,29 @@ const ListOrderMain = ({ orderType }: { orderType: OrderType }) => {
     setStatus(newValue);
   }
   const callApiGetAllOrder = useCallback(async () => {
-    const isCustomer = orderType == OrderType.Leasee;
-    console.log("callApiGetAllOrder");
+    const isCustomer = orderType === OrderType.Leasee;
     if (!profile?.id) {
       callAlert("Mời bạn đăng nhập lại!");
       return router.push("/");
     }
-    return await getAllOrder(profile?.id, isCustomer).then((response) => {
-      setListOrder(response);
-    });
-  }, [orderType, profile?.id, callAlert, router]);
+    return await handleApiCall(
+      () => getAllOrder(profile?.id, isCustomer),
+      (response) => {
+        setListOrder(response)
+      },
+      "Lấy đơn hàng thành công"
+    )
+  }, [orderType, profile?.id, handleApiCall, callAlert, router]);
 
   const getOrderWithStatus = useCallback(async (status: number) => {
-    const isCustomer = orderType == OrderType.Leasee;
-
+    const isCustomer = orderType === OrderType.Leasee;
     // Sử dụng handleApiCall từ hook
-    await handleApiCall(
+    return await handleApiCall(
       // Hàm gọi API
       () => getOrderWithStatusService(status, profile, isCustomer),
 
       // Hàm xử lý khi API thành công
       (response) => {
-        console.log({ response });
         setListOrder(response);  // Cập nhật state listOrder
       },
       "Lấy đơn hàng thành công"
@@ -90,13 +91,13 @@ const ListOrderMain = ({ orderType }: { orderType: OrderType }) => {
       callAlert("Đã tải lại thành công");
     });
   };
-  const reloadStatus = async (_: any, newValue: number)=> {
+  const reloadStatus = async (_: any, newValue: number) => {
     setStatus(newValue);
     return await callWhichApi();
   };
   useEffect(() => {
     callWhichApi();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
   const renderSectionTab = () => {

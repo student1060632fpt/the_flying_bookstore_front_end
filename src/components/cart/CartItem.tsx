@@ -9,8 +9,11 @@ import { getBookDetailService } from "../../api/bookListService";
 import { IListing } from "../../types/book";
 import BookDetailInfo from "./BookDetailInfo";
 import { useStoreAlert } from "../../hooks/alert";
+import { useStoreStep } from "../../hooks/step";
 
-const CartItem = ({ tabNum, isCheckout = false }: { tabNum: number, isCheckout?: boolean }) => {
+const CartItem = ({ isCheckout = false }: { isCheckout?: boolean }) => {
+  const { tabNum } = useStoreStep();
+
   const { cart, removeCartBuy, removeCartRent } = useStoreCart();
   const [book, setBook] = useState<IListing>();
   const { callErrorAlert } = useStoreAlert(state => state);

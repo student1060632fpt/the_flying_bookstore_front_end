@@ -24,7 +24,6 @@ export default function ListOrder({
 }) {
   const router = useRouter();
   const { profile } = useAuthStore();
-
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {

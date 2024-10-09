@@ -118,7 +118,6 @@ const Order = ({ orderDetail }: { orderDetail: IOrder }) => {
           <div className="border-t">
             <CartInfoItem title={`Tổng cộng`} description={!!orderDetail?.leaseOrder?.totalDeposit && formatCurrency(orderDetail?.leaseOrder?.totalDeposit)} ><TbSum className="total__icon" /></CartInfoItem>
           </div>
-
         </div>
       </div >
     </>

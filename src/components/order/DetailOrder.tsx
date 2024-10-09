@@ -6,6 +6,7 @@ import NoData from "./NoData";
 import OrderFooter from "./OrderFooter";
 import { IOrder, OrderType } from "../../types/order";
 import { useState } from "react";
+import theme from "../../utils/theme";
 
 const DetailOrder = ({
   order,
@@ -27,6 +28,7 @@ const DetailOrder = ({
         width: "100%",
         border: 1,
         borderRadius: 3,
+        borderColor: theme.palette.grey[400],
         px: 2,
         py: 1,
         height: listBook.length != 0 ? "auto" : "500px",

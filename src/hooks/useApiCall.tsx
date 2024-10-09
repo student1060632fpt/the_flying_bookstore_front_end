@@ -4,7 +4,7 @@ import { useStoreAlert } from './alert';
 
 // Custom hook useApiCall
 const useApiCall = <T,>() => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const { callAlert, callErrorAlert } = useStoreAlert();
   const handleApiCall = async (
     apiCall: () => Promise<T>,       // Hàm gọi API

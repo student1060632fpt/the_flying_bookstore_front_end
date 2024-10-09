@@ -10,20 +10,24 @@ import Owner from "./Owner";
 import { IPropsBook } from "./DocumentInfo";
 import { calPercentPromotion, formatCurrency } from "@/utils/helps";
 import { CiShoppingCart } from "react-icons/ci";
-import { Chip } from "@mui/material";
+import { Alert, Chip } from "@mui/material";
 import { ICart, ICartBook } from "../../types/cart";
 import { useStoreCart } from "../../hooks/cart";
 import { useRouter } from "next/navigation";
+import { useStoreStep } from "../../hooks/step";
+import { useAuthStore } from "../../hooks/user";
 
 const RentBook = ({ book }: IPropsBook) => {
   const router = useRouter();
+  const { profile } = useAuthStore();
   const addToCart = useStoreCart((state) => state.addCartBuy);
+  const { changeTabNum } = useStoreStep();
   const handleAddToCartBuy = ()=>{
     if (!book?.id) return; 
     const submitCart: ICartBook = {
       bookId: book.id,
     };
-   
+    changeTabNum(1)
     addToCart(submitCart);
     router.push("/cart");
   }
@@ -74,7 +78,11 @@ const RentBook = ({ book }: IPropsBook) => {
             </p>
           </div>
         </div>
-        <Button
+        {profile?.id == book?.user.id ? (
+          <Alert severity="info">
+            Đây là sách của bạn, bạn không thể thêm vào giỏ hàng
+          </Alert>
+        ):( <Button
           variant="contained"
           color="secondary"
           size="large"
@@ -84,7 +92,8 @@ const RentBook = ({ book }: IPropsBook) => {
           onClick={handleAddToCartBuy}
         >
           Mua ngay
-        </Button>
+        </Button>)}
+       
       </AccordionDetails>
     </Accordion>);
   }

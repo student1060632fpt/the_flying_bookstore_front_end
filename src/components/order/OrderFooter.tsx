@@ -51,7 +51,7 @@ const OrderFooter = ({
   const renderAlert = () => {
     if (!order?.leaseOrder?.status) return <></>;
     const content = callContentAlert(order);
-    if (orderType == OrderType.Leasee) {
+    if (orderType == OrderType.Leasor) {
       if (
         !content?.isCustomer[order?.leaseOrder?.status] ||
         content?.isCustomer[order?.leaseOrder?.status] == ""
@@ -103,7 +103,7 @@ const OrderFooter = ({
   );
   const renderButton = () => {
     let message = "";
-    if (orderType == OrderType.Leasee) {
+    if (orderType == OrderType.Leasor) {
       switch (order?.leaseOrder?.status) {
         case "RETURNING":
           message = `Đã nhận lại sách`;

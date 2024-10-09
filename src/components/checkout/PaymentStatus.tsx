@@ -40,7 +40,7 @@ const renderStatus = (
   orderType?: OrderType
 ) => {
   if (!status) return <></>;
-  if (orderType == OrderType.Leasee && content.isCustomer[status]) {
+  if (orderType == OrderType.Leasor && content.isCustomer[status]) {
     return content.isCustomer[status];
   }
   if (content.isManager[status]) return content.isManager[status];

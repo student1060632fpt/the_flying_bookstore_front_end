@@ -1,11 +1,12 @@
 import { SITE_NAME } from "@/utils/env"
 import { Metadata } from "next"
-import ListOrderBuySell from "../../../components/customerOrder/ListOrderBuySell";
+import ListOrderMain from "../../../components/customerOrder/ListOrderMain";
+import { OrderType } from "../../../types/order";
 
 export const metadata: Metadata={
-  title: `Quản lý đơn mua | ${SITE_NAME}`,
+  title: `Quản lý đơn ${OrderType.Buy} | ${SITE_NAME}`,
 }
 const page = () => {
-  return <ListOrderBuySell isCustomer={true} />;
+  return <ListOrderMain orderType={OrderType.Buy} />;
 };
 export default page;

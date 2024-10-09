@@ -4,23 +4,18 @@ import {
   Button,
   Grid,
   IconButton,
-  Stack,
   Typography,
 } from "@mui/material";
-import { GridSlotsComponentsProps } from "@mui/x-data-grid";
 import RateModel from "./RateModel";
-import { CiCircleInfo } from "react-icons/ci";
 import { useState } from "react";
 import { formatCurrency } from "../../utils/helps";
-import { IOrder, IOrderStatus } from "../../types/order";
+import { IOrder, IOrderStatus, OrderType } from "../../types/order";
 import { updateStatusOrder } from "../../api/order";
 import { useStoreAlert } from "../../hooks/alert";
-import { redirect } from "next/navigation";
 import { CiTrash } from "react-icons/ci";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import localizedFormat from "dayjs/plugin/localizedFormat";
-import { useRouter } from "next/navigation";
 import CancelModal from "./CancelModal";
 import { callContentAlert } from "./contentAlert";
 import { useAuthStore } from "../../hooks/user";
@@ -34,9 +29,9 @@ export type IRateModal = { open: boolean; order: IOrder };
 const OrderFooter = ({
   order,
   changeStatus,
-  isCustomer,
+  orderType,
 }: {
-  isCustomer?: boolean;
+  orderType?: OrderType;
   order: IOrder;
   changeStatus: (e: any, newValue: number) => void;
 }) => {
@@ -56,7 +51,7 @@ const OrderFooter = ({
   const renderAlert = () => {
     if (!order?.leaseOrder?.status) return <></>;
     const content = callContentAlert(order);
-    if (isCustomer) {
+    if (orderType == OrderType.Leasee) {
       if (
         !content?.isCustomer[order?.leaseOrder?.status] ||
         content?.isCustomer[order?.leaseOrder?.status] == ""
@@ -108,7 +103,7 @@ const OrderFooter = ({
   );
   const renderButton = () => {
     let message = "";
-    if (isCustomer) {
+    if (orderType == OrderType.Leasee) {
       switch (order?.leaseOrder?.status) {
         case "RETURNING":
           message = `Đã nhận lại sách`;

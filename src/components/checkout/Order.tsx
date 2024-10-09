@@ -52,13 +52,25 @@ const Order = ({ orderDetail }: { orderDetail: IOrder }) => {
       title: `Thời gian thuê`,
       description: ` ${dayjs(leaseOrder?.fromDate).format("DD/MM/YYYY")} - ${dayjs(leaseOrder?.toDate).format("DD/MM/YYYY")}`,
       children: <RiCalendarTodoLine className="total__icon" />
-    }] : [])
-    ,
-    {
-      title: `Địa chỉ người ${tabNum == 0 ? " cho thuê" : "bán"}`,
+    }, {
+      title: `Địa chỉ người  cho thuê `,
       description: leaseOrder?.lessorAddress,
       children: <RiMapPin2Line className="total__icon" />
-    },
+    }, {
+      title: `Số điện thoại người  cho thuê`,
+      description: formatPhoneNumber(lessor?.phoneNumber),
+      children: <PiPhone className="total__icon" />
+    },] : [{
+      title: `Địa chỉ người bán`,
+      description: leaseOrder?.lessorAddress,
+      children: <RiMapPin2Line className="total__icon" />
+    }, {
+      title: `Số điện thoại người bán`,
+      description: formatPhoneNumber(lessor?.phoneNumber),
+      children: <PiPhone className="total__icon" />
+    },])
+    ,
+
     {
       title: `Số điện thoại người ${tabNum == 0 ? " cho thuê" : "bán"}`,
       description: formatPhoneNumber(lessor?.phoneNumber),
@@ -78,19 +90,19 @@ const Order = ({ orderDetail }: { orderDetail: IOrder }) => {
       title: `Số ngày thuê`,
       description: renderDurationRent(),
       children: <RiCalendarTodoLine className="total__icon" />
-    }] : []),
-    {
-      title: ` ${tabNum == 0 ? "Tiền thuê" : "Giá bán"}`,
+    }, {
+      title: `Tiền thuê`,
       description: formatCurrency(orderDetail?.leaseOrder?.totalLeaseFee),
       children: <PiMoney className="total__icon" />
-    },
-    ...(tabNum == 0 ? [{
+    }, {
       title: `Tiền cọc`,
       description: formatCurrency(orderDetail?.leaseOrder?.totalDeposit),
       children: <GiMoneyStack className="total__icon" />
-    }] : [])
-    ,
-
+    }] : [{
+      title: `Giá bán`,
+      description: formatCurrency(orderDetail?.leaseOrder?.totalDeposit),
+      children: <PiMoney className="total__icon" />
+    }]),
   ]
   return (
     <>

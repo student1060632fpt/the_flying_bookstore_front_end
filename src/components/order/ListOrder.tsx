@@ -3,7 +3,7 @@ import { Button, Grid, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
 import { useAuthStore } from "../../hooks/user";
-import { IOrder } from "../../types/order";
+import { IOrder, OrderType } from "../../types/order";
 import DetailOrder from "./DetailOrder";
 import { getAllOrder } from "../../api/order";
 import { useStoreAlert } from "../../hooks/alert";
@@ -14,15 +14,16 @@ import { useRouter } from "next/navigation";
 export default function ListOrder({
   status,
   changeStatus,
-  isCustomer,
+  orderType,
 }: {
-  isCustomer: boolean;
+  orderType: OrderType;
   status: number;
   changeStatus: (e: any, newValue: number) => void;
 }) {
   const router = useRouter();
   const { profile } = useAuthStore();
   const [listOrder, setListOrder] = useState<Array<IOrder>>();
+  const isCustomer = orderType == OrderType.Leasee;
   const { callAlert } = useStoreAlert();
   const callApiGetAllOrder = useCallback(async () => {
     if (!profile?.id) {
@@ -129,7 +130,7 @@ export default function ListOrder({
           <DetailOrder
             order={order}
             changeStatus={reloadStatus}
-            isCustomer={isCustomer}
+            orderType={orderType}
           />
         </Grid>
       ))}

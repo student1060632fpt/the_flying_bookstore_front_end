@@ -57,7 +57,7 @@ const Order = ({ orderDetail }: { orderDetail: IOrder }) => {
       description: leaseOrder?.lessorAddress,
       children: <RiMapPin2Line className="total__icon" />
     }, {
-      title: `Số điện thoại người  cho thuê`,
+      title: `Số điện thoại người cho thuê`,
       description: formatPhoneNumber(lessor?.phoneNumber),
       children: <PiPhone className="total__icon" />
     },] : [{

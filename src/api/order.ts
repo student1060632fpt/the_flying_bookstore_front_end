@@ -47,7 +47,7 @@ export const updateStatusOrder = async (status: IOrderStatus, id: number, token:
     });
 };
 
-export const getOrderWithStatusService = async (status: number, profile: IUser | null, isCustomer?: boolean) => {
+export const getOrderWithStatusService = async (status: number, profile: IUser | null, isCustomer?: boolean)  => {
   try {
     const response = await axios.request({
       url: `${port}/api/leaseOrder/search/${isCustomer ? `lessor` : `lessee`

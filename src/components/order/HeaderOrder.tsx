@@ -68,7 +68,7 @@ export const HeaderOrder = ({
           Thời gian thuê
         </Typography>
         <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          {dayjs(order?.leaseOrder?.fromDate).format("DD/MM")} -
+          {dayjs(order?.leaseOrder?.fromDate).format("DD/MM")} - {` `}
           {dayjs(order?.leaseOrder?.toDate).format("DD/MM/YYYY")}
         </Typography>
       </Grid>

@@ -12,9 +12,57 @@ import { CiUser, CiBag1, CiViewList, CiCirclePlus } from "react-icons/ci";
 import { PiBriefcaseLight } from "react-icons/pi";
 import Link from "next/link";
 import { useAuthStore } from "../../hooks/user";
-
+const sizeIcon = 22;
+const menuItems = [
+  {
+    href: '/profile',
+    icon: <CiUser size={sizeIcon} />,
+    text: 'Cài đặt tài khoản',
+  },
+  {
+    href: '/my-order/0',
+    icon: <CiBag1 size={sizeIcon} />,
+    text: 'Đơn thuê',
+  },
+  {
+    href: '/customer-order',
+    icon: <PiBriefcaseLight size={sizeIcon} />,
+    text: 'Đơn cho thuê',
+  },
+  {
+    href: '/buy-order',
+    icon: <CiBag1 size={sizeIcon} />,
+    text: 'Đơn mua',
+  },
+  {
+    href: '/sell-order',
+    icon: <PiBriefcaseLight size={sizeIcon} />,
+    text: 'Đơn bán',
+  },
+  {
+    href: '/manager-post',
+    icon: <CiViewList size={sizeIcon} />,
+    text: 'Quản lý bài đăng',
+  },
+  {
+    href: '/manager-post/add-post',
+    icon: <CiCirclePlus size={sizeIcon} />,
+    text: 'Thêm bài đăng',
+  },
+];
 const MenuProfile = () => {
   const { profile } = useAuthStore();
+
+  const renderMenuItems = () => {
+    return menuItems.map((item, index) => (
+      <Link key={index} href={item.href}>
+        <MenuItem sx={{ py: 1.5, px: 2 }}>
+          <ListItemIcon>{item.icon}</ListItemIcon>
+          <ListItemText>{item.text}</ListItemText>
+        </MenuItem>
+      </Link>
+    ));
+  };
   return (
     <MenuList>
       <MenuItem sx={{ py: 1.5, px: 2 }}>
@@ -29,49 +77,10 @@ const MenuProfile = () => {
             />
           </div>
         </ListItemIcon>
-        <ListItemText sx={{ ml: 2 }}>Chào {profile?.firstName}</ListItemText>
+        <ListItemText sx={{ ml: 2 }}>Chào {profile?.firstName ? profile?.firstName : profile?.username}</ListItemText>
       </MenuItem>
       <Divider />
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiUser size={22} />
-        </ListItemIcon>
-        <Link href="/profile">
-          <ListItemText>Cài đặt tài khoản</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiBag1 size={22} />
-        </ListItemIcon>
-        <Link href="/my-order/0">
-          <ListItemText>Quản lý đơn hàng của tôi</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <PiBriefcaseLight size={22} />
-        </ListItemIcon>
-        <Link href="/customer-order">
-          <ListItemText>Quản lý đơn hàng của khách</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiViewList size={22} />
-        </ListItemIcon>
-        <Link href="/manager-post">
-          <ListItemText>Quản lý bài đăng</ListItemText>
-        </Link>
-      </MenuItem>
-      <MenuItem sx={{ py: 1.5, px: 2 }}>
-        <ListItemIcon>
-          <CiCirclePlus size={22} />
-        </ListItemIcon>
-        <Link href="/manager-post/add-post">
-          <ListItemText>Thêm bài đăng</ListItemText>
-        </Link>
-      </MenuItem>
+      {renderMenuItems()}
     </MenuList>
   );
 };

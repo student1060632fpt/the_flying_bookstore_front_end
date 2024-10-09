@@ -4,16 +4,16 @@ import { DataGrid } from "@mui/x-data-grid";
 import { IRow, columnsOrder, convertToRow } from "./column";
 import NoData from "./NoData";
 import OrderFooter from "./OrderFooter";
-import { IOrder } from "../../types/order";
+import { IOrder, OrderType } from "../../types/order";
 import { useState } from "react";
 
 const DetailOrder = ({
   order,
   changeStatus,
-  isCustomer,
+  orderType,
 }: {
   order: IOrder;
-  isCustomer?: boolean;
+  orderType: OrderType;
   changeStatus: (e: any, newValue: number) => void;
 }) => {
   const [listBook, setlistBook] = useState<IRow[]>(
@@ -32,7 +32,7 @@ const DetailOrder = ({
         height: listBook.length != 0 ? "auto" : "500px",
       }}
     >
-      <HeaderOrder order={order} isCustomer={isCustomer}/>
+      <HeaderOrder order={order} orderType={orderType} />
       <DataGrid
         rows={listBook}
         columns={columnsOrder}
@@ -42,9 +42,9 @@ const DetailOrder = ({
         hideFooterPagination
         hideFooterSelectedRowCount
         hideFooter
-        
+
       />
-      <OrderFooter changeStatus={changeStatus} order={order}  isCustomer={isCustomer}/>
+      <OrderFooter changeStatus={changeStatus} order={order} orderType={orderType} />
     </Box>
   );
 };

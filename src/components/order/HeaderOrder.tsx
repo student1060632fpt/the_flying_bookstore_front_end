@@ -4,6 +4,7 @@ import { CiLocationArrow1 } from "react-icons/ci";
 import { IOrder, OrderType } from "../../types/order";
 import dayjs from "dayjs";
 import { renderStatus } from "../checkout/PaymentStatus";
+import { useStoreStep } from "../../hooks/step";
 const renderUserName = (order: IOrder, orderType: OrderType): string => {
   switch (orderType) {
     case OrderType.Leasee:
@@ -35,7 +36,7 @@ export const HeaderOrder = ({
 }) => {
 
   const theme = useTheme();
-  console.log({ orderType })
+  const { tabNum } = useStoreStep()
 
 
   return (
@@ -63,16 +64,17 @@ export const HeaderOrder = ({
           {renderUserName(order, orderType)}
         </Typography>
       </Grid>
-
-      <Grid item xs={2}>
-        <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
-          Thời gian thuê
-        </Typography>
-        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-          {dayjs(order?.leaseOrder?.fromDate).format("DD/MM")} - {` `}
-          {dayjs(order?.leaseOrder?.toDate).format("DD/MM/YYYY")}
-        </Typography>
-      </Grid>
+      {tabNum == 0 && (
+        <Grid item xs={2}>
+          <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
+            Thời gian thuê
+          </Typography>
+          <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
+            {dayjs(order?.leaseOrder?.fromDate).format("DD/MM")} - {` `}
+            {dayjs(order?.leaseOrder?.toDate).format("DD/MM/YYYY")}
+          </Typography>
+        </Grid>
+      )}
       <Grid item xs={3}>
         <Typography variant="body2" sx={{ color: theme.palette.grey[600] }}>
           Trạng thái {orderUserTitles[orderType] || orderUserTitles[OrderType.Leasor]}

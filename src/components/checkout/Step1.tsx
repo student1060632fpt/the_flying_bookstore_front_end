@@ -110,11 +110,11 @@ const Step1 = ({ handleNext }: { handleNext: () => void }) => {
             <h3 className="">Thông tin đặt {tabNum == 1 ? "mua" : "thuê"}</h3>
             <InfoRent />
             <h3 className="mt-10">Thông tin đặt hàng</h3>
-            <InfoCheckout tabNum={tabNum} />
+            <InfoCheckout />
           </div>
           <div className="card">
             <h3 className="">Thông tin sản phẩm</h3>
-            <CartItem tabNum={tabNum} isCheckout={true} />
+            <CartItem isCheckout={true} />
             <h3 className="mt-10">Thanh toán</h3>
             <Pay payType={payType} setPayType={setPayType} />
           </div>

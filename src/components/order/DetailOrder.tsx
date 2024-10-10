@@ -1,12 +1,13 @@
 import { Box } from "@mui/material";
 import { HeaderOrder } from "./HeaderOrder";
 import { DataGrid } from "@mui/x-data-grid";
-import { IRow, columnsOrder, convertToRow } from "./column";
+import { IRow, columnsOrderRent, columnsOrderSellBuy, convertToRow } from "./column";
 import NoData from "./NoData";
 import OrderFooter from "./OrderFooter";
 import { IOrder, OrderType } from "../../types/order";
 import { useState } from "react";
 import theme from "../../utils/theme";
+import { useStoreStep } from "../../hooks/step";
 
 const DetailOrder = ({
   order,
@@ -17,6 +18,7 @@ const DetailOrder = ({
   orderType: OrderType;
   changeStatus: (e: any, newValue: number) => void;
 }) => {
+  const { tabNum } = useStoreStep()
   const [listBook, setlistBook] = useState<IRow[]>(
     order && order.listing ? [convertToRow(order)] : []
   );
@@ -37,7 +39,7 @@ const DetailOrder = ({
       <HeaderOrder order={order} orderType={orderType} />
       <DataGrid
         rows={listBook}
-        columns={columnsOrder}
+        columns={tabNum == 1 ? columnsOrderSellBuy : columnsOrderRent}
         disableRowSelectionOnClick
         slots={{ noRowsOverlay: NoData }}
         sx={{ border: "none" }}

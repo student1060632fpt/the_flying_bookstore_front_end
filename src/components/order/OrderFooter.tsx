@@ -190,7 +190,7 @@ const OrderFooter = ({
         justifyItems="center"
         alignItems="center"
       >
-        <Grid item xs={6}>
+        <Grid item xs={6}  mb={1}>
           {renderAlert()}
         </Grid>
         <Grid item xs={3} mb={1}>

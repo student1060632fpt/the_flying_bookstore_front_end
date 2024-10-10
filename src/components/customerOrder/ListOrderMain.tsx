@@ -14,6 +14,7 @@ import { useStoreAlert } from "../../hooks/alert";
 import { useRouter } from "next/navigation";
 import { getAllOrder, getOrderWithStatusService } from "../../api/order";
 import useApiCall from "../../hooks/useApiCall";
+import { useStoreStep } from "../../hooks/step";
 
 const arrSame: Array<{ label: string }> = [
   { label: "Tất cả" },
@@ -35,6 +36,7 @@ const arrStatus: Array<{ label: string }> = [
 const ListOrderMain = ({ orderType }: { orderType: OrderType }) => {
   const [status, setStatus] = useState(0);
   const { profile } = useAuthStore();
+  const { tabNum } = useStoreStep()
   const { callAlert, callErrorAlert } = useStoreAlert();
   const [listOrder, setListOrder] = useState<Array<IOrder>>();
   const { handleApiCall, loading } = useApiCall<IOrder[]>();  // Sử dụng hook
@@ -101,7 +103,7 @@ const ListOrderMain = ({ orderType }: { orderType: OrderType }) => {
   }, [status]);
 
   const renderSectionTab = () => {
-    return arrStatus.map((_, index) => {
+    return (tabNum == 1 ? arrStatusBuySell : arrStatus).map((_, index) => {
       return (
         <CustomTabPanel value={status} index={index} key={index}>
           <ListOrder orderType={orderType} listOrder={listOrder} loading={loading} reloadButton={reloadButton} reloadStatus={reloadStatus} />
@@ -116,7 +118,7 @@ const ListOrderMain = ({ orderType }: { orderType: OrderType }) => {
       </Typography>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs value={status} onChange={handleChange} aria-label="order tab">
-          {arrStatus.map(({ label }, index) => {
+          {(tabNum == 1 ? arrStatusBuySell : arrStatus).map(({ label }, index) => {
             return <Tab label={label} {...orderProps(index)} key={index} />;
           })}
         </Tabs>

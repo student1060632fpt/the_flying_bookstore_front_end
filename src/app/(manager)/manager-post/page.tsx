@@ -73,9 +73,10 @@ const ManagerPost = () => {
         </Link>
       </Stack>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs value={tabPost} onChange={handleChangeTabPost} aria-label="basic tabs example">
-          <Tab label="Bài đăng thuê" {...a11yProps(0)} />
-          <Tab label="Bài đăng bán" {...a11yProps(1)} />
+        <Tabs value={tabPost} onChange={handleChangeTabPost} aria-label="manage post">
+          <Tab label="Bài đăng bán và thuê" {...a11yProps(0)} />
+          <Tab label="Bài đăng chỉ thuê" {...a11yProps(1)} />
+          <Tab label="Bài đăng chỉ bán" {...a11yProps(2)} />
         </Tabs>
       </Box>
       <CustomTabPanel value={tabPost} index={0}>
@@ -99,6 +100,26 @@ const ManagerPost = () => {
         </Box>
       </CustomTabPanel>
       <CustomTabPanel value={tabPost} index={1}>
+        <Box sx={{ width: "100%", height: listPost[0]!! ? "auto" : "500px" }}>
+          <DataGrid
+            rows={listPost}
+            columns={columnsPost(handleClickOpen,tabPost)}
+            initialState={{
+              pagination: {
+                paginationModel: {
+                  pageSize: 5,
+                },
+              },
+            }}
+            pageSizeOptions={[5]}
+            disableRowSelectionOnClick
+            slots={{ toolbar: GridToolbar, noRowsOverlay: NoData }}
+            slotProps={{ toolbar: { showQuickFilter: true } }}
+            sx={{ py: 1, px: 2 }}
+          />
+        </Box>
+      </CustomTabPanel>
+      <CustomTabPanel value={tabPost} index={2}>
         <Box sx={{ width: "100%", height: listPost[0]!! ? "auto" : "500px" }}>
           <DataGrid
             rows={listPost}

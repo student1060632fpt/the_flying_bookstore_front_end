@@ -16,6 +16,7 @@ import { IPostState } from "../../app/(manager)/manager-post/add-post/page";
 import { useStoreAlert } from "../../hooks/alert";
 import { useRouter } from "next/navigation";
 import { onCreateListing } from "../../api/create/createPostService";
+import { handleError } from "../../api/handleError";
 export type TFieldPostValue = {
   address: string;
   leaseRate: string; // must be number
@@ -25,10 +26,10 @@ export type TFieldPostValue = {
 };
 const CreatePost = ({ copyId }: { copyId: IPostState["copyId"] }) => {
   const { profile, token } = useAuthStore();
-  const methods = useForm<TFieldPostValue>({defaultValues: {address: profile?.address}});
+  const methods = useForm<TFieldPostValue>({ defaultValues: { address: profile?.address } });
   const { handleSubmit } = methods;
   const router = useRouter()
-  const {callAlert} = useStoreAlert()
+  const { callAlert, callErrorAlert } = useStoreAlert()
   const onSubmit: SubmitHandler<TFieldPostValue> = async (value) => {
     const { address, depositFee, description, leaseRate, penaltyRate } = value;
     let data = {
@@ -43,14 +44,19 @@ const CreatePost = ({ copyId }: { copyId: IPostState["copyId"] }) => {
       penaltyRate: parseFloat(penaltyRate),
       description,
     };
-    const response = await onCreateListing(data,token);
-    if (response) {
-      callAlert(`Tạo sách #${response.data.id} thành công`)
-      router.push(`/detail/${response.data.id}`) //TODO test in this
+    try {
+      const response = await onCreateListing(data, token);
+      if (typeof response != "string") {
+        callAlert(`Tạo sách #${response.data.id} thành công`)
+        router.push(`/detail/${response.data.id}`) //TODO test in this
+      }
+      else {
+        callErrorAlert(response);
+      };
+    } catch (error) {
+      callErrorAlert(handleError(error))
     }
-    else {
-      console.log(response?.error);
-    };
+
   };
   return (
     <FormProvider {...methods}>
